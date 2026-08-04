@@ -1,12 +1,26 @@
 import type { IconName } from "./ui";
 
-/** Voce della navigazione principale e del drawer mobile. */
+/**
+ * Chiave della voce di menu.
+ * Coincide con le chiavi di `nav` nei dizionari: se aggiungi una voce qui
+ * senza tradurla, TypeScript segnala l'errore.
+ */
+export type NavKey =
+  | "home"
+  | "about"
+  | "projects"
+  | "skills"
+  | "experience"
+  | "contact";
+
+/**
+ * Voce della navigazione principale e del drawer mobile.
+ * L'etichetta non e qui: arriva dal dizionario tramite `key`.
+ */
 export interface NavItem {
-  label: string;
+  key: NavKey;
+  /** Percorso senza prefisso di lingua: lo aggiunge `localePath()`. */
   href: string;
-  /** Sottotitolo mostrato nelle card della 404 e nel drawer mobile. */
-  description?: string;
-  /** Se true apre in una nuova scheda con rel="noopener noreferrer". */
   external?: boolean;
 }
 
