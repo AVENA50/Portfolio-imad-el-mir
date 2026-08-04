@@ -1,0 +1,21 @@
+# Normalizza i fine riga: nel repository si salva sempre LF,
+# nella working copy Windows usa CRLF. Elimina i diff fantasma
+# quando lo stesso repo viene aperto da sistemi operativi diversi.
+* text=auto eol=lf
+
+# File binari: mai toccati da git
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.avif  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+
+# Lockfile: generato, escluso dalle statistiche del linguaggio
+package-lock.json linguist-generated=true
