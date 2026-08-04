@@ -39,11 +39,12 @@
     "planned": "Planned",
     "available": "Available for opportunities"
   },
-  "home": {
-    "eyebrow": "Design system",
+  "hero": {
+    "badge": "Available for opportunities",
     "greeting": "Hi, I'm",
     "name": "Imad",
-    "intro": "Tokens, type scale and surfaces are live. This page verifies the foundations and will be replaced by the real home in M8.",
+    "role": "Full Stack Developer & AI Enthusiast",
+    "intro": "I build modern web applications, intelligent systems and engaging gaming experiences.",
     "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
