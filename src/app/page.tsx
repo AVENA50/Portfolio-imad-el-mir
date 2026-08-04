@@ -1,103 +1,65 @@
-import Image from "next/image";
-
+/**
+ * Home temporanea.
+ *
+ * Serve solo a verificare i design token di M1-T3 nel browser.
+ * Viene sostituita dalla home vera in M8-T7: nessun componente
+ * definito qui va riutilizzato.
+ */
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="relative min-h-dvh overflow-hidden">
+      <div className="bg-hero-glow pointer-events-none absolute inset-0" aria-hidden />
+      <div
+        className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-40"
+        aria-hidden
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="container-site relative flex min-h-dvh flex-col justify-center py-24">
+        <p className="eyebrow">Design system</p>
+
+        <h1 className="text-display mt-6 max-w-3xl">
+          Hi, I&apos;m <span className="text-gradient">Imad</span>
+        </h1>
+
+        <p className="text-ink-muted mt-6 max-w-xl text-lg">
+          Token, scala tipografica e superfici sono attivi. Questa pagina
+          verifica M1-T3 e verra sostituita dalla home definitiva in M8.
+        </p>
+
+        <div className="mt-10 flex flex-wrap gap-4">
+          <button
+            type="button"
+            className="bg-button-gradient text-primary-fg shadow-glow hover:shadow-glow-strong rounded-button px-6 py-3 font-semibold transition-shadow"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Bottone primario
+          </button>
+
+          <button
+            type="button"
+            className="bg-surface hover:bg-surface-hover border-border hover:border-border-strong rounded-button border px-6 py-3 font-semibold transition-colors"
           >
-            Read our docs
-          </a>
+            Bottone secondario
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { name: "Algorithms", color: "bg-accent-violet" },
+            { name: "Data & BI", color: "bg-accent-blue" },
+            { name: "Full Stack", color: "bg-accent-indigo" },
+            { name: "AI & ML", color: "bg-accent-cyan" },
+          ].map((category) => (
+            <li
+              key={category.name}
+              className="bg-surface border-border shadow-card hover:border-border-strong rounded-card border p-5 transition-colors"
+            >
+              <span className={`${category.color} rounded-pill block size-3`} />
+              <h2 className="text-h3 mt-4">{category.name}</h2>
+              <p className="text-ink-subtle mt-2 text-sm">Accento di categoria</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }
