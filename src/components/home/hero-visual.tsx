@@ -1,11 +1,6 @@
 import { Code2 } from "lucide-react";
 import { FaJava } from "react-icons/fa";
-import {
-  SiNextdotjs,
-  SiPython,
-  SiReact,
-  SiTypescript,
-} from "react-icons/si";
+import { SiNextdotjs, SiPython, SiReact, SiTypescript } from "react-icons/si";
 import type { ComponentType, CSSProperties } from "react";
 
 import { EarthGlobe } from "@/components/home/earth-globe";
@@ -92,7 +87,7 @@ function Orbit({ items, radius, duration, reverse = false }: OrbitProps) {
               <div style={{ transform: `rotate(${-tech.angle}deg)` }}>
                 <span
                   title={tech.label}
-                  className="glass rounded-panel flex size-[4.5rem] items-center justify-center lg:size-24"
+                  className="glass flex size-[4.5rem] items-center justify-center rounded-panel lg:size-24"
                   style={{ boxShadow: `0 0 32px -12px ${tech.color}` }}
                 >
                   {/* Il colore e quello del marchio, non del tema */}

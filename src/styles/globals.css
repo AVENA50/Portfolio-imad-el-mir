@@ -58,7 +58,11 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-violet-600) 45%, transparent);
+    background-color: color-mix(
+      in oklab,
+      var(--color-violet-600) 45%,
+      transparent
+    );
     color: var(--color-ink);
   }
 
@@ -220,7 +224,9 @@
      Browser senza backdrop-filter: si passa a una superficie opaca, cosi
      il testo resta leggibile invece di galleggiare su niente. */
 
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
     .glass,
     .glass-bar,
     .glass-panel {

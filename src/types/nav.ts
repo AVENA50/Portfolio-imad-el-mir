@@ -6,12 +6,7 @@ import type { IconName } from "./ui";
  * senza tradurla, TypeScript segnala l'errore.
  */
 export type NavKey =
-  | "home"
-  | "about"
-  | "projects"
-  | "skills"
-  | "experience"
-  | "contact";
+  "home" | "about" | "projects" | "skills" | "experience" | "contact";
 
 /**
  * Voce della navigazione principale e del drawer mobile.

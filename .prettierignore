@@ -1,0 +1,12 @@
+# Generati o gestiti da altri strumenti
+node_modules
+.next
+out
+build
+coverage
+package-lock.json
+next-env.d.ts
+
+# Contenuti: la formattazione automatica romperebbe il markdown degli MDX
+src/content
+public

@@ -42,28 +42,28 @@ export default async function HomePage({
 
           <div className="relative mx-auto grid w-full max-w-[110rem] items-center gap-14 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
             <div>
-              <p className="glass text-ink-muted inline-flex items-center gap-2.5 rounded-pill px-4 py-2 text-sm font-medium">
-                <span aria-hidden className="bg-success size-2 rounded-pill" />
+              <p className="glass inline-flex items-center gap-2.5 rounded-pill px-4 py-2 text-sm font-medium text-ink-muted">
+                <span aria-hidden className="size-2 rounded-pill bg-success" />
                 {t.hero.badge}
               </p>
 
-              <h1 className="text-display mt-8">
+              <h1 className="mt-8 text-display">
                 {t.hero.greeting}{" "}
                 <span className="text-gradient">{t.hero.name}</span>
               </h1>
 
-              <p className="text-h3 text-ink-muted font-display mt-4 font-semibold">
+              <p className="mt-4 font-display text-h3 font-semibold text-ink-muted">
                 {t.hero.role}
               </p>
 
-              <p className="text-ink-subtle mt-6 max-w-xl text-lg leading-relaxed lg:text-xl">
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-subtle lg:text-xl">
                 {t.hero.intro}
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <Link
                   href={localePath(locale, "/projects")}
-                  className="bg-button-gradient text-primary-fg shadow-glow hover:shadow-glow-strong rounded-pill inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold transition-shadow"
+                  className="bg-button-gradient inline-flex items-center gap-2.5 rounded-pill px-8 py-4 text-base font-semibold text-primary-fg shadow-glow transition-shadow hover:shadow-glow-strong"
                 >
                   {t.hero.primaryCta}
                   <Icon name="arrow-right" className="size-5" />
@@ -71,7 +71,7 @@ export default async function HomePage({
 
                 <Link
                   href={localePath(locale, "/contact")}
-                  className="glass glass-hover rounded-pill inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold transition-colors"
+                  className="glass glass-hover inline-flex items-center gap-2.5 rounded-pill px-8 py-4 text-base font-semibold transition-colors"
                 >
                   {t.hero.secondaryCta}
                   <Icon name="mail" className="size-5" />
@@ -91,7 +91,7 @@ export default async function HomePage({
                         rel={isExternal ? "noopener noreferrer" : undefined}
                         download={link.icon === "file" ? true : undefined}
                         title={link.label}
-                        className="glass glass-hover text-ink-muted hover:text-ink rounded-card flex size-14 items-center justify-center transition-colors"
+                        className="glass glass-hover flex size-14 items-center justify-center rounded-card text-ink-muted transition-colors hover:text-ink"
                       >
                         <Icon name={link.icon} className="size-6" />
                         <span className="sr-only">{link.srLabel}</span>
