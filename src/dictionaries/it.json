@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Imad El Mir - Full Stack Developer",
+    "description": "Portfolio e case study di Imad El Mir: applicazioni web full stack, sistemi intelligenti e pipeline dati."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "Chi sono",
+    "projects": "Progetti",
+    "skills": "Competenze",
+    "experience": "Percorso",
+    "contact": "Contatti"
+  },
+  "actions": {
+    "downloadCv": "Scarica il CV",
+    "openMenu": "Apri il menu",
+    "closeMenu": "Chiudi il menu",
+    "skipToContent": "Vai al contenuto",
+    "backToHome": "Torna alla home",
+    "viewProjects": "Vedi i progetti",
+    "getInTouch": "Scrivimi",
+    "viewAll": "Vedi tutti",
+    "liveDemo": "Demo",
+    "sourceCode": "Codice"
+  },
+  "localeSwitcher": {
+    "label": "Cambia lingua",
+    "current": "Lingua attuale"
+  },
+  "categories": {
+    "algorithms": "Algoritmi",
+    "data-bi": "Dati & BI",
+    "full-stack": "Full Stack",
+    "ai-ml": "AI & ML"
+  },
+  "status": {
+    "completed": "Completato",
+    "in-progress": "In corso",
+    "planned": "Pianificato",
+    "available": "Disponibile per opportunita"
+  },
+  "home": {
+    "eyebrow": "Design system",
+    "greeting": "Ciao, sono",
+    "name": "Imad",
+    "intro": "Token, scala tipografica e superfici sono attivi. Questa pagina verifica le fondamenta e verra sostituita dalla home definitiva in M8.",
+    "primaryCta": "Vedi i miei lavori",
+    "secondaryCta": "Scrivimi"
+  },
+  "footer": {
+    "rights": "Tutti i diritti riservati.",
+    "builtWith": "Costruito con Next.js e React"
+  }
+}

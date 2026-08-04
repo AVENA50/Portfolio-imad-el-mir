@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Imad El Mir - Full Stack Developer",
+    "description": "Portfolio and engineering case studies by Imad El Mir: full stack web applications, intelligent systems and data pipelines."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "actions": {
+    "downloadCv": "Download CV",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content",
+    "backToHome": "Back to home",
+    "viewProjects": "View projects",
+    "getInTouch": "Get in touch",
+    "viewAll": "View all",
+    "liveDemo": "Live demo",
+    "sourceCode": "Code"
+  },
+  "localeSwitcher": {
+    "label": "Change language",
+    "current": "Current language"
+  },
+  "categories": {
+    "algorithms": "Algorithms",
+    "data-bi": "Data & BI",
+    "full-stack": "Full Stack",
+    "ai-ml": "AI & ML"
+  },
+  "status": {
+    "completed": "Completed",
+    "in-progress": "In progress",
+    "planned": "Planned",
+    "available": "Available for opportunities"
+  },
+  "home": {
+    "eyebrow": "Design system",
+    "greeting": "Hi, I'm",
+    "name": "Imad",
+    "intro": "Tokens, type scale and surfaces are live. This page verifies the foundations and will be replaced by the real home in M8.",
+    "primaryCta": "View my work",
+    "secondaryCta": "Get in touch"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js and React"
+  }
+}
