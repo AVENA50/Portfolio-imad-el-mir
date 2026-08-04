@@ -1,24 +1,26 @@
 import type { Metadata, Viewport } from "next";
 
 import { fontVariables } from "@/app/fonts";
+import { SITE } from "@/config/site";
 import { ThemeProvider } from "@/providers/theme-provider";
 import "@/styles/globals.css";
 
 /**
- * Metadata di base. Il builder riutilizzabile che genera anche Open Graph
- * e Twitter card per ogni pagina arriva in M10-T1: qui resta il minimo
- * indispensabile perche ogni pagina abbia un titolo sensato da subito.
+ * Metadata di base, generati da config/site.ts.
+ * Il builder riutilizzabile con Open Graph e Twitter card per ogni pagina
+ * arriva in M10-T1: qui resta il minimo perche ogni pagina abbia da subito
+ * un titolo sensato.
  */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://imadelmir.dev"),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: "Imad El Mir - Full Stack Developer",
-    template: "%s | Imad El Mir",
+    default: `${SITE.name} - ${SITE.role}`,
+    template: `%s | ${SITE.name}`,
   },
-  description:
-    "Portfolio e case study di Imad El Mir: applicazioni web full stack, sistemi intelligenti e pipeline dati.",
-  authors: [{ name: "Imad El Mir" }],
-  creator: "Imad El Mir",
+  description: SITE.description,
+  keywords: [...SITE.keywords],
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
 };
 
 export const viewport: Viewport = {
