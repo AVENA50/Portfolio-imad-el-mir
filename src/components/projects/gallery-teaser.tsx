@@ -63,7 +63,7 @@ export function GalleryTeaser({
   return (
     <div
       className={cn(
-        "glass flex flex-wrap items-center gap-x-6 gap-y-4 rounded-card px-5 py-4",
+        "glass glow-hover flex flex-wrap items-center gap-x-6 gap-y-4 rounded-card px-5 py-4",
         className,
       )}
     >

@@ -102,6 +102,13 @@
   --shadow-glow: 0 8px 32px -12px #7c3aeda6;
   --shadow-glow-strong: 0 12px 48px -12px #7c3aedcc;
 
+  /* Alone al passaggio del mouse sulle superfici (non sui bottoni): piu
+     largo e piu tenue di --shadow-glow, perche deve accendere una card
+     senza farla sembrare premuta. Il primo valore e un bordo luminoso,
+     il secondo l'alone, il terzo il riflesso sul bordo superiore. */
+  --shadow-glow-card:
+    0 0 0 1px #8b5cf640, 0 20px 50px -24px #7c3aedd9, inset 0 1px 0 0 #ffffff2e;
+
   /* ------------------------------------------------------------ vetro -----
      Superfici traslucide con sfocatura dello sfondo. Il riflesso interno
      e la riga chiara sul bordo superiore: e quello che fa leggere il

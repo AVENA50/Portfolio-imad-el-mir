@@ -84,7 +84,7 @@ export function ProjectMetrics({ metrics, className }: ProjectMetricsProps) {
       {metrics.map((metric, index) => (
         <div
           key={metric.label}
-          className="glass rounded-card px-5 py-4 backdrop-blur-xl"
+          className="glass glow-hover rounded-card px-5 py-4 backdrop-blur-xl"
         >
           <dt className="text-xs font-medium tracking-wide text-ink-subtle uppercase">
             {metric.label}

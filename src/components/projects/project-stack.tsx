@@ -50,7 +50,12 @@ export function ProjectStack({ stack, dictionary }: ProjectStackProps) {
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {groups.map(({ group, items }) => (
-          <Card key={group} surface="flat" padding="lg">
+          <Card
+            key={group}
+            surface="flat"
+            padding="lg"
+            className="zoom-hover h-full"
+          >
             <h3 className="text-xs font-semibold tracking-wide text-ink-subtle uppercase">
               {dictionary.caseStudy.techGroups[group]}
             </h3>
