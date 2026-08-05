@@ -50,6 +50,30 @@
     "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
+  "home": {
+    "tech": {
+      "eyebrow": "What I work with",
+      "title": "Technologies",
+      "description": "The stack that actually appears in the projects below, grouped by its role in the system."
+    },
+    "about": {
+      "eyebrow": "About me",
+      "title": "From physics to data",
+      "paragraphOne": "I study Business Intelligence Software Development at ITS ICT Piemonte in Turin, after a university path in physics. That's where my way of approaching a problem comes from: understand the data before writing code, isolate the variables, measure instead of assume.",
+      "paragraphTwo": "I work across the whole chain that turns data into a decision — ingestion and transformation pipelines, databases designed around the questions they have to answer, APIs and interfaces that make the result readable. Python, Java, SQL and Docker are the tools I reach for most.",
+      "paragraphThree": "I'm looking for an internship or a first role in business intelligence and data engineering: real data, real constraints, and people better than me to learn from.",
+      "cta": "See the full path",
+      "factLocation": "Based in",
+      "factStudying": "Currently studying at",
+      "factLanguages": "Languages",
+      "languages": {
+        "arabic": "Arabic",
+        "italian": "Italian",
+        "french": "French",
+        "english": "English"
+      }
+    }
+  },
   "featured": {
     "eyebrow": "Featured",
     "title": "Selected work",
