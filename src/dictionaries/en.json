@@ -21,7 +21,9 @@
     "getInTouch": "Get in touch",
     "viewAll": "View all",
     "liveDemo": "Live demo",
-    "sourceCode": "Code"
+    "sourceCode": "Code",
+    "tryDemo": "Try the demo",
+    "documentation": "Documentation"
   },
   "localeSwitcher": {
     "label": "Change language",
@@ -64,6 +66,49 @@
     "readingTime": "{n} min read",
     "empty": "No projects found",
     "emptyHint": "No project matches the selected filters."
+  },
+  "caseStudy": {
+    "backToProjects": "All projects",
+    "tableOfContents": "On this page",
+    "overview": "Overview",
+    "metrics": "By the numbers",
+    "featuresEyebrow": "Features",
+    "features": "What it does",
+    "featuresDescription": "The features that define the project, not the full list.",
+    "architectureEyebrow": "Under the hood",
+    "architecture": "Architecture",
+    "architectureLayers": "The layers",
+    "architectureDecisions": "Technical decisions",
+    "decisionWhy": "Why",
+    "stackEyebrow": "Technologies",
+    "stack": "Tech stack",
+    "stackDescription": "The technologies used, grouped by their role in the system.",
+    "galleryEyebrow": "Images",
+    "gallery": "Gallery",
+    "galleryHint": "Click an image to enlarge it",
+    "learningsEyebrow": "Retrospective",
+    "learnings": "What I learned",
+    "learningsDescription": "The things this project taught me, and that I carry into the next one.",
+    "prev": "Previous project",
+    "next": "Next project",
+    "openImage": "Enlarge image",
+    "closeImage": "Close image",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "imageCounter": "{current} of {total}",
+    "types": {
+      "personal": "Personal project",
+      "academic": "Academic project",
+      "professional": "Professional project",
+      "open-source": "Open source"
+    },
+    "techGroups": {
+      "language": "Languages",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "data": "Data",
+      "devops": "DevOps and tooling"
+    }
   },
   "notFound": {
     "code": "404",

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ICON_NAMES } from "@/config/icons";
 import { CATEGORY_SLUGS } from "@/config/project-categories";
 import { TECH_SLUGS } from "@/config/tech-stack";
 
@@ -52,8 +53,17 @@ const imageSchema = z.object({
   caption: z.string().optional(),
 });
 
+/**
+ * Blocco icona + titolo + testo: feature e lezioni apprese.
+ *
+ * `icon` e un enum, non una stringa libera. Il frontmatter e un dato
+ * esterno: con `z.string()` un refuso passerebbe la validazione e la
+ * pagina esploderebbe al rendering, quando ormai e in produzione. Cosi
+ * invece la build si ferma indicando file e valore sbagliato, e l'elenco
+ * dei nomi validi e uno solo per tutto il sito (config/icons.ts).
+ */
 const iconTextSchema = z.object({
-  icon: z.string(),
+  icon: z.enum(ICON_NAMES),
   title: z.string().min(1),
   description: z.string().min(1),
 });
