@@ -65,7 +65,19 @@
     "countOne": "1 progetto",
     "readingTime": "{n} min di lettura",
     "empty": "Nessun progetto trovato",
-    "emptyHint": "Nessun progetto corrisponde ai filtri selezionati."
+    "emptyHint": "Nessun progetto corrisponde ai filtri selezionati.",
+    "filterAll": "Tutti",
+    "resetFilters": "Azzera",
+    "sortLabel": "Ordina",
+    "sort": {
+      "newest": "Piu recenti",
+      "oldest": "Piu vecchi",
+      "featured": "In evidenza"
+    },
+    "view": {
+      "grid": "Vista a griglia",
+      "list": "Vista a elenco"
+    }
   },
   "caseStudy": {
     "backToProjects": "Tutti i progetti",

@@ -21,6 +21,20 @@ export interface Project extends ProjectFrontmatter {
   readingTime: number;
 }
 
+/**
+ * Il progetto senza il corpo MDX.
+ *
+ * Quello che si passa ai componenti client. Tutto cio che attraversa il
+ * confine server/client viene serializzato e spedito nel payload della
+ * pagina: includere `content` significherebbe far scaricare al browser il
+ * testo integrale di ogni case study per poter filtrare otto card.
+ *
+ * Con otto progetti sono pochi kilobyte; con cinquanta sarebbe mezzo mega
+ * di testo che nessuno legge. Il tipo rende l'errore impossibile invece che
+ * improbabile: un componente client che chiede `content` non compila.
+ */
+export type ProjectSummary = Omit<Project, "content">;
+
 export type ProjectStatus = ProjectFrontmatter["status"];
 export type ProjectType = ProjectFrontmatter["type"];
 export type ProjectLinks = ProjectFrontmatter["links"];

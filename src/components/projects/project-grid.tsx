@@ -4,10 +4,10 @@ import { EmptyState } from "@/components/shared";
 import type { Locale } from "@/config/i18n";
 import { cn } from "@/lib/cn";
 import type { Dictionary } from "@/lib/dictionary";
-import type { Project } from "@/types";
+import type { ProjectSummary } from "@/types";
 
 interface ProjectGridProps {
-  projects: readonly Project[];
+  projects: readonly ProjectSummary[];
   locale: Locale;
   dictionary: Dictionary;
   /** Colonne su schermo largo. Due danno card grandi, tre una panoramica. */
