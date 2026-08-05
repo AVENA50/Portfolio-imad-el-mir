@@ -1,12 +1,31 @@
 /**
  * Punto unico di import dei tipi per tutti i componenti.
  *
- * I componenti scrivono sempre `import type { NavItem } from "@/types"`,
+ * I componenti scrivono sempre `import type { Project } from "@/types"`,
  * mai il percorso del singolo file: se un tipo cambia casa, si aggiorna
  * solo questo barrel.
- *
- * I tipi dei progetti (Project, ProjectMetric, ...) arrivano in M4-T6.
  */
+
+export type {
+  AdjacentProjects,
+  ArchitectureDecision,
+  ArchitectureLayer,
+  CategorySlug,
+  Project,
+  ProjectArchitecture,
+  ProjectFeature,
+  ProjectFilters,
+  ProjectImage,
+  ProjectLearning,
+  ProjectLinks,
+  ProjectMetric,
+  ProjectScreenshot,
+  ProjectSort,
+  ProjectStatus,
+  ProjectType,
+  ProjectView,
+  TechSlug,
+} from "./project";
 
 export type { NavItem, NavKey, SocialLink } from "./nav";
 export type { Accent, ButtonVariant, IconName, Size } from "./ui";
