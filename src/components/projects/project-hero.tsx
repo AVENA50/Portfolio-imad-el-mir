@@ -9,7 +9,7 @@ import type { Locale } from "@/config/i18n";
 import { localePath } from "@/config/navigation";
 import { getCategoryAccent } from "@/config/project-categories";
 import type { Dictionary } from "@/lib/dictionary";
-import { formatDateRange } from "@/lib/format";
+import { formatDateRange, formatMonthYear } from "@/lib/format";
 import type { IconName, Project } from "@/types";
 
 interface ProjectHeroProps {
@@ -111,7 +111,15 @@ export function ProjectHero({ project, locale, dictionary }: ProjectHeroProps) {
         <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-subtle">
           <span className="inline-flex items-center gap-2">
             <Icon name="clock" className="size-4" />
-            {formatDateRange(project.startDate, project.endDate, locale)}
+            {/* Un progetto pianificato non e "in corso": mostrarlo come un
+                periodo aperto direbbe che ci stiamo lavorando. Qui la data
+                e una previsione, e va detto. */}
+            {project.status === "planned"
+              ? dictionary.caseStudy.plannedStart.replace(
+                  "{date}",
+                  formatMonthYear(project.startDate, locale),
+                )
+              : formatDateRange(project.startDate, project.endDate, locale)}
           </span>
 
           <span className="inline-flex items-center gap-2">
