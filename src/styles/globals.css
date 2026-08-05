@@ -136,6 +136,11 @@
     background-image: var(--gradient-hero-glow);
   }
 
+  /* Alone dietro il visual dell'hero */
+  .bg-hero-orb {
+    background-image: var(--gradient-hero-orb);
+  }
+
   .bg-brand-gradient {
     background-image: var(--gradient-brand);
   }
@@ -148,5 +153,116 @@
   .bg-grid-pattern {
     background-image: var(--pattern-grid);
     background-size: var(--pattern-grid-size);
+  }
+}
+
+/* ============================================================================
+   Vetro smerigliato
+   ----------------------------------------------------------------------------
+   Tre livelli, non uno solo: il vetro funziona per contrasto. Se tutto e
+   vetro, niente sembra vetro. La regola del progetto e:
+
+     .glass         card, pannelli, badge         -> sfondo che filtra
+     .glass-bar     header sticky, barre          -> sfocatura piu forte
+     .glass-panel   drawer, modali, hero card     -> vetro + velo viola
+
+   backdrop-filter e costoso: va su elementi che si sovrappongono a qualcosa,
+   mai su liste lunghe di card. Per quelle esiste `.glass-flat`, che imita
+   il vetro senza sfocare nulla.
+   ========================================================================= */
+
+@layer components {
+  .glass {
+    background-color: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(160%);
+    backdrop-filter: blur(var(--blur-glass)) saturate(160%);
+  }
+
+  .glass-hover:hover {
+    background-color: var(--color-glass-strong);
+    box-shadow: var(--shadow-glass-hover);
+  }
+
+  .glass-bar {
+    background-color: var(--color-glass-strong);
+    border-bottom: 1px solid var(--color-glass-border);
+    -webkit-backdrop-filter: blur(var(--blur-glass-strong)) saturate(180%);
+    backdrop-filter: blur(var(--blur-glass-strong)) saturate(180%);
+  }
+
+  .glass-panel {
+    background-image: linear-gradient(
+      160deg,
+      var(--color-glass-strong) 0%,
+      var(--color-glass) 45%,
+      var(--color-glass-tint) 100%
+    );
+    border: 1px solid var(--color-glass-border);
+    box-shadow: var(--shadow-glass);
+    -webkit-backdrop-filter: blur(var(--blur-glass-strong)) saturate(180%);
+    backdrop-filter: blur(var(--blur-glass-strong)) saturate(180%);
+  }
+
+  /* Stesso aspetto, zero sfocatura: per griglie con molte card. */
+  .glass-flat {
+    background-image: linear-gradient(
+      160deg,
+      var(--color-glass-strong) 0%,
+      var(--color-glass) 100%
+    );
+    border: 1px solid var(--color-glass-border);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* --------------------------------------------------------- fallback ----
+     Browser senza backdrop-filter: si passa a una superficie opaca, cosi
+     il testo resta leggibile invece di galleggiare su niente. */
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass,
+    .glass-bar,
+    .glass-panel {
+      background-color: var(--color-surface);
+      background-image: none;
+    }
+  }
+
+  /* ------------------------------------------------------------ orbita ----
+     Rotazione condivisa da anelli e tile. Le tile girano in senso opposto
+     con la stessa durata, cosi restano dritte mentre l'anello ruota:
+     senza la contro-rotazione i loghi arriverebbero a testa in giu. */
+
+  @keyframes orbit-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .orbit-ring {
+    animation: orbit-spin var(--orbit-duration, 30s) linear infinite;
+  }
+
+  .orbit-ring-reverse {
+    animation: orbit-spin var(--orbit-duration, 30s) linear infinite reverse;
+  }
+
+  /* Chi ha ridotto la trasparenza a livello di sistema (Windows, macOS,
+     iOS) riceve superfici piene: e una richiesta di accessibilita, non
+     una preferenza estetica. */
+  @media (prefers-reduced-transparency: reduce) {
+    .glass,
+    .glass-bar,
+    .glass-panel,
+    .glass-flat {
+      background-color: var(--color-surface);
+      background-image: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 }

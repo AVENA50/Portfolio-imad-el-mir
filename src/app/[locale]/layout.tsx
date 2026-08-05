@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 
+import { Starfield } from "@/components/effects/starfield";
 import { fontVariables } from "@/app/fonts";
 import { LOCALES, LOCALE_META, isLocale, type Locale } from "@/config/i18n";
 import { SITE } from "@/config/site";
@@ -85,6 +86,12 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="bg-bg text-ink antialiased">
+        {/* Sfondo stellato, fisso dietro a tutto. z-index negativo: sta sopra
+            il colore del body ma sotto qualsiasi contenuto. */}
+        <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden>
+          <Starfield />
+        </div>
+
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

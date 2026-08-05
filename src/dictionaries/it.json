@@ -39,11 +39,12 @@
     "planned": "Pianificato",
     "available": "Disponibile per opportunita"
   },
-  "home": {
-    "eyebrow": "Design system",
+  "hero": {
+    "badge": "Disponibile per opportunità",
     "greeting": "Ciao, sono",
     "name": "Imad",
-    "intro": "Token, scala tipografica e superfici sono attivi. Questa pagina verifica le fondamenta e verra sostituita dalla home definitiva in M8.",
+    "role": "Full Stack Developer & AI Enthusiast",
+    "intro": "Costruisco applicazioni web moderne, sistemi intelligenti ed esperienze di gioco coinvolgenti.",
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },

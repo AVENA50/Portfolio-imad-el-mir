@@ -1,15 +1,21 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { HeroVisual } from "@/components/home/hero-visual";
+import { Header } from "@/components/layout/header";
+import { Icon } from "@/components/shared/icon";
 import { isLocale } from "@/config/i18n";
-import { MAIN_NAV, localePath } from "@/config/navigation";
-import { LocaleSwitcher } from "@/components/shared/locale-switcher";
+import { localePath } from "@/config/navigation";
+import { SOCIAL_LINKS } from "@/data/social";
 import { getDictionary } from "@/lib/dictionary";
 
 /**
- * Home temporanea.
+ * Home.
  *
- * Verifica design token (M1-T3) e i18n (M1-T6b) nel browser.
- * Viene sostituita dalla home vera in M8-T7.
+ * Per ora contiene solo l'hero, dimensionato per occupare tutta la finestra
+ * meno l'header. Le altre sezioni (progetti in evidenza, orbita tecnologie,
+ * banda statistiche) arrivano in M8; l'header si spostera nel layout del
+ * route group (site) in M3-T9.
  */
 export default async function HomePage({
   params,
@@ -22,74 +28,84 @@ export default async function HomePage({
   const t = await getDictionary(locale);
 
   return (
-    <main className="relative min-h-dvh overflow-hidden">
-      <div className="bg-hero-glow pointer-events-none absolute inset-0" aria-hidden />
-      <div
-        className="bg-grid-pattern pointer-events-none absolute inset-0 opacity-40"
-        aria-hidden
-      />
+    <>
+      <Header locale={locale} dictionary={t} />
 
-      <div className="container-site relative flex min-h-dvh flex-col justify-center py-24">
-        <div className="flex items-center justify-between gap-4">
-          <p className="eyebrow">{t.home.eyebrow}</p>
-          <LocaleSwitcher label={t.localeSwitcher.label} />
-        </div>
+      <main>
+        {/* min-h calcolata sull'altezza dell'header (5rem): l'hero riempie
+            esattamente il resto della finestra, senza scroll parassita. */}
+        <section className="relative flex min-h-[calc(100dvh-5rem)] items-center overflow-hidden">
+          <div
+            className="bg-hero-orb pointer-events-none absolute inset-0"
+            aria-hidden
+          />
 
-        <h1 className="text-display mt-6 max-w-3xl">
-          {t.home.greeting} <span className="text-gradient">{t.home.name}</span>
-        </h1>
+          <div className="relative mx-auto grid w-full max-w-[110rem] items-center gap-14 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
+            <div>
+              <p className="glass text-ink-muted inline-flex items-center gap-2.5 rounded-pill px-4 py-2 text-sm font-medium">
+                <span aria-hidden className="bg-success size-2 rounded-pill" />
+                {t.hero.badge}
+              </p>
 
-        <p className="text-ink-muted mt-6 max-w-xl text-lg">{t.home.intro}</p>
+              <h1 className="text-display mt-8">
+                {t.hero.greeting}{" "}
+                <span className="text-gradient">{t.hero.name}</span>
+              </h1>
 
-        <div className="mt-10 flex flex-wrap gap-4">
-          <button
-            type="button"
-            className="bg-button-gradient text-primary-fg shadow-glow hover:shadow-glow-strong rounded-button px-6 py-3 font-semibold transition-shadow"
-          >
-            {t.home.primaryCta}
-          </button>
+              <p className="text-h3 text-ink-muted font-display mt-4 font-semibold">
+                {t.hero.role}
+              </p>
 
-          <button
-            type="button"
-            className="bg-surface hover:bg-surface-hover border-border hover:border-border-strong rounded-button border px-6 py-3 font-semibold transition-colors"
-          >
-            {t.home.secondaryCta}
-          </button>
-        </div>
+              <p className="text-ink-subtle mt-6 max-w-xl text-lg leading-relaxed lg:text-xl">
+                {t.hero.intro}
+              </p>
 
-        {/* Verifica che dizionario e navigazione siano allineati */}
-        <ul className="mt-16 flex flex-wrap gap-2">
-          {MAIN_NAV.map((item) => (
-            <li key={item.key}>
-              <span className="border-border bg-surface text-ink-muted rounded-pill border px-3 py-1.5 text-sm">
-                {t.nav[item.key]}
-                <span className="text-ink-subtle ml-2 text-xs">
-                  {localePath(locale, item.href)}
-                </span>
-              </span>
-            </li>
-          ))}
-        </ul>
+              <div className="mt-10 flex flex-wrap items-center gap-4">
+                <Link
+                  href={localePath(locale, "/projects")}
+                  className="bg-button-gradient text-primary-fg shadow-glow hover:shadow-glow-strong rounded-pill inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold transition-shadow"
+                >
+                  {t.hero.primaryCta}
+                  <Icon name="arrow-right" className="size-5" />
+                </Link>
 
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {(
-            [
-              { key: "algorithms", color: "bg-accent-violet" },
-              { key: "data-bi", color: "bg-accent-blue" },
-              { key: "full-stack", color: "bg-accent-indigo" },
-              { key: "ai-ml", color: "bg-accent-cyan" },
-            ] as const
-          ).map((category) => (
-            <li
-              key={category.key}
-              className="bg-surface border-border shadow-card hover:border-border-strong rounded-card border p-5 transition-colors"
-            >
-              <span className={`${category.color} rounded-pill block size-3`} />
-              <h2 className="text-h3 mt-4">{t.categories[category.key]}</h2>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </main>
+                <Link
+                  href={localePath(locale, "/contact")}
+                  className="glass glass-hover rounded-pill inline-flex items-center gap-2.5 px-8 py-4 text-base font-semibold transition-colors"
+                >
+                  {t.hero.secondaryCta}
+                  <Icon name="mail" className="size-5" />
+                </Link>
+              </div>
+
+              {/* Contatti rapidi sotto i bottoni */}
+              <ul className="mt-10 flex items-center gap-4">
+                {SOCIAL_LINKS.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+
+                  return (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        download={link.icon === "file" ? true : undefined}
+                        title={link.label}
+                        className="glass glass-hover text-ink-muted hover:text-ink rounded-card flex size-14 items-center justify-center transition-colors"
+                      >
+                        <Icon name={link.icon} className="size-6" />
+                        <span className="sr-only">{link.srLabel}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <HeroVisual className="hidden justify-self-center lg:block" />
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
