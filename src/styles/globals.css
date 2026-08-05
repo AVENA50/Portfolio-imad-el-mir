@@ -286,6 +286,48 @@
     }
   }
 
+  /* --------------------------------------------------- bordo sfumato -----
+     Cornice in gradiente attorno a un elemento (components/effects/
+     glow-border.tsx).
+
+     Il trucco e il ritaglio: si disegna un rettangolo pieno di gradiente e
+     se ne cancella l'interno con due maschere sovrapposte in esclusione.
+     Resta solo la cornice, spessa quanto il padding.
+
+     `border-image` non serve perche non segue `border-radius`, e quattro
+     bordi con `linear-gradient` non si raccordano agli angoli. Questo e il
+     modo con cui un bordo in gradiente resta arrotondato.
+
+     `border-radius: inherit` fa seguire alla cornice il raggio del genitore
+     senza doverlo ripetere: cambia rounded-card e la cornice si adegua. */
+
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: var(--glow-border-width, 1px);
+    background-image: var(--glow-border-gradient, var(--gradient-brand));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Browser senza mask-composite: meglio un bordo pieno che una lastra
+     colorata sopra il contenuto. */
+  @supports not ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+    .glow-border::before {
+      background-image: none;
+      border: var(--glow-border-width, 1px) solid var(--color-violet-500);
+    }
+  }
+
   /* ------------------------------------------------- micro-ingrandimento --
      Un accenno, non un salto: il 2% si percepisce come reattivita, il 10%
      come un elemento che ti viene addosso. `transform` non tocca il layout

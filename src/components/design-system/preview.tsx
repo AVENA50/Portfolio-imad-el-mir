@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Stagger } from "@/components/effects";
+import { GlowBorder, GridBackground, Stagger } from "@/components/effects";
 import { EmptyState, Section, SectionHeading } from "@/components/shared";
 import {
   Badge,
@@ -346,6 +346,57 @@ export function DesignSystemPreview() {
             </Card>
           ))}
         </Stagger>
+      </Section>
+
+      {/* ------------------------------------------------ bordo e griglia -- */}
+      <Section tone="subtle" spacing="sm">
+        <SectionHeading
+          as="h3"
+          eyebrow="Superfici"
+          title="GlowBorder e GridBackground"
+          description="Due effetti di sola CSS, senza JavaScript. La cornice va usata con parsimonia: se la porta ogni card, smette di indicare qualcosa."
+        />
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          {(["brand", "violet", "subtle"] as const).map((tone) => (
+            <GlowBorder key={tone} tone={tone} className="rounded-card">
+              <Card surface="flat" className="h-full">
+                <CardTitle>tone &ldquo;{tone}&rdquo;</CardTitle>
+                <CardDescription>
+                  Cornice ritagliata da uno pseudo-elemento: segue il raggio
+                  degli angoli, cosa che un bordo in gradiente normale non fa.
+                </CardDescription>
+              </Card>
+            </GlowBorder>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-6 lg:grid-cols-3">
+          {(["radial", "bottom", "none"] as const).map((fade) => (
+            <div
+              key={fade}
+              className="glass-flat relative h-44 overflow-hidden rounded-card"
+            >
+              <GridBackground fade={fade} size="sm" />
+              <p className="absolute bottom-4 left-4 font-mono text-xs text-ink-muted">
+                fade=&ldquo;{fade}&rdquo;
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 max-w-3xl">
+          <GlowBorder tone="brand" width="thick" glow className="rounded-panel">
+            <div className="glass-flat rounded-panel p-8">
+              <p className="font-display text-h3 font-bold">
+                width=&ldquo;thick&rdquo; con glow
+              </p>
+              <p className="mt-2 text-sm text-ink-muted">
+                La combinazione da riservare a un solo elemento per pagina.
+              </p>
+            </div>
+          </GlowBorder>
+        </div>
       </Section>
 
       {/* ----------------------------------------------------- stato vuoto -- */}
