@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { SkipLink } from "@/components/layout/skip-link";
 import { isLocale } from "@/config/i18n";
 import { getDictionary } from "@/lib/dictionary";
@@ -32,6 +33,7 @@ export default async function SiteLayout({
   return (
     <>
       <SkipLink label={dictionary.actions.skipToContent} />
+      <ScrollProgress />
       <Header locale={locale} dictionary={dictionary} />
 
       {/* L'id e il bersaglio dello skip link. tabIndex -1 lo rende

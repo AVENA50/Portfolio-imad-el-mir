@@ -6,7 +6,6 @@ import { fontVariables } from "@/app/fonts";
 import { LOCALES, LOCALE_META, isLocale, type Locale } from "@/config/i18n";
 import { SITE } from "@/config/site";
 import { getDictionary } from "@/lib/dictionary";
-import { ThemeProvider } from "@/providers/theme-provider";
 import "@/styles/globals.css";
 
 /**
@@ -14,6 +13,21 @@ import "@/styles/globals.css";
  *
  * Vive dentro [locale] e non in app/: e l'unico modo per avere
  * <html lang> corretto, perche il layout di primo livello non riceve params.
+ *
+ * **Il sito ha un tema solo, scuro** (decisione di M3-T8). Per questo qui non
+ * c'e un provider del tema: senza un tema alternativo, next-themes avrebbe
+ * aggiunto una dipendenza e uno script inline eseguito prima del paint per
+ * scegliere fra un'opzione sola.
+ *
+ * Il tema si dichiara in due punti e basta: `colorScheme: "dark"` nel
+ * viewport, che dice al browser di disegnare scure anche le parti che non
+ * controlliamo — scrollbar di sistema, campi di input nativi, menu a
+ * tendina — e `color-scheme: dark` su <html> in globals.css.
+ *
+ * Se un domani servisse il tema chiaro: i valori stanno tutti in tokens.css,
+ * si aggiunge un blocco `.light` e si rimette un provider. Il lavoro vero
+ * non e il provider, sono i colori scritti a mano nei componenti che oggi
+ * danno per scontato il fondo scuro.
  */
 
 interface LocaleLayoutProps {
@@ -78,13 +92,7 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   return (
-    // suppressHydrationWarning e richiesto da next-themes: lo script inline
-    // modifica la classe di <html> prima dell'idratazione.
-    <html
-      lang={LOCALE_META[locale].htmlLang}
-      className={fontVariables}
-      suppressHydrationWarning
-    >
+    <html lang={LOCALE_META[locale].htmlLang} className={fontVariables}>
       <body className="bg-bg text-ink antialiased">
         {/* Sfondo stellato, fisso dietro a tutto. z-index negativo: sta sopra
             il colore del body ma sotto qualsiasi contenuto. */}
@@ -92,7 +100,7 @@ export default async function LocaleLayout({
           <Starfield />
         </div>
 
-        <ThemeProvider>{children}</ThemeProvider>
+        {children}
       </body>
     </html>
   );
