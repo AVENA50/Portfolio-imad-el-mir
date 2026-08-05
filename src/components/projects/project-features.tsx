@@ -40,7 +40,12 @@ export function ProjectFeatures({
         className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         {features.map((feature) => (
-          <Card key={feature.title} surface="flat" padding="lg">
+          <Card
+            key={feature.title}
+            surface="flat"
+            padding="lg"
+            className="glow-hover h-full"
+          >
             <span className="inline-flex size-12 items-center justify-center rounded-card border border-violet-500/25 bg-violet-500/12 text-violet-300">
               <Icon name={feature.icon} className="size-6" />
             </span>

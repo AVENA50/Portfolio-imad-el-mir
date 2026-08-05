@@ -254,6 +254,51 @@
     box-shadow: var(--shadow-glass);
   }
 
+  /* --------------------------------------------------------- bagliore ----
+     Alone viola al passaggio del mouse, per le superfici che non sono
+     bottoni: card delle metriche, funzionalita, barra della galleria.
+
+     Perche una classe e non `hover:shadow-glow` scritto ogni volta: le
+     tre proprieta devono muoversi insieme e con la stessa durata. Sparse
+     nei componenti divergono al primo ritocco, e si ottiene un sito dove
+     ogni card si accende in modo leggermente diverso.
+
+     Si anima solo `box-shadow` e `border-color`: due proprieta che il
+     browser compone senza ricalcolare il layout. */
+
+  .glow-hover {
+    transition:
+      box-shadow var(--duration-base) var(--ease-out-soft),
+      border-color var(--duration-base) var(--ease-out-soft);
+  }
+
+  .glow-hover:hover {
+    border-color: color-mix(in oklab, var(--color-violet-500) 45%, transparent);
+    box-shadow: var(--shadow-glow-card);
+  }
+
+  /* Il puntatore non esiste sul touch: senza questa guardia, su mobile il
+     bagliore resta acceso dopo un tocco finche non ne tocchi un altro. */
+  @media (hover: none) {
+    .glow-hover:hover {
+      border-color: var(--color-glass-border);
+      box-shadow: var(--shadow-glass);
+    }
+  }
+
+  /* ------------------------------------------------- micro-ingrandimento --
+     Un accenno, non un salto: il 2% si percepisce come reattivita, il 10%
+     come un elemento che ti viene addosso. `transform` non tocca il layout
+     degli altri elementi, quindi la griglia non si muove. */
+
+  .zoom-hover {
+    transition: transform var(--duration-base) var(--ease-out-soft);
+  }
+
+  .zoom-hover:hover {
+    transform: scale(1.02);
+  }
+
   /* --------------------------------------------------------- fallback ----
      Browser senza backdrop-filter: si passa a una superficie opaca, cosi
      il testo resta leggibile invece di galleggiare su niente. */
@@ -267,6 +312,86 @@
       background-color: var(--color-surface);
       background-image: none;
     }
+  }
+
+  /* ---------------------------------------------------- barra del video ---
+     Cursore di avanzamento della demo.
+
+     E un `input[type=range]` e non un div con un click handler: cosi si
+     muove anche con le frecce della tastiera, riceve il focus, e uno
+     screen reader lo annuncia come cursore con il suo valore. Rifarlo a
+     mano significa riscrivere tutto questo, di solito male.
+
+     Lo stile va scritto qui perche i pezzi interni di un range vivono in
+     pseudo-elementi con prefisso di browser, che le utility non
+     raggiungono. La percentuale riempita arriva da --progress, impostata
+     inline da React.
+     ------------------------------------------------------------------- */
+
+  .video-scrubber {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    /* Alta abbastanza da essere afferrabile: una barra da 4px si manca */
+    height: 1.25rem;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .video-scrubber::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(
+      to right,
+      var(--color-violet-400) var(--progress, 0%),
+      #ffffff33 var(--progress, 0%)
+    );
+  }
+
+  .video-scrubber::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    box-shadow: 0 0 0 4px #7c3aed59;
+    /* Compare solo quando serve: a riposo la barra resta una linea sottile */
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out-soft);
+  }
+
+  .video-scrubber:hover::-webkit-slider-thumb,
+  .video-scrubber:focus-visible::-webkit-slider-thumb {
+    opacity: 1;
+  }
+
+  .video-scrubber::-moz-range-track {
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: #ffffff33;
+  }
+
+  .video-scrubber::-moz-range-progress {
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--color-violet-400);
+  }
+
+  .video-scrubber::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-ink);
+    box-shadow: 0 0 0 4px #7c3aed59;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out-soft);
+  }
+
+  .video-scrubber:hover::-moz-range-thumb,
+  .video-scrubber:focus-visible::-moz-range-thumb {
+    opacity: 1;
   }
 
   /* ------------------------------------------------------------ orbita ----
