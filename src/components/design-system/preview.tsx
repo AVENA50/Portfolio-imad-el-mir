@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Stagger } from "@/components/effects";
 import { EmptyState, Section, SectionHeading } from "@/components/shared";
 import {
   Badge,
@@ -324,6 +325,27 @@ export function DesignSystemPreview() {
             )}
           </Field>
         </div>
+      </Section>
+
+      {/* --------------------------------------------------------- effetti -- */}
+      <Section spacing="sm">
+        <SectionHeading
+          as="h3"
+          eyebrow="Movimento"
+          title="Reveal e Stagger"
+          description="Scorri fino a qui: le card salgono una dopo l'altra invece di accendersi tutte insieme. Con prefers-reduced-motion attivo compaiono gia visibili."
+        />
+
+        <Stagger step={90} className="mt-8 grid gap-6 md:grid-cols-3">
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <Card key={index} surface="flat">
+              <CardTitle>Elemento {index}</CardTitle>
+              <CardDescription>
+                Ritardo {Math.min((index - 1) * 90, 600)} ms
+              </CardDescription>
+            </Card>
+          ))}
+        </Stagger>
       </Section>
 
       {/* ----------------------------------------------------- stato vuoto -- */}
