@@ -65,7 +65,19 @@
     "countOne": "1 project",
     "readingTime": "{n} min read",
     "empty": "No projects found",
-    "emptyHint": "No project matches the selected filters."
+    "emptyHint": "No project matches the selected filters.",
+    "filterAll": "All",
+    "resetFilters": "Reset",
+    "sortLabel": "Sort",
+    "sort": {
+      "newest": "Newest first",
+      "oldest": "Oldest first",
+      "featured": "Featured first"
+    },
+    "view": {
+      "grid": "Grid view",
+      "list": "List view"
+    }
   },
   "caseStudy": {
     "backToProjects": "All projects",

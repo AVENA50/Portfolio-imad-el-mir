@@ -22,6 +22,7 @@ export type {
   ProjectScreenshot,
   ProjectSort,
   ProjectStatus,
+  ProjectSummary,
   ProjectType,
   ProjectVideo,
   ProjectView,

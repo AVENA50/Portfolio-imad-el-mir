@@ -10,10 +10,10 @@ import { getCategoryAccent } from "@/config/project-categories";
 import { getTech } from "@/config/tech-stack";
 import type { Dictionary } from "@/lib/dictionary";
 import { formatMonthYear } from "@/lib/format";
-import type { Project } from "@/types";
+import type { ProjectSummary } from "@/types";
 
 interface ProjectCardProps {
-  project: Project;
+  project: ProjectSummary;
   locale: Locale;
   dictionary: Dictionary;
   /** Le prime card sono sopra la piega: l'immagine va caricata subito. */
