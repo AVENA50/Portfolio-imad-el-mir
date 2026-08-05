@@ -48,6 +48,17 @@
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },
+  "notFound": {
+    "code": "404",
+    "title": "Questa pagina è uscita dalla mappa",
+    "description": "La pagina che cerchi non esiste, oppure si è spostata altrove. Ti riporto sulla strada giusta.",
+    "suggestions": "Oppure prova una di queste"
+  },
+  "error": {
+    "title": "Qualcosa è andato storto",
+    "description": "Si è verificato un errore imprevisto. Puoi riprovare, oppure tornare alla home.",
+    "retry": "Riprova"
+  },
   "footer": {
     "rights": "Tutti i diritti riservati.",
     "builtWith": "Costruito con Next.js e React"

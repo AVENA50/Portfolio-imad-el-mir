@@ -4,6 +4,9 @@ import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "@/config/i18n";
 
 /** Cookie in cui salviamo la scelta esplicita dell'utente. */
 const LOCALE_COOKIE = "NEXT_LOCALE";
+
+/** Header con cui il middleware comunica la lingua ai componenti server. */
+export const LOCALE_HEADER = "x-locale";
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
 /**
@@ -67,7 +70,14 @@ export function middleware(request: NextRequest) {
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
 
-  if (hasLocale) return NextResponse.next();
+  if (hasLocale) {
+    // La lingua viaggia anche come header: not-found.tsx e le pagine di
+    // errore non ricevono `params`, e senza questo non saprebbero in che
+    // lingua parlare all'utente.
+    const headers = new Headers(request.headers);
+    headers.set(LOCALE_HEADER, pathname.split("/")[1] ?? DEFAULT_LOCALE);
+    return NextResponse.next({ request: { headers } });
+  }
 
   const locale = resolvePreferredLocale(request);
   const url = request.nextUrl.clone();

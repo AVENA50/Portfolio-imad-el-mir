@@ -48,6 +48,17 @@
     "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
+  "notFound": {
+    "code": "404",
+    "title": "This page went off the board",
+    "description": "The page you're looking for doesn't exist, or it moved somewhere else. Let's get you back on track.",
+    "suggestions": "Or try one of these"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. You can try again, or head back home.",
+    "retry": "Try again"
+  },
   "footer": {
     "rights": "All rights reserved.",
     "builtWith": "Built with Next.js and React"
