@@ -1,10 +1,14 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useTransition } from "react";
 
 import { LOCALES, LOCALE_META, type Locale } from "@/config/i18n";
 import { localeFromPathname, stripLocale } from "@/config/navigation";
+import {
+  INDICATOR_CLASSES,
+  useSlidingIndicator,
+} from "@/hooks/use-sliding-indicator";
 import { cn } from "@/lib/cn";
 
 interface LocaleSwitcherProps {
@@ -13,62 +17,21 @@ interface LocaleSwitcherProps {
   className?: string;
 }
 
-interface Indicator {
-  left: number;
-  width: number;
-  visible: boolean;
-}
-
-const HIDDEN: Indicator = { left: 0, width: 0, visible: false };
-
 /**
  * Selettore di lingua.
  *
  * Cambia solo il primo segmento del path, quindi resti sulla stessa pagina:
  * /it/projects/arcadium diventa /en/projects/arcadium. Salva la scelta in un
  * cookie, cosi il middleware la rispetta alle visite successive.
- *
- * Stesso indicatore scorrevole del menu principale: una pill di vetro che
- * si sposta sulla lingua puntata e a riposo torna su quella attiva.
  */
 export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const listRef = useRef<HTMLDivElement>(null);
-  const activeRef = useRef<HTMLButtonElement>(null);
-  const [indicator, setIndicator] = useState<Indicator>(HIDDEN);
-
   const current = localeFromPathname(pathname);
-
-  const moveTo = useCallback((target: HTMLElement | null) => {
-    const list = listRef.current;
-    if (!list || !target) {
-      setIndicator(HIDDEN);
-      return;
-    }
-
-    const listBox = list.getBoundingClientRect();
-    const targetBox = target.getBoundingClientRect();
-
-    setIndicator({
-      left: targetBox.left - listBox.left,
-      width: targetBox.width,
-      visible: true,
-    });
-  }, []);
-
-  const settle = useCallback(() => {
-    moveTo(activeRef.current);
-  }, [moveTo]);
-
-  useEffect(() => {
-    settle();
-
-    window.addEventListener("resize", settle);
-    return () => window.removeEventListener("resize", settle);
-  }, [settle, current]);
+  const { containerRef, activeRef, indicator, indicatorStyle, moveTo, settle } =
+    useSlidingIndicator<HTMLDivElement, HTMLButtonElement>(current);
 
   function switchTo(locale: Locale) {
     if (locale === current) return;
@@ -84,7 +47,7 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
 
   return (
     <div
-      ref={listRef}
+      ref={containerRef}
       role="group"
       aria-label={label}
       onMouseLeave={settle}
@@ -97,14 +60,11 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
       <span
         aria-hidden
         className={cn(
-          "glass pointer-events-none absolute inset-y-1 -z-0 rounded-pill",
-          "transition-[transform,width,opacity] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          INDICATOR_CLASSES,
+          "inset-y-1",
           indicator.visible ? "opacity-100" : "opacity-0",
         )}
-        style={{
-          width: `${indicator.width}px`,
-          transform: `translateX(${indicator.left}px)`,
-        }}
+        style={indicatorStyle}
       />
 
       {LOCALES.map((locale) => {
