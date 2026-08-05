@@ -97,7 +97,7 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
       <span
         aria-hidden
         className={cn(
-          "glass rounded-pill pointer-events-none absolute inset-y-1 -z-0",
+          "glass pointer-events-none absolute inset-y-1 -z-0 rounded-pill",
           "transition-[transform,width,opacity] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           indicator.visible ? "opacity-100" : "opacity-0",
         )}
@@ -123,7 +123,7 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
             aria-current={isActive ? "true" : undefined}
             disabled={isPending}
             className={cn(
-              "rounded-pill relative z-10 px-5 py-2.5 text-base font-bold transition-colors",
+              "relative z-10 rounded-pill px-5 py-2.5 text-base font-bold transition-colors",
               isActive ? "text-ink" : "text-ink/60 hover:text-ink",
             )}
           >

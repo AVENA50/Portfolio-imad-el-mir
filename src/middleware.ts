@@ -43,7 +43,10 @@ function resolvePreferredLocale(request: NextRequest): Locale {
   const fromCookie = request.cookies.get(LOCALE_COOKIE)?.value;
   if (fromCookie && isLocale(fromCookie)) return fromCookie;
 
-  return matchAcceptLanguage(request.headers.get("accept-language")) ?? DEFAULT_LOCALE;
+  return (
+    matchAcceptLanguage(request.headers.get("accept-language")) ??
+    DEFAULT_LOCALE
+  );
 }
 
 /**

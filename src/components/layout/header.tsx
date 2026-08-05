@@ -37,7 +37,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
         >
           <span
             aria-hidden
-            className="bg-blue-500 size-3 rounded-pill transition-colors group-hover:bg-violet-500"
+            className="size-3 rounded-pill bg-blue-500 transition-colors group-hover:bg-violet-500"
           />
           <span className="font-display text-xl font-extrabold tracking-[0.14em] uppercase lg:text-2xl">
             {SITE.name}
@@ -54,7 +54,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
           <a
             href={SITE.resumePath}
             download
-            className="glass glass-hover rounded-pill hidden items-center gap-2 px-5 py-2.5 text-sm font-semibold transition-colors sm:inline-flex"
+            className="glass glass-hover hidden items-center gap-2 rounded-pill px-5 py-2.5 text-sm font-semibold transition-colors sm:inline-flex"
           >
             <Icon name="download" className="size-[18px]" />
             {dictionary.actions.downloadCv}

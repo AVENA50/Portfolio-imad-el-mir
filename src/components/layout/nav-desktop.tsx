@@ -82,7 +82,7 @@ export function NavDesktop({ locale, labels }: NavDesktopProps) {
         <span
           aria-hidden
           className={cn(
-            "glass rounded-pill pointer-events-none absolute inset-y-0 -z-0",
+            "glass pointer-events-none absolute inset-y-0 -z-0 rounded-pill",
             "transition-[transform,width,opacity] duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
             indicator.visible ? "opacity-100" : "opacity-0",
           )}
@@ -105,7 +105,7 @@ export function NavDesktop({ locale, labels }: NavDesktopProps) {
                 onFocus={(event) => moveTo(event.currentTarget)}
                 onBlur={settle}
                 className={cn(
-                  "rounded-pill block px-7 py-3.5 text-lg font-medium transition-colors",
+                  "block rounded-pill px-7 py-3.5 text-lg font-medium transition-colors",
                   isActive ? "text-ink" : "text-ink/85 hover:text-ink",
                 )}
               >
