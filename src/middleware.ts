@@ -1,12 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "@/config/i18n";
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_HEADER,
+  isLocale,
+  type Locale,
+} from "@/config/i18n";
 
 /** Cookie in cui salviamo la scelta esplicita dell'utente. */
 const LOCALE_COOKIE = "NEXT_LOCALE";
-
-/** Header con cui il middleware comunica la lingua ai componenti server. */
-export const LOCALE_HEADER = "x-locale";
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
 /**

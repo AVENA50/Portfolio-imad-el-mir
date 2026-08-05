@@ -11,7 +11,7 @@ interface SectionHeadingProps {
   action?: ReactNode;
   align?: "left" | "center";
   /** Livello dell'intestazione. Cambia il tag, non l'aspetto. */
-  as?: "h2" | "h3";
+  as?: "h1" | "h2" | "h3";
   className?: string;
 }
 

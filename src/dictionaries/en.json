@@ -48,6 +48,16 @@
     "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
+  "projects": {
+    "eyebrow": "My work",
+    "title": "Projects",
+    "description": "A collection of projects that show how I work: the technical decisions, the problems solved and what I learned.",
+    "count": "{n} projects",
+    "countOne": "1 project",
+    "readingTime": "{n} min read",
+    "empty": "No projects found",
+    "emptyHint": "No project matches the selected filters."
+  },
   "notFound": {
     "code": "404",
     "title": "This page went off the board",

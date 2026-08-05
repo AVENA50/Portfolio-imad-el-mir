@@ -15,6 +15,15 @@ export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "it";
 
+/**
+ * Header con cui il middleware comunica la lingua ai componenti server.
+ *
+ * Vive qui e non in middleware.ts di proposito: importare qualcosa da
+ * middleware.ts dentro una pagina fa credere a Next che `export const config`
+ * sia la configurazione di quella route, e produce un avviso a ogni richiesta.
+ */
+export const LOCALE_HEADER = "x-locale";
+
 /** Etichette dello switcher di lingua e attributi lang/hreflang. */
 export const LOCALE_META: Record<
   Locale,
