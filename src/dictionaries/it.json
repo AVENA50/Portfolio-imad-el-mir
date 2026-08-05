@@ -48,6 +48,13 @@
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },
+  "featured": {
+    "eyebrow": "In evidenza",
+    "title": "Progetti selezionati",
+    "description": "I lavori che raccontano meglio come affronto un problema: dalle scelte di architettura al risultato che si vede.",
+    "cta": "Vedi tutti i progetti",
+    "readCase": "Leggi il case study"
+  },
   "projects": {
     "eyebrow": "Il mio lavoro",
     "title": "Progetti",

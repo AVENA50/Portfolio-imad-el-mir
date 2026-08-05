@@ -48,6 +48,13 @@
     "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
+  "featured": {
+    "eyebrow": "Featured",
+    "title": "Selected work",
+    "description": "The projects that best show how I approach a problem: from architectural decisions to the result you can see.",
+    "cta": "View all projects",
+    "readCase": "Read the case study"
+  },
   "projects": {
     "eyebrow": "My work",
     "title": "Projects",
