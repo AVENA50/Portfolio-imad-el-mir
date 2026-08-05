@@ -5,10 +5,9 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Icon } from "@/components/shared/icon";
 import { Button, Card } from "@/components/ui";
-import { resolveLocale } from "@/config/i18n";
+import { LOCALE_HEADER, resolveLocale } from "@/config/i18n";
 import { MAIN_NAV, localePath } from "@/config/navigation";
 import { getDictionary } from "@/lib/dictionary";
-import { LOCALE_HEADER } from "@/middleware";
 import type { IconName } from "@/types";
 
 /** Icona per ciascuna scorciatoia della 404. */

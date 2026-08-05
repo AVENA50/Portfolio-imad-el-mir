@@ -48,6 +48,16 @@
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },
+  "projects": {
+    "eyebrow": "Il mio lavoro",
+    "title": "Progetti",
+    "description": "Una raccolta di progetti che raccontano come lavoro: le scelte tecniche, i problemi risolti e cosa ho imparato.",
+    "count": "{n} progetti",
+    "countOne": "1 progetto",
+    "readingTime": "{n} min di lettura",
+    "empty": "Nessun progetto trovato",
+    "emptyHint": "Nessun progetto corrisponde ai filtri selezionati."
+  },
   "notFound": {
     "code": "404",
     "title": "Questa pagina è uscita dalla mappa",
