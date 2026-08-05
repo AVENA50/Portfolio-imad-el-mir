@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { NavDesktop } from "@/components/layout/nav-desktop";
-import { Icon } from "@/components/shared/icon";
 import { LocaleSwitcher } from "@/components/shared/locale-switcher";
+import { Button } from "@/components/ui";
 import type { Locale } from "@/config/i18n";
 import { localePath } from "@/config/navigation";
 import { SITE } from "@/config/site";
@@ -51,14 +51,16 @@ export function Header({ locale, dictionary }: HeaderProps) {
         <div className="flex shrink-0 items-center gap-3">
           <LocaleSwitcher label={dictionary.localeSwitcher.label} />
 
-          <a
-            href={SITE.resumePath}
-            download
-            className="glass glass-hover hidden items-center gap-2 rounded-pill px-5 py-2.5 text-sm font-semibold transition-colors sm:inline-flex"
+          <Button
+            asChild
+            variant="secondary"
+            iconLeft="download"
+            className="hidden sm:inline-flex"
           >
-            <Icon name="download" className="size-[18px]" />
-            {dictionary.actions.downloadCv}
-          </a>
+            <a href={SITE.resumePath} download>
+              {dictionary.actions.downloadCv}
+            </a>
+          </Button>
         </div>
       </div>
     </header>

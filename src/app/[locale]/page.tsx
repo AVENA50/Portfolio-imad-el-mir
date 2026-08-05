@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { HeroVisual } from "@/components/home/hero-visual";
+import { Button } from "@/components/ui";
 import { Header } from "@/components/layout/header";
 import { Icon } from "@/components/shared/icon";
 import { isLocale } from "@/config/i18n";
@@ -61,21 +62,17 @@ export default async function HomePage({
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Link
-                  href={localePath(locale, "/projects")}
-                  className="bg-button-gradient inline-flex items-center gap-2.5 rounded-pill px-8 py-4 text-base font-semibold text-primary-fg shadow-glow transition-shadow hover:shadow-glow-strong"
-                >
-                  {t.hero.primaryCta}
-                  <Icon name="arrow-right" className="size-5" />
-                </Link>
+                <Button asChild size="lg" iconRight="arrow-right">
+                  <Link href={localePath(locale, "/projects")}>
+                    {t.hero.primaryCta}
+                  </Link>
+                </Button>
 
-                <Link
-                  href={localePath(locale, "/contact")}
-                  className="glass glass-hover inline-flex items-center gap-2.5 rounded-pill px-8 py-4 text-base font-semibold transition-colors"
-                >
-                  {t.hero.secondaryCta}
-                  <Icon name="mail" className="size-5" />
-                </Link>
+                <Button asChild size="lg" variant="secondary" iconRight="mail">
+                  <Link href={localePath(locale, "/contact")}>
+                    {t.hero.secondaryCta}
+                  </Link>
+                </Button>
               </div>
 
               {/* Contatti rapidi sotto i bottoni */}
