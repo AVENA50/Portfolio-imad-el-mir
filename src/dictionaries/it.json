@@ -175,6 +175,71 @@
     "languagesDescription": "Livelli secondo il Quadro comune europeo di riferimento.",
     "nativeLevel": "Madrelingua"
   },
+  "experience": {
+    "eyebrow": "Da dove vengo",
+    "title": "Percorso",
+    "description": "Formazione, lavoro e certificazioni. Non tutto è informatica, e la parte che non lo è ha comunque insegnato qualcosa che uso ogni giorno.",
+    "tabsLabel": "Sezioni del percorso",
+    "tabEducation": "Formazione",
+    "tabWork": "Esperienza",
+    "tabCertificates": "Certificazioni",
+    "education": {
+      "its": {
+        "title": "Business Intelligence Software Developer",
+        "description": "Percorso ITS di livello EQF 5, orientato all'analisi dei dati e allo sviluppo software. È il corso che sto frequentando adesso e da cui nascono i progetti di questo portfolio.",
+        "details": [
+          "Business Intelligence e analisi dati",
+          "Database SQL e NoSQL",
+          "Python, Java, JavaScript, Node.js",
+          "Sviluppo web e API REST",
+          "Linux e reti",
+          "Cloud, container e Machine Learning"
+        ]
+      },
+      "physics": {
+        "title": "Percorso universitario in Fisica",
+        "description": "Studi in fisica generale, matematica e metodo scientifico, in fase di completamento: mancano due esami alla laurea. Da qui viene il modo in cui affronto un problema — isolare le variabili, misurare, verificare prima di concludere.",
+        "details": [
+          "Fisica classica e moderna",
+          "Analisi matematica ed equazioni differenziali",
+          "Analisi e interpretazione di dati sperimentali",
+          "Metodo scientifico"
+        ]
+      },
+      "highschool": {
+        "title": "Diploma di maturità scientifica",
+        "description": "Liceo scientifico, con formazione di base in matematica, fisica e scienze.",
+        "details": []
+      }
+    },
+    "work": {
+      "contentCreator": {
+        "title": "Content creator e progettista di media digitali",
+        "description": "Gestione di profili social con una community di oltre 350.000 follower: produzione e montaggio di contenuti video, pianificazione editoriale, analisi delle metriche e strategie di crescita organica. Ho imparato a leggere i numeri di un pubblico e a decidere in base a quelli — che è la stessa cosa che chiedo a un cruscotto di Business Intelligence.",
+        "details": [
+          "Oltre 350.000 follower",
+          "Video editing e post-produzione",
+          "Analisi delle performance",
+          "Pianificazione editoriale"
+        ]
+      },
+      "personalTrainer": {
+        "title": "Personal trainer",
+        "description": "Quasi cinque anni a seguire persone verso obiettivi misurabili, con programmi da adattare quando i dati non tornano. È il lavoro che mi ha insegnato la costanza e a spiegare cose tecniche a chi non è del mestiere.",
+        "details": [
+          "Programmazione degli allenamenti",
+          "Monitoraggio dei progressi",
+          "Comunicazione con i clienti"
+        ]
+      }
+    },
+    "certificates": {
+      "nutrition": {
+        "title": "Formazione annuale in nutrizione",
+        "description": "Percorso annuale in alimentazione, metabolismo e nutrizione applicata, con particolare attenzione alla performance sportiva."
+      }
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "Questa pagina è uscita dalla mappa",

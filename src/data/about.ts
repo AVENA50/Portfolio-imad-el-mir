@@ -52,19 +52,73 @@ export const EDUCATION: readonly EducationEntry[] = [
     url: "https://www.usmba.ac.ma/",
   },
   {
-    key: "nutrition",
-    institution: "American Society for Nutrition",
-    startDate: "2022-11",
-    endDate: "2023-04",
-    location: "Online",
-    url: "https://nutrition.org/",
-  },
-  {
     key: "highschool",
     institution: "Liceo Hamilton",
     startDate: "2020-09",
     endDate: "2021-06",
     location: "Fes",
+  },
+];
+
+export interface ExperienceEntry {
+  /** Chiave del testo nel dizionario (experience.work.<key>). */
+  key: string;
+  organization: string;
+  startDate: string;
+  endDate?: string;
+  location: string;
+  /** Cosa lascia in eredita al lavoro tecnico. Chiave nel dizionario. */
+  transferable?: boolean;
+}
+
+export interface CertificateEntry {
+  key: string;
+  issuer: string;
+  /** YYYY-MM del rilascio. */
+  date: string;
+  url?: string;
+}
+
+/**
+ * Esperienze lavorative, dalla piu recente.
+ *
+ * Nessuna delle due e un lavoro da sviluppatore, e non c'e ragione di
+ * nasconderlo. Su un primo portfolio la domanda che un selezionatore si
+ * fa non e "ha gia fatto questo mestiere" — sa che non l'ha fatto — ma
+ * "questa persona ha mai portato a termine qualcosa con costanza".
+ *
+ * Un pubblico costruito da zero e cinque anni nella stessa palestra
+ * rispondono a quella domanda meglio di un tirocinio di tre settimane.
+ * `transferable` marca le esperienze per cui vale la pena spiegare il
+ * collegamento invece di lasciarlo intuire.
+ */
+export const EXPERIENCE: readonly ExperienceEntry[] = [
+  {
+    // DA CONFERMARE: nel CV questa voce e "Attuale" senza data di inizio.
+    // Il valore qui sotto e una stima e va corretto con quella vera.
+    key: "contentCreator",
+    organization: "Freelance",
+    startDate: "2022-01",
+    location: "Fes",
+    transferable: true,
+  },
+  {
+    key: "personalTrainer",
+    organization: "AdriGym",
+    startDate: "2021-04",
+    endDate: "2025-12",
+    location: "Fes",
+    transferable: true,
+  },
+];
+
+/** Certificazioni e formazione breve. */
+export const CERTIFICATES: readonly CertificateEntry[] = [
+  {
+    key: "nutrition",
+    issuer: "American Society for Nutrition",
+    date: "2023-04",
+    url: "https://nutrition.org/",
   },
 ];
 
