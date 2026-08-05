@@ -69,6 +69,7 @@
   },
   "caseStudy": {
     "backToProjects": "Tutti i progetti",
+    "plannedStart": "Inizio previsto {date}",
     "tableOfContents": "In questa pagina",
     "overview": "Panoramica",
     "metrics": "I numeri",
