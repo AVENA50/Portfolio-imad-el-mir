@@ -1,22 +1,32 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { AboutPreview } from "@/components/home/about-preview";
 import { FeaturedProjects } from "@/components/home/featured-projects";
 import { HeroVisual } from "@/components/home/hero-visual";
+import { TechSection } from "@/components/home/tech-section";
 import { Icon } from "@/components/shared/icon";
 import { Badge, Button } from "@/components/ui";
 import { isLocale } from "@/config/i18n";
 import { localePath } from "@/config/navigation";
 import { SOCIAL_LINKS } from "@/data/social";
-import { getFeaturedProjects } from "@/lib/content/projects";
+import { getAllProjects, getFeaturedProjects } from "@/lib/content/projects";
 import { getDictionary } from "@/lib/dictionary";
 
 /**
- * Home.
+ * Home (M8-T7).
  *
- * Header, footer e skip link arrivano dal layout del gruppo (site):
- * qui resta solo il contenuto della pagina. Le altre sezioni — progetti
- * in evidenza, orbita tecnologie, banda statistiche — arrivano in M8.
+ * Header, footer e skip link arrivano dal layout del gruppo (site): qui
+ * resta il contenuto, in un ordine che segue una domanda alla volta.
+ *
+ *   hero        chi sei
+ *   progetti    fammi vedere
+ *   tecnologie  con cosa
+ *   chi sono    da dove vieni, cosa cerchi
+ *
+ * "Chi sono" chiude invece di aprire: chi arriva su un portfolio vuole
+ * prima vedere il lavoro. La biografia interessa dopo, a chi ha visto
+ * qualcosa che gli e piaciuto.
  */
 export default async function HomePage({
   params,
@@ -28,6 +38,13 @@ export default async function HomePage({
 
   const t = await getDictionary(locale);
   const featured = getFeaturedProjects(locale, 4);
+
+  // Le tecnologie si deducono da tutti i progetti, non solo dai quattro in
+  // evidenza: quello che uso non dipende da cosa ho scelto di mettere in
+  // vetrina. Il corpo MDX non serve e non viene portato avanti.
+  const all = getAllProjects(locale).map(
+    ({ content: _content, ...summary }) => summary,
+  );
 
   return (
     <>
@@ -105,6 +122,10 @@ export default async function HomePage({
       </section>
 
       <FeaturedProjects projects={featured} locale={locale} dictionary={t} />
+
+      <TechSection projects={all} dictionary={t} />
+
+      <AboutPreview locale={locale} dictionary={t} />
     </>
   );
 }

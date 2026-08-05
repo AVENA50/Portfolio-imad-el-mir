@@ -50,6 +50,30 @@
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },
+  "home": {
+    "tech": {
+      "eyebrow": "Con cosa lavoro",
+      "title": "Tecnologie",
+      "description": "Lo stack che compare davvero nei progetti qui sotto, raggruppato per ruolo nel sistema."
+    },
+    "about": {
+      "eyebrow": "Chi sono",
+      "title": "Dalla fisica ai dati",
+      "paragraphOne": "Studio Business Intelligence Software Development all'ITS ICT Piemonte di Torino, dopo un percorso universitario in fisica. Da lì viene il modo in cui affronto un problema: capire i dati prima di scrivere codice, isolare le variabili, misurare invece di supporre.",
+      "paragraphTwo": "Lavoro sull'intera catena che porta un dato a una decisione — pipeline di ingestione e trasformazione, database progettati sulle domande a cui devono rispondere, API e interfacce che rendono il risultato leggibile. Python, Java, SQL e Docker sono gli strumenti che uso più spesso.",
+      "paragraphThree": "Cerco un tirocinio o una prima esperienza nella Business Intelligence e nel data engineering: dati veri, vincoli veri, qualcuno più bravo di me da cui imparare.",
+      "cta": "Il percorso completo",
+      "factLocation": "Dove sono",
+      "factStudying": "Sto studiando",
+      "factLanguages": "Lingue",
+      "languages": {
+        "arabic": "Arabo",
+        "italian": "Italiano",
+        "french": "Francese",
+        "english": "Inglese"
+      }
+    }
+  },
   "featured": {
     "eyebrow": "In evidenza",
     "title": "Progetti selezionati",

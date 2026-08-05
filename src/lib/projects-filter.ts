@@ -29,6 +29,18 @@ export const DEFAULT_FILTERS: ProjectFilters = {
   view: "grid",
 };
 
+/**
+ * Il progetto esiste davvero, non e solo previsto.
+ *
+ * Serve dove si dichiara qualcosa su di se — le tecnologie mostrate in
+ * home, per esempio. Un progetto pianificato appartiene al portfolio,
+ * marcato come tale, ma non puo contribuire a dichiarare competenze che
+ * non ha ancora dimostrato.
+ */
+export function isBuilt(project: ProjectSummary): boolean {
+  return project.status !== "planned";
+}
+
 /** Type guard: i valori arrivano dalla URL, quindi sono `string | null`. */
 export function isSort(value: string | null): value is ProjectSort {
   return value !== null && (SORT_OPTIONS as readonly string[]).includes(value);
