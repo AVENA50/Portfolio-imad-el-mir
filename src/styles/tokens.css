@@ -62,6 +62,14 @@
 
   --color-indigo-500: #6366f1;
   --color-cyan-400: #22d3ee;
+
+  /* Chiude la scala fredda violetto -> indaco -> blu -> ciano -> teal.
+     Il verde resta, ma solo come colore di stato: "disponibile". Usarlo
+     anche come accento decorativo gli toglierebbe il significato. */
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+
   --color-emerald-400: #34d399;
   --color-emerald-500: #22c55e;
 
@@ -83,6 +91,7 @@
   --color-accent-blue: #3b82f6; /* data-bi      */
   --color-accent-indigo: #6366f1; /* full-stack   */
   --color-accent-cyan: #22d3ee; /* ai-ml        */
+  --color-accent-teal: #2dd4bf; /* infrastruttura */
   --color-accent-green: #22c55e; /* disponibilita */
 
   /* ------------------------------------------------------------ raggi ----- */
@@ -155,6 +164,11 @@
   /* 1408px: i mockup erano disegnati a 1200, ma su monitor da 1440 in su
      lasciavano troppo margine vuoto ai lati. */
   --container-site: 88rem;
+
+  /* 1664px: per le griglie che respirano male a 1408 — competenze,
+     timeline. Su un monitor da 2560 il contenuto smette di sembrare una
+     colonna stretta in mezzo al vuoto. */
+  --container-wide: 104rem;
   --spacing-section: 6rem; /* stacco verticale fra sezioni */
   --spacing-section-sm: 4rem;
 

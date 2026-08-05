@@ -26,6 +26,7 @@ const ACCENTS: readonly Accent[] = [
   "blue",
   "indigo",
   "cyan",
+  "teal",
   "green",
 ];
 
@@ -39,6 +40,7 @@ const ACCENT_SWATCH: Record<Accent, string> = {
   blue: "bg-accent-blue",
   indigo: "bg-accent-indigo",
   cyan: "bg-accent-cyan",
+  teal: "bg-accent-teal",
   green: "bg-accent-green",
 };
 
