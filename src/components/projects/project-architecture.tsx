@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Reveal } from "@/components/effects";
+import { GridBackground, Reveal } from "@/components/effects";
 import { Section, SectionHeading } from "@/components/shared";
 import { TechIcon } from "@/components/shared/tech-icon";
 import { Card } from "@/components/ui";
@@ -86,6 +86,11 @@ export function ProjectArchitecture({
 
   return (
     <Section id="architecture" spacing="md">
+      {/* La griglia dice "schema tecnico" senza scriverlo. Sfuma verso il
+          basso perche il cielo stellato del sito riprende da li: due trame
+          sovrapposte fanno rumore, una che cede all'altra fa profondita. */}
+      <GridBackground fade="bottom" size="lg" className="-z-10" />
+
       <SectionHeading
         eyebrow={dictionary.caseStudy.architectureEyebrow}
         title={dictionary.caseStudy.architecture}
