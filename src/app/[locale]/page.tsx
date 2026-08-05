@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { HeroVisual } from "@/components/home/hero-visual";
-import { Button } from "@/components/ui";
+import { Badge, Button } from "@/components/ui";
 import { Header } from "@/components/layout/header";
 import { Icon } from "@/components/shared/icon";
 import { isLocale } from "@/config/i18n";
@@ -43,10 +43,9 @@ export default async function HomePage({
 
           <div className="relative mx-auto grid w-full max-w-[110rem] items-center gap-14 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-10">
             <div>
-              <p className="glass inline-flex items-center gap-2.5 rounded-pill px-4 py-2 text-sm font-medium text-ink-muted">
-                <span aria-hidden className="size-2 rounded-pill bg-success" />
+              <Badge accent="green" size="lg" dot>
                 {t.hero.badge}
-              </p>
+              </Badge>
 
               <h1 className="mt-8 text-display">
                 {t.hero.greeting}{" "}
@@ -82,17 +81,24 @@ export default async function HomePage({
 
                   return (
                     <li key={link.label}>
-                      <a
-                        href={link.href}
-                        target={isExternal ? "_blank" : undefined}
-                        rel={isExternal ? "noopener noreferrer" : undefined}
-                        download={link.icon === "file" ? true : undefined}
-                        title={link.label}
-                        className="glass glass-hover flex size-14 items-center justify-center rounded-card text-ink-muted transition-colors hover:text-ink"
+                      <Button
+                        asChild
+                        variant="secondary"
+                        size="lg"
+                        iconOnly
+                        className="rounded-card text-ink-muted hover:text-ink"
                       >
-                        <Icon name={link.icon} className="size-6" />
-                        <span className="sr-only">{link.srLabel}</span>
-                      </a>
+                        <a
+                          href={link.href}
+                          target={isExternal ? "_blank" : undefined}
+                          rel={isExternal ? "noopener noreferrer" : undefined}
+                          download={link.icon === "file" ? true : undefined}
+                          title={link.label}
+                        >
+                          <Icon name={link.icon} className="size-6" />
+                          <span className="sr-only">{link.srLabel}</span>
+                        </a>
+                      </Button>
                     </li>
                   );
                 })}
