@@ -21,7 +21,9 @@
     "getInTouch": "Scrivimi",
     "viewAll": "Vedi tutti",
     "liveDemo": "Demo",
-    "sourceCode": "Codice"
+    "sourceCode": "Codice",
+    "tryDemo": "Prova la demo",
+    "documentation": "Documentazione"
   },
   "localeSwitcher": {
     "label": "Cambia lingua",
@@ -64,6 +66,49 @@
     "readingTime": "{n} min di lettura",
     "empty": "Nessun progetto trovato",
     "emptyHint": "Nessun progetto corrisponde ai filtri selezionati."
+  },
+  "caseStudy": {
+    "backToProjects": "Tutti i progetti",
+    "tableOfContents": "In questa pagina",
+    "overview": "Panoramica",
+    "metrics": "I numeri",
+    "featuresEyebrow": "Funzionalità",
+    "features": "Cosa fa",
+    "featuresDescription": "Le funzionalità che definiscono il progetto, non l'elenco completo.",
+    "architectureEyebrow": "Sotto il cofano",
+    "architecture": "Architettura",
+    "architectureLayers": "I livelli",
+    "architectureDecisions": "Decisioni tecniche",
+    "decisionWhy": "Perché",
+    "stackEyebrow": "Tecnologie",
+    "stack": "Stack tecnologico",
+    "stackDescription": "Le tecnologie usate, raggruppate per ruolo nel sistema.",
+    "galleryEyebrow": "Immagini",
+    "gallery": "Galleria",
+    "galleryHint": "Clicca un'immagine per ingrandirla",
+    "learningsEyebrow": "Retrospettiva",
+    "learnings": "Cosa ho imparato",
+    "learningsDescription": "Le cose che questo progetto mi ha insegnato e che porto in quello dopo.",
+    "prev": "Progetto precedente",
+    "next": "Progetto successivo",
+    "openImage": "Ingrandisci l'immagine",
+    "closeImage": "Chiudi l'immagine",
+    "previousImage": "Immagine precedente",
+    "nextImage": "Immagine successiva",
+    "imageCounter": "{current} di {total}",
+    "types": {
+      "personal": "Progetto personale",
+      "academic": "Progetto accademico",
+      "professional": "Progetto professionale",
+      "open-source": "Open source"
+    },
+    "techGroups": {
+      "language": "Linguaggi",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "data": "Dati",
+      "devops": "DevOps e strumenti"
+    }
   },
   "notFound": {
     "code": "404",

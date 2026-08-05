@@ -1,3 +1,5 @@
+import type { ICON_NAMES } from "@/config/icons";
+
 /**
  * Tipi trasversali dell'interfaccia.
  *
@@ -17,25 +19,13 @@ export type Size = "sm" | "md" | "lg";
 
 /**
  * Icone disponibili nel sito.
- * Aggiungere una voce qui obbliga a implementarla nel registro delle icone,
- * altrimenti TypeScript non compila.
+ *
+ * Non scritta a mano: deriva dalla tupla ICON_NAMES di config/icons.ts.
+ * L'elenco doveva esistere anche a runtime perche lo schema zod dei case
+ * study valida il nome dell'icona letto dal frontmatter — e un tipo, da
+ * solo, non puo controllare un dato esterno.
+ *
+ * Aggiungere una voce alla tupla obbliga a implementarla nel registro dei
+ * glifi, altrimenti TypeScript non compila.
  */
-export type IconName =
-  | "arrow-right"
-  | "arrow-left"
-  | "arrow-up-right"
-  | "chevron-down"
-  | "close"
-  | "menu"
-  | "download"
-  | "external"
-  | "github"
-  | "linkedin"
-  | "mail"
-  | "file"
-  | "home"
-  | "grid"
-  | "list"
-  | "search"
-  | "sun"
-  | "moon";
+export type IconName = (typeof ICON_NAMES)[number];
