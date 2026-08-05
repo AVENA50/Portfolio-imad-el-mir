@@ -37,6 +37,8 @@ import {
   Menu,
   Moon,
   Network,
+  Pause,
+  Play,
   Puzzle,
   RefreshCw,
   Rocket,
@@ -53,6 +55,7 @@ import {
   TrendingUp,
   Trophy,
   Users,
+  Video,
   Workflow,
   Wrench,
   X,
@@ -114,6 +117,9 @@ const ICONS: Record<IconName, IconComponent> = {
   search: Search,
   "zoom-in": ZoomIn,
   check: Check,
+  play: Play,
+  pause: Pause,
+  video: Video,
 
   // --- marchi e contatti
   github: GithubMark,

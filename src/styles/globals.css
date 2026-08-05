@@ -158,6 +158,40 @@
     background-image: var(--pattern-grid);
     background-size: var(--pattern-grid-size);
   }
+
+  /* ------------------------------------------------- tono delle sezioni ----
+     Le sezioni alternate non hanno un fondo pieno ma una fascia che sfuma
+     ai due estremi.
+
+     Con un `background-color` il bordo della sezione diventa una riga netta
+     larga tutto lo schermo: dietro c'e un cielo stellato continuo, e quel
+     taglio lo interrompe di colpo. La sfumatura fa entrare e uscire il tono
+     nell'arco di 8rem, quindi lo stacco si legge come profondita invece che
+     come un errore di allineamento.
+
+     La misura e in rem e non in percentuale di proposito: cosi una sezione
+     alta e una bassa hanno la stessa transizione, invece di una sfumatura
+     lunghissima e una brusca. */
+
+  .section-tone-subtle {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--color-bg-subtle) 8rem,
+      var(--color-bg-subtle) calc(100% - 8rem),
+      transparent 100%
+    );
+  }
+
+  .section-tone-elevated {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--color-bg-elevated) 8rem,
+      var(--color-bg-elevated) calc(100% - 8rem),
+      transparent 100%
+    );
+  }
 }
 
 /* ============================================================================

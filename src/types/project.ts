@@ -41,6 +41,7 @@ export type ProjectLearning = NonNullable<
 export type ProjectScreenshot = NonNullable<
   ProjectFrontmatter["screenshots"]
 >[number];
+export type ProjectVideo = NonNullable<ProjectFrontmatter["video"]>;
 export type ProjectImage = ProjectFrontmatter["cover"];
 
 export type ProjectArchitecture = NonNullable<

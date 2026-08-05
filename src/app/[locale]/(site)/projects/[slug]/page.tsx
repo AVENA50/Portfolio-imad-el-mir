@@ -10,6 +10,7 @@ import {
   ProjectNav,
   ProjectStack,
   ProjectToc,
+  ProjectVideo,
 } from "@/components/projects";
 import { Section, SectionHeading } from "@/components/shared";
 import { LOCALES, LOCALE_META, isLocale, type Locale } from "@/config/i18n";
@@ -121,7 +122,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           `minmax(0, 1fr)` e obbligatorio, non stilistico: senza, un blocco
           di codice lungo allargherebbe la colonna oltre il contenitore
           invece di scorrere al suo interno. */}
-      <Section id="overview" spacing="sm">
+      <Section id="overview" spacing="none" className="pt-10 pb-20 lg:pt-12">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_15rem] lg:gap-16">
           <div className="prose-case-study max-w-3xl">{content}</div>
 
@@ -146,6 +147,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
       {project.stack && (
         <ProjectStack stack={project.stack} dictionary={dictionary} />
+      )}
+
+      {project.video && (
+        <Section id="video" spacing="md">
+          <SectionHeading
+            eyebrow={dictionary.caseStudy.videoEyebrow}
+            title={dictionary.caseStudy.video}
+            description={dictionary.caseStudy.videoDescription}
+          />
+
+          <div className="mt-12">
+            <ProjectVideo video={project.video} dictionary={dictionary} />
+          </div>
+        </Section>
       )}
 
       {screenshots.length > 0 && (

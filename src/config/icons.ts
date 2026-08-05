@@ -29,6 +29,9 @@ export const ICON_NAMES = [
   "search",
   "zoom-in",
   "check",
+  "play",
+  "pause",
+  "video",
 
   // --- marchi e contatti
   "github",

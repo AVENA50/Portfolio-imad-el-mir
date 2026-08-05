@@ -60,6 +60,7 @@ export function ProjectCard({
             alt={project.cover.alt}
             fill
             priority={priority}
+            quality={88}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 ease-out-soft group-hover:scale-[1.03]"
           />

@@ -23,6 +23,7 @@ export type {
   ProjectSort,
   ProjectStatus,
   ProjectType,
+  ProjectVideo,
   ProjectView,
   TechSlug,
 } from "./project";

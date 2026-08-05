@@ -1,19 +1,186 @@
 ---
-title: "Arcadium 2.0"
-tagline: "Piattaforma di libreria giochi ispirata a Steam, con recensioni, wishlist e funzioni social"
+title: "Arcadium"
+tagline: "Piattaforma per tenere in ordine la propria libreria di videogiochi, costruita su un catalogo Steam di 122.479 titoli"
+description: "Case study di Arcadium: dal dataset Steam grezzo alla piattaforma completa, con pipeline ETL in Python, database PostgreSQL versionato, backend Spring Boot e frontend Next.js."
 category: "full-stack"
+type: "academic"
 status: "in-progress"
 featured: true
 order: 1
 startDate: "2025-01"
-stack: ["nextjs", "spring", "postgres", "docker"]
+stack:
+  ["python", "java", "spring", "postgres", "nextjs", "react", "javascript", "docker"]
+tags: ["etl", "rest-api", "jwt", "i18n", "docker"]
 links:
   repo: "https://github.com/AVENA50/arcadium"
 cover:
-  src: "/images/projects/arcadium/cover.png"
-  alt: "Copertina segnaposto del progetto Arcadium 2.0"
+  src: "/images/projects/arcadium/cover.webp"
+  alt: "Il catalogo di Arcadium con i filtri per prezzo, piattaforma, genere e categoria"
+logo:
+  src: "/images/projects/arcadium/logo.webp"
+  alt: "Il marchio di Arcadium: una A stilizzata attraversata da un'orbita"
+video:
+  src: "/videos/projects/arcadium/demo.mp4"
+  poster: "/images/projects/arcadium/video-poster.webp"
+  caption: "Cinquanta secondi dentro Arcadium: il catalogo con i filtri, la ricerca che suggerisce mentre scrivi, la libreria divisa per stato, le statistiche e il profilo pubblico."
+metrics:
+  - label: "Giochi a catalogo"
+    value: "122.479"
+    hint: "Estratti da un dataset Steam di 460 MB"
+  - label: "Tabelle PostgreSQL"
+    value: "25"
+    hint: "In cinque aree logiche, migrazioni Flyway V1-V7"
+  - label: "Full load"
+    value: "65 s"
+    hint: "Rieseguibile: la pipeline e idempotente"
+  - label: "Test automatici"
+    value: "53"
+    hint: "49 unitari e 4 di caricamento su database"
+features:
+  - icon: "search"
+    title: "Catalogo con ricerca tollerante"
+    description: "Filtri per testo, genere, piattaforma, prezzo e stato, con paginazione. La ricerca usa l'estensione pg_trgm di PostgreSQL, quindi trova un titolo anche quando lo scrivi male."
+  - icon: "list"
+    title: "Backlog con stati di avanzamento"
+    description: "Ogni gioco attraversa mai giocato, in corso, finito e abbandonato. Le ore registrate alimentano la barra di completamento e le statistiche personali."
+  - icon: "trophy"
+    title: "Achievement guidati dai dati"
+    description: "Gli obiettivi non sono scritti nel codice: ognuno dichiara cosa misurare e con quale soglia. Aggiungerne uno significa inserire una riga, non ricompilare."
+  - icon: "gamepad"
+    title: "Sincronizzazione Steam"
+    description: "L'utente collega il proprio account e importa libreria e ore di gioco. La sincronizzazione aggiunge e aggiorna, non cancella mai nulla."
+  - icon: "globe"
+    title: "Bilingue a ogni livello"
+    description: "Italiano e inglese non solo nell'interfaccia: colonne separate nel database per i valori mostrati, e messaggi del server scelti in base all'header Accept-Language."
+  - icon: "lock"
+    title: "Autenticazione JWT stateless"
+    description: "Password cifrate, token firmato su ogni richiesta protetta, recupero password con token a scadenza. Gli endpoint pubblici sono ridotti al minimo indispensabile."
+architecture:
+  summary: "Cinque strati indipendenti, ciascuno con una responsabilita sola. Il dato entra una volta dal dataset Steam e da li in poi attraversa confini precisi: il frontend non parla mai al database, ma sempre e solo alle API del backend."
+  layers:
+    - name: "Dataset Steam"
+      description: "Il punto di partenza: 122.501 record grezzi in JSON, 40 colonne. Prima di diventare utile ha richiesto una fase di pulizia vera, non una formalita."
+    - name: "Pipeline ETL in Python"
+      description: "Legge il file in streaming, normalizza i campi, deduplica i valori riutilizzabili e popola il database. Rieseguirla non produce un solo duplicato."
+      tech: ["python", "postgres"]
+    - name: "Database PostgreSQL"
+      description: "La fonte di verita: 25 tabelle in cinque aree, vincoli CHECK sul dominio, cancellazioni a cascata dove ha senso e ricerca fuzzy con pg_trgm. Lo schema e versionato, non improvvisato."
+      tech: ["postgres", "docker"]
+    - name: "Backend Spring Boot"
+      description: "Architettura a strati: controller, service, repository, entita. Espone le API REST sotto /api, applica la sicurezza JWT e documenta se stesso con OpenAPI."
+      tech: ["java", "spring", "postgres"]
+    - name: "Frontend Next.js"
+      description: "App Router, un client API centralizzato e un layout che protegge le pagine autenticate. Grafici con Recharts, traduzioni con react-i18next."
+      tech: ["nextjs", "react", "javascript"]
+  decisions:
+    - choice: "L'AppID di Steam come chiave primaria dei giochi"
+      why: "E gia univoco nel dataset e resta stabile nel tempo. Generarne uno nostro avrebbe aggiunto una colonna e una traduzione mentale a ogni join, senza garantire niente di piu."
+    - choice: "Lettura del JSON in streaming con ijson"
+      why: "Il dataset pesa 460 MB. Un json.load() lo tiene tutto in memoria e su una macchina normale non arriva in fondo. Leggerlo a pezzi costa qualche riga in piu e rende il caricamento indipendente dalla dimensione del file."
+    - choice: "Caricamento idempotente con ON CONFLICT DO UPDATE"
+      why: "Un ETL che si puo rilanciare senza pensarci e un ETL che si usa davvero. La verifica non e teorica: due full load consecutivi lasciano tutte le tabelle con conteggi identici."
+    - choice: "Migrazioni Flyway forward-only, riusate dal backend"
+      why: "Le stesse migrazioni che costruiscono il database sono quelle che il backend applica all'avvio, con JPA in sola validazione. Nessuno schema generato a runtime, nessuna deriva fra la macchina di uno e quella di un altro."
+    - choice: "Ricerca fuzzy dentro PostgreSQL invece di un motore esterno"
+      why: "pg_trgm con indici dedicati copre il caso d'uso reale, che e un titolo scritto male. Un motore di ricerca a parte avrebbe aggiunto un servizio da far girare, sincronizzare e spiegare, per un vantaggio che qui nessuno avrebbe notato."
+    - choice: "Chiave Steam fornita dall'utente e conservata cifrata"
+      why: "La prima versione usava una chiave del server per leggere i dati di tutti. Ribaltare il modello significa che ogni utente accede ai propri dati con le proprie credenziali, e che il server non custodisce piu un segreto che vale per l'intera piattaforma."
+learnings:
+  - icon: "database"
+    title: "Un dataset sporco e la normalita, non l'eccezione"
+    description: "L'intestazione fondeva due colonne in una, l'AppID non era nei dati di riga e sessantasei giochi comparivano piu volte. Recuperare gli identificativi dagli URL e decidere quale rilevazione tenere ha richiesto piu tempo che scrivere il caricamento. Nessun AppID e stato inventato: ventidue righe restano nulle, ed e la risposta onesta."
+  - icon: "refresh"
+    title: "L'idempotenza si dimostra, non si dichiara"
+    description: "Dire che una pipeline si puo rilanciare non basta. La prova e stata eseguirla due volte sull'intero catalogo e confrontare i conteggi di tutte le tabelle, una per una. Finche non l'ho fatto era una speranza, non una proprieta."
+  - icon: "git-branch"
+    title: "Le migrazioni sono un contratto, e il database se lo ricorda"
+    description: "Rimettendo in piedi l'ambiente mesi dopo, Flyway si e rifiutato di partire: nello storico c'erano due migrazioni che nel codice non esistevano piu. Un volume vecchio racconta una versione del progetto che non c'e piu, e forward-only serve esattamente a trasformare quel disallineamento in un errore invece che in un mistero."
+  - icon: "container"
+    title: "Un container non-root e file di root non vanno d'accordo"
+    description: "L'immagine del frontend copiava i file come root e poi passava all'utente node, che non poteva piu scrivere nella cache di Next: il processo cadeva a ogni avvio. Una riga di chown ha risolto. Le istruzioni COPY di Docker non ereditano l'utente dichiarato dopo di loro."
+screenshots:
+  - src: "/images/projects/arcadium/catalogo.webp"
+    alt: "Il catalogo di Arcadium con i filtri per prezzo, piattaforma, genere, lingua e categoria"
+    caption: "Il catalogo, con i filtri e l'interruttore Safe search"
+  - src: "/images/projects/arcadium/ricerca.webp"
+    alt: "La ricerca nel catalogo mostra i suggerimenti con copertina e prezzo mentre si digita"
+    caption: "Ricerca con suggerimenti: pg_trgm tollera anche i titoli scritti male"
+  - src: "/images/projects/arcadium/dettaglio-gioco.webp"
+    alt: "La pagina di dettaglio di Apex Legends con valutazione, descrizione e pannello di acquisto"
+    caption: "Dettaglio del gioco: la valutazione nasce dalle recensioni reali del dataset"
+  - src: "/images/projects/arcadium/dettaglio-gioco-media.webp"
+    alt: "La sezione immagini e i tag della pagina di dettaglio di Apex Legends"
+    caption: "Immagini, generi e tag arrivano dalle tabelle ponte del catalogo"
+  - src: "/images/projects/arcadium/backlog.webp"
+    alt: "Il backlog con la sezione dei giochi mai giocati"
+    caption: "Il backlog raggruppa i giochi per stato di avanzamento"
+  - src: "/images/projects/arcadium/backlog-stati.webp"
+    alt: "Il backlog con le sezioni in corso, finito e abbandonato e le ore registrate"
+    caption: "Quattro stati, ore registrate, e trascinamento per cambiarli"
+  - src: "/images/projects/arcadium/statistiche.webp"
+    alt: "La pagina statistiche con giochi totali, ore giocate, completamento medio e generi"
+    caption: "Statistiche personali calcolate sul backlog, non su dati finti"
+  - src: "/images/projects/arcadium/statistiche-grafici.webp"
+    alt: "I grafici delle statistiche: giochi per genere, stato dei giochi e ore giocate per mese"
+    caption: "Grafici con Recharts: distribuzione per genere, stato e ore per mese"
+  - src: "/images/projects/arcadium/achievement.webp"
+    alt: "La pagina achievement con punti, percentuale di completamento e obiettivi sbloccati"
+    caption: "Gli achievement sono dati, non codice: metrica e soglia stanno in tabella"
+  - src: "/images/projects/arcadium/profilo.webp"
+    alt: "Il profilo pubblico di un utente con giochi totali, ore giocate e achievement"
+    caption: "Profilo pubblico, condivisibile con anteprima OpenGraph"
+  - src: "/images/projects/arcadium/community.webp"
+    alt: "La pagina Community con la ricerca di altri utenti e l'elenco degli amici"
+    caption: "Community: si trova solo chi ha scelto di avere il profilo pubblico"
+  - src: "/images/projects/arcadium/impostazioni-steam.webp"
+    alt: "Le impostazioni con Safe search, auto-abbandono e il collegamento dell'account Steam"
+    caption: "La chiave Steam la genera l'utente, e Arcadium la conserva cifrata"
+  - src: "/images/projects/arcadium/impostazioni-profilo.webp"
+    alt: "Le impostazioni del profilo con nome utente, immagine e livello di privacy"
+    caption: "Privacy del profilo: pubblico e cercabile, oppure invisibile agli altri"
+  - src: "/images/projects/arcadium/registrazione.webp"
+    alt: "Il modulo di registrazione di Arcadium"
+    caption: "Registrazione: la password viene salvata solo cifrata"
+  - src: "/images/projects/arcadium/login.webp"
+    alt: "Il modulo di accesso di Arcadium"
+    caption: "Accesso: il backend rilascia un JWT con scadenza configurabile"
+  - src: "/images/projects/arcadium/password-dimenticata.webp"
+    alt: "Il modulo per richiedere il recupero della password"
+    caption: "Recupero password con token a scadenza, aggiunto nella migrazione V5"
 ---
 
-## Panoramica
+## Il problema
 
-Case study in preparazione: la documentazione completa del progetto e in fase di rielaborazione.
+Chi gioca su PC accumula giochi molto piu in fretta di quanto riesca a giocarli. La libreria di Steam dice cosa possiedi, non a che punto sei: quali hai iniziato, quali hai lasciato dopo due ore, quali aspettano da un anno.
+
+Arcadium nasce da li. E una piattaforma ispirata a Steam nell'aspetto ma diversa nello scopo: non serve a comprare giochi, serve a tenere in ordine quelli che hai gia.
+
+## Come funziona
+
+Il sistema e diviso in cinque strati e ognuno fa una cosa sola. Il dataset Steam entra una volta tramite una pipeline ETL scritta in Python. Il database PostgreSQL diventa la fonte di verita. Un backend Spring Boot espone tutto attraverso API REST protette da JWT. Il frontend Next.js consuma quelle API e disegna l'interfaccia.
+
+Il confine piu importante e anche il piu banale da rispettare: il frontend non conosce il database. Non ha credenziali, non ha una connessione, non potrebbe raggiungerlo neanche volendo. Ogni dato passa da un endpoint documentato.
+
+## Dal dataset al database
+
+La parte che ha richiesto piu lavoro non e stata scrivere codice, ma capire cosa ci fosse davvero nel file di partenza.
+
+L'intestazione fondeva due colonne in una, e questo faceva slittare di una posizione tutti i valori fino a meta riga. L'AppID, che e l'identificativo di un gioco su Steam, non compariva nei dati: e stato ricostruito dal percorso `/apps/<AppID>/` presente negli URL delle immagini. Sessantasei giochi comparivano con piu rilevazioni dello stesso titolo, e per ognuno andava scelto quale snapshot tenere.
+
+Alla fine restano 122.479 giochi con AppID tutti distinti, piu ventidue righe con identificativo nullo: casi che non era possibile determinare con certezza, e per i quali inventare un numero sarebbe stato peggio che ammettere il buco.
+
+Il caricamento gira in circa 65 secondi e si puo rilanciare quante volte si vuole. Non e una promessa: due esecuzioni consecutive lasciano tutte e undici le tabelle coinvolte con conteggi identici, dai 122.479 giochi fino a 1.178.560 relazioni fra giochi e tag.
+
+## Sicurezza e accesso
+
+L'autenticazione e stateless: dopo il login il backend rilascia un token JWT che il client allega a ogni richiesta protetta. Le password sono salvate solo cifrate. Gli endpoint pubblici sono cinque in tutto, per tutto il resto serve un token valido.
+
+L'integrazione con Steam e il punto piu interessante, perche ha cambiato forma durante il progetto. La prima versione usava una chiave del server per leggere i dati di tutti gli utenti. La versione finale ribalta il modello: e l'utente a generare la propria chiave sulla pagina ufficiale di Steam e a incollarla nelle impostazioni, dove viene conservata cifrata. La sincronizzazione e su richiesta, aggiunge i giochi nuovi con stato "mai giocato", aggiorna le ore di quelli gia presenti e non cancella niente.
+
+## Cosa e successo rimettendolo in piedi
+
+Ho ricostruito l'ambiente Docker mesi dopo la consegna, e due cose si sono rotte subito.
+
+Flyway si e rifiutato di partire: il volume del database conservava lo storico di due migrazioni che nel codice non esistevano piu. Il container del frontend, invece, moriva a ogni avvio perche l'immagine copiava i file come root e poi passava a un utente non privilegiato, che non poteva piu scrivere la cache di Next.
+
+Nessuno dei due e un difetto della logica applicativa, ed e proprio questo il punto: un progetto funziona finche l'ambiente che gli sta sotto racconta la stessa storia del codice. Quando le due versioni divergono, la cosa migliore che possa capitare e che qualcosa si fermi rumorosamente, invece di continuare a girare fingendo che vada tutto bene.

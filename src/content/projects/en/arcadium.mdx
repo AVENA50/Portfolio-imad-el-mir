@@ -1,19 +1,186 @@
 ---
-title: "Arcadium 2.0"
-tagline: "Game library platform inspired by Steam, with reviews, wishlist and community features"
+title: "Arcadium"
+tagline: "A platform for keeping your game library in order, built on a Steam catalogue of 122,479 titles"
+description: "Arcadium case study: from a raw Steam dataset to a complete platform, with a Python ETL pipeline, a versioned PostgreSQL database, a Spring Boot backend and a Next.js frontend."
 category: "full-stack"
+type: "academic"
 status: "in-progress"
 featured: true
 order: 1
 startDate: "2025-01"
-stack: ["nextjs", "spring", "postgres", "docker"]
+stack:
+  ["python", "java", "spring", "postgres", "nextjs", "react", "javascript", "docker"]
+tags: ["etl", "rest-api", "jwt", "i18n", "docker"]
 links:
   repo: "https://github.com/AVENA50/arcadium"
 cover:
-  src: "/images/projects/arcadium/cover.png"
-  alt: "Placeholder cover for the Arcadium 2.0 project"
+  src: "/images/projects/arcadium/cover.webp"
+  alt: "The Arcadium catalogue with filters for price, platform, genre and category"
+logo:
+  src: "/images/projects/arcadium/logo.webp"
+  alt: "The Arcadium mark: a stylised A crossed by an orbit"
+video:
+  src: "/videos/projects/arcadium/demo.mp4"
+  poster: "/images/projects/arcadium/video-poster.webp"
+  caption: "Fifty seconds inside Arcadium: the catalogue with its filters, search suggesting as you type, the library split by state, the statistics and the public profile."
+metrics:
+  - label: "Games in catalogue"
+    value: "122,479"
+    hint: "Extracted from a 460 MB Steam dataset"
+  - label: "PostgreSQL tables"
+    value: "25"
+    hint: "Across five logical areas, Flyway migrations V1-V7"
+  - label: "Full load"
+    value: "65 s"
+    hint: "Re-runnable: the pipeline is idempotent"
+  - label: "Automated tests"
+    value: "53"
+    hint: "49 unit tests and 4 database loading tests"
+features:
+  - icon: "search"
+    title: "Catalogue with forgiving search"
+    description: "Filters by text, genre, platform, price and status, with pagination. Search uses the PostgreSQL pg_trgm extension, so it finds a title even when you misspell it."
+  - icon: "list"
+    title: "Backlog with progress states"
+    description: "Every game moves through never played, in progress, finished and abandoned. Logged hours feed the completion bar and the personal statistics."
+  - icon: "trophy"
+    title: "Data-driven achievements"
+    description: "Goals are not written in code: each one declares what to measure and at which threshold. Adding one means inserting a row, not recompiling."
+  - icon: "gamepad"
+    title: "Steam synchronisation"
+    description: "Users connect their own account and import their library and playtime. Syncing adds and updates, and never deletes anything."
+  - icon: "globe"
+    title: "Bilingual at every layer"
+    description: "Italian and English not just in the interface: separate database columns for user-facing values, and server messages picked from the Accept-Language header."
+  - icon: "lock"
+    title: "Stateless JWT authentication"
+    description: "Hashed passwords, a signed token on every protected request, password recovery with an expiring token. Public endpoints are kept to the bare minimum."
+architecture:
+  summary: "Five independent layers, each with a single responsibility. Data enters once from the Steam dataset and from there crosses precise boundaries: the frontend never talks to the database, only ever to the backend API."
+  layers:
+    - name: "Steam dataset"
+      description: "The starting point: 122,501 raw JSON records across 40 columns. Before it was useful it needed real cleaning, not a formality."
+    - name: "Python ETL pipeline"
+      description: "Streams the file, normalises fields, deduplicates reusable values and populates the database. Re-running it does not produce a single duplicate."
+      tech: ["python", "postgres"]
+    - name: "PostgreSQL database"
+      description: "The source of truth: 25 tables across five areas, CHECK constraints on the domain, cascading deletes where they make sense, and fuzzy search with pg_trgm. The schema is versioned, not improvised."
+      tech: ["postgres", "docker"]
+    - name: "Spring Boot backend"
+      description: "A layered architecture: controller, service, repository, entity. It exposes the REST API under /api, enforces JWT security and documents itself with OpenAPI."
+      tech: ["java", "spring", "postgres"]
+    - name: "Next.js frontend"
+      description: "App Router, a centralised API client and a layout that guards authenticated pages. Charts with Recharts, translations with react-i18next."
+      tech: ["nextjs", "react", "javascript"]
+  decisions:
+    - choice: "Steam AppID as the primary key for games"
+      why: "It is already unique in the dataset and stable over time. Generating our own would have added a column and a mental translation to every join, without guaranteeing anything more."
+    - choice: "Streaming the JSON with ijson"
+      why: "The dataset is 460 MB. A json.load() holds all of it in memory and on an ordinary machine never reaches the end. Reading it in chunks costs a few more lines and makes loading independent of file size."
+    - choice: "Idempotent loading with ON CONFLICT DO UPDATE"
+      why: "An ETL you can re-run without thinking is an ETL people actually use. The check is not theoretical: two consecutive full loads leave every table with identical counts."
+    - choice: "Forward-only Flyway migrations, reused by the backend"
+      why: "The same migrations that build the database are the ones the backend applies at startup, with JPA in validate-only mode. No schema generated at runtime, no drift between one machine and another."
+    - choice: "Fuzzy search inside PostgreSQL instead of an external engine"
+      why: "pg_trgm with dedicated indexes covers the real use case, which is a misspelled title. A separate search engine would have added a service to run, sync and explain, for a benefit nobody here would have noticed."
+    - choice: "A Steam key supplied by the user and stored encrypted"
+      why: "The first version used a server key to read everyone's data. Flipping the model means each user reaches their own data with their own credentials, and the server no longer holds one secret that unlocks the whole platform."
+learnings:
+  - icon: "database"
+    title: "A messy dataset is the norm, not the exception"
+    description: "The header merged two columns into one, the AppID was missing from the row data, and sixty-six games appeared more than once. Recovering identifiers from URLs and deciding which snapshot to keep took longer than writing the loader. No AppID was invented: twenty-two rows stay null, and that is the honest answer."
+  - icon: "refresh"
+    title: "Idempotency is demonstrated, not declared"
+    description: "Saying a pipeline can be re-run is not enough. The proof was running it twice across the whole catalogue and comparing the counts of every table, one by one. Until I did that it was a hope, not a property."
+  - icon: "git-branch"
+    title: "Migrations are a contract, and the database remembers it"
+    description: "Rebuilding the environment months later, Flyway refused to start: the history held two migrations that no longer existed in the code. An old volume tells the story of a version of the project that is gone, and forward-only exists precisely to turn that mismatch into an error rather than a mystery."
+  - icon: "container"
+    title: "A non-root container and root-owned files do not mix"
+    description: "The frontend image copied files as root and then switched to the node user, which could no longer write the Next cache: the process died on every start. One chown line fixed it. Docker COPY instructions do not inherit the user declared after them."
+screenshots:
+  - src: "/images/projects/arcadium/catalogo.webp"
+    alt: "The Arcadium catalogue with filters for price, platform, genre, language and category"
+    caption: "The catalogue, with filters and the Safe search toggle"
+  - src: "/images/projects/arcadium/ricerca.webp"
+    alt: "Catalogue search showing suggestions with cover art and price as you type"
+    caption: "Search with suggestions: pg_trgm tolerates misspelled titles"
+  - src: "/images/projects/arcadium/dettaglio-gioco.webp"
+    alt: "The Apex Legends detail page with rating, description and purchase panel"
+    caption: "Game detail: the rating comes from the real review counts in the dataset"
+  - src: "/images/projects/arcadium/dettaglio-gioco-media.webp"
+    alt: "The images section and tags on the Apex Legends detail page"
+    caption: "Images, genres and tags come from the catalogue bridge tables"
+  - src: "/images/projects/arcadium/backlog.webp"
+    alt: "The backlog showing the never played section"
+    caption: "The backlog groups games by progress state"
+  - src: "/images/projects/arcadium/backlog-stati.webp"
+    alt: "The backlog with in progress, finished and abandoned sections and logged hours"
+    caption: "Four states, logged hours, and drag and drop to change them"
+  - src: "/images/projects/arcadium/statistiche.webp"
+    alt: "The statistics page with total games, hours played, average completion and genres"
+    caption: "Personal statistics computed from the backlog, not from mock data"
+  - src: "/images/projects/arcadium/statistiche-grafici.webp"
+    alt: "The statistics charts: games by genre, game states and hours played per month"
+    caption: "Charts with Recharts: genre distribution, states and hours per month"
+  - src: "/images/projects/arcadium/achievement.webp"
+    alt: "The achievements page with points, completion percentage and unlocked goals"
+    caption: "Achievements are data, not code: metric and threshold live in a table"
+  - src: "/images/projects/arcadium/profilo.webp"
+    alt: "A public user profile with total games, hours played and achievements"
+    caption: "Public profile, shareable with an OpenGraph preview"
+  - src: "/images/projects/arcadium/community.webp"
+    alt: "The Community page with user search and the friends list"
+    caption: "Community: only users who chose a public profile can be found"
+  - src: "/images/projects/arcadium/impostazioni-steam.webp"
+    alt: "Settings with Safe search, auto-abandon and the Steam account connection"
+    caption: "The user generates the Steam key, and Arcadium stores it encrypted"
+  - src: "/images/projects/arcadium/impostazioni-profilo.webp"
+    alt: "Profile settings with username, avatar and privacy level"
+    caption: "Profile privacy: public and searchable, or invisible to others"
+  - src: "/images/projects/arcadium/registrazione.webp"
+    alt: "The Arcadium sign-up form"
+    caption: "Sign-up: the password is only ever stored hashed"
+  - src: "/images/projects/arcadium/login.webp"
+    alt: "The Arcadium sign-in form"
+    caption: "Sign-in: the backend issues a JWT with a configurable expiry"
+  - src: "/images/projects/arcadium/password-dimenticata.webp"
+    alt: "The form to request a password reset"
+    caption: "Password recovery with an expiring token, added in migration V5"
 ---
 
-## Overview
+## The problem
 
-Case study in progress: the full project documentation is being reworked.
+PC players collect games far faster than they can play them. A Steam library tells you what you own, not where you are: which ones you started, which you dropped after two hours, which have been waiting for a year.
+
+That is where Arcadium comes from. It is a platform that looks like Steam but serves a different purpose: it is not for buying games, it is for keeping order among the ones you already have.
+
+## How it works
+
+The system is split into five layers and each one does a single thing. The Steam dataset enters once through an ETL pipeline written in Python. The PostgreSQL database becomes the source of truth. A Spring Boot backend exposes everything through JWT-protected REST endpoints. The Next.js frontend consumes that API and draws the interface.
+
+The most important boundary is also the most mundane to honour: the frontend does not know the database. It has no credentials, no connection, and could not reach it even if it wanted to. Every piece of data goes through a documented endpoint.
+
+## From dataset to database
+
+The part that took the most work was not writing code, but understanding what was actually in the source file.
+
+The header merged two columns into one, which shifted every value up to the middle of the row by one position. The AppID, which identifies a game on Steam, did not appear in the data at all: it was reconstructed from the `/apps/<AppID>/` path present in the image URLs. Sixty-six games appeared with multiple snapshots of the same title, and for each one we had to decide which snapshot to keep.
+
+What remains is 122,479 games with entirely distinct AppIDs, plus twenty-two rows with a null identifier: cases that could not be determined with certainty, and where inventing a number would have been worse than admitting the gap.
+
+The load runs in roughly 65 seconds and can be re-run as often as you like. That is not a promise: two consecutive runs leave all eleven affected tables with identical counts, from 122,479 games up to 1,178,560 game-to-tag relationships.
+
+## Security and access
+
+Authentication is stateless: after login the backend issues a JWT that the client attaches to every protected request. Passwords are only stored hashed. There are five public endpoints in total; everything else requires a valid token.
+
+The Steam integration is the most interesting part, because it changed shape during the project. The first version used a server key to read every user's data. The final version flips the model: the user generates their own key on Steam's official page and pastes it into their settings, where it is stored encrypted. Syncing is on demand, adds new games with the "never played" state, updates the hours of games already there, and deletes nothing.
+
+## What happened when I rebuilt it
+
+I rebuilt the Docker environment months after delivery, and two things broke immediately.
+
+Flyway refused to start: the database volume still held the history of two migrations that no longer existed in the code. The frontend container, meanwhile, died on every start because the image copied files as root and then switched to an unprivileged user who could no longer write the Next cache.
+
+Neither is a flaw in the application logic, and that is exactly the point: a project works as long as the environment underneath tells the same story as the code. When the two versions diverge, the best thing that can happen is for something to stop loudly, instead of carrying on and pretending everything is fine.

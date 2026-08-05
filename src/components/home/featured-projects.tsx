@@ -47,6 +47,7 @@ function FeaturedHero({
           alt={project.cover.alt}
           fill
           priority
+          quality={90}
           sizes="(max-width: 1024px) 100vw, 55vw"
           className="object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
         />
