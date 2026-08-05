@@ -1,6 +1,6 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import type { ButtonHTMLAttributes } from "react";
+import type { ComponentPropsWithRef } from "react";
 
 import { Icon } from "@/components/shared/icon";
 import { cn } from "@/lib/cn";
@@ -57,9 +57,7 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends ComponentPropsWithRef<"button">, VariantProps<typeof buttonVariants> {
   /**
    * Rende il figlio invece di un <button>, passandogli gli stili.
    * Serve per i link: un CTA che naviga deve essere una <a>, non un bottone

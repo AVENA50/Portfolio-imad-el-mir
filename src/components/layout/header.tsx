@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { NavDesktop } from "@/components/layout/nav-desktop";
+import { NavMobile } from "@/components/layout/nav-mobile";
 import { LocaleSwitcher } from "@/components/shared/locale-switcher";
 import { Button } from "@/components/ui";
 import type { Locale } from "@/config/i18n";
@@ -49,7 +50,11 @@ export function Header({ locale, dictionary }: HeaderProps) {
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-          <LocaleSwitcher label={dictionary.localeSwitcher.label} />
+          <div className="hidden lg:block">
+            <LocaleSwitcher label={dictionary.localeSwitcher.label} />
+          </div>
+
+          <NavMobile locale={locale} dictionary={dictionary} />
 
           <Button
             asChild
