@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { GalleryTeaser } from "@/components/projects/gallery-teaser";
 import { ProjectMetrics } from "@/components/projects/project-metrics";
 import { Icon } from "@/components/shared/icon";
 import { Badge, Button } from "@/components/ui";
@@ -46,11 +47,12 @@ const LINK_ORDER = [
 export function ProjectHero({ project, locale, dictionary }: ProjectHeroProps) {
   const accent = getCategoryAccent(project.category);
   const metrics = project.metrics ?? [];
+  const screenshots = project.screenshots ?? [];
 
   const links = LINK_ORDER.filter(({ key }) => Boolean(project.links[key]));
 
   return (
-    <section className="relative overflow-hidden pt-10 pb-16 lg:pb-24">
+    <section className="relative overflow-hidden pt-10 pb-8 lg:pb-10">
       <div
         className="bg-hero-glow pointer-events-none absolute inset-x-0 top-0 h-[32rem]"
         aria-hidden
@@ -83,7 +85,24 @@ export function ProjectHero({ project, locale, dictionary }: ProjectHeroProps) {
           <Badge size="lg">{dictionary.caseStudy.types[project.type]}</Badge>
         </div>
 
-        <h1 className="mt-6 max-w-4xl text-h1">{project.title}</h1>
+        <div className="mt-6 flex items-center gap-4 lg:gap-6">
+          {project.logo && (
+            /* alt vuoto di proposito: il marchio sta accanto al titolo che
+               dice la stessa cosa. Descriverlo farebbe annunciare il nome
+               del progetto due volte di fila. L'alt del frontmatter resta
+               come documentazione, e servirebbe se il logo comparisse solo. */
+            <Image
+              src={project.logo.src}
+              alt=""
+              width={160}
+              height={160}
+              priority
+              className="size-14 shrink-0 object-contain lg:size-20"
+            />
+          )}
+
+          <h1 className="max-w-4xl text-h1">{project.title}</h1>
+        </div>
 
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-ink-muted lg:text-xl">
           {project.tagline}
@@ -131,12 +150,17 @@ export function ProjectHero({ project, locale, dictionary }: ProjectHeroProps) {
             sezione. */}
         <div className="relative mt-14">
           <div className="glass relative aspect-[16/9] overflow-hidden rounded-panel">
+            {/* La copertina e una schermata piena di testo minuto: con la
+                qualita di default di next/image (75) i caratteri sbavano.
+                `sizes` dichiara la larghezza reale del contenitore, cosi su
+                schermi ad alta densita viene servita la variante grande. */}
             <Image
               src={project.cover.src}
               alt={project.cover.alt}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 1200px"
+              quality={90}
+              sizes="(max-width: 1024px) 100vw, 1400px"
               className="object-cover"
             />
 
@@ -163,6 +187,14 @@ export function ProjectHero({ project, locale, dictionary }: ProjectHeroProps) {
             {project.cover.caption}
           </p>
         )}
+
+        <GalleryTeaser
+          screenshots={screenshots}
+          projectTitle={project.title}
+          dictionary={dictionary}
+          videoTargetId={project.video ? "video" : undefined}
+          className="mt-6"
+        />
       </div>
     </section>
   );

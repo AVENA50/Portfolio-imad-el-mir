@@ -14,13 +14,17 @@ import { cn } from "@/lib/cn";
  *
  * `tone` alterna il fondo come nei mockup: sezioni pari trasparenti,
  * dispari appena piu chiare, per separarle senza disegnare linee.
+ *
+ * Il tono e una fascia sfumata, non un colore pieno (globals.css): con un
+ * fondo opaco il confine fra due sezioni diventa una riga netta larga tutto
+ * lo schermo, che sopra il cielo stellato si legge come un difetto.
  */
 const sectionVariants = cva("relative", {
   variants: {
     tone: {
       transparent: "",
-      subtle: "bg-bg-subtle",
-      elevated: "bg-bg-elevated",
+      subtle: "section-tone-subtle",
+      elevated: "section-tone-elevated",
     },
     spacing: {
       none: "",

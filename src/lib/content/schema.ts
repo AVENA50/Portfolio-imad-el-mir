@@ -101,7 +101,31 @@ export const projectSchema = z.object({
 
   // --- Media
   cover: imageSchema,
+  /**
+   * Marchio del progetto, accanto al titolo del case study.
+   * Va ritagliato con sfondo trasparente: qui sotto c'e il cielo stellato,
+   * e un riquadro opaco si vedrebbe.
+   */
+  logo: imageSchema.optional(),
   screenshots: z.array(imageSchema).optional(),
+
+  /**
+   * Breve dimostrazione del progetto in movimento.
+   *
+   * Il poster e obbligatorio, non un optional: senza, il browser scarica il
+   * video solo per mostrare il primo fotogramma, e l'anteprima di una
+   * sezione che magari nessuno guarda finisce per costare quanto il video.
+   *
+   * Il video e sempre muto e in loop: `caption` descrive cosa succede a
+   * schermo, e vale anche come alternativa per chi non puo vederlo.
+   */
+  video: z
+    .object({
+      src: z.string().startsWith("/", "Il percorso deve partire da /public"),
+      poster: z.string().startsWith("/", "Il percorso deve partire da /public"),
+      caption: z.string().min(1, "Serve una descrizione di cosa mostra"),
+    })
+    .optional(),
 
   // --- Contenuto ricco: tutto opzionale, il layout si adatta
   highlights: z.array(z.string()).optional(),

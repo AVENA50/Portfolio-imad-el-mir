@@ -165,6 +165,7 @@ export function ProjectGallery({
                   src={shot.src}
                   alt={shot.alt}
                   fill
+                  quality={88}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 ease-out-soft group-hover:scale-[1.04]"
                 />
@@ -237,13 +238,17 @@ export function ProjectGallery({
             )}
 
             <div className="flex h-full min-w-0 flex-1 items-center justify-center">
+              {/* Qualita alta e deliberata: qui l'immagine e il contenuto,
+                  non un'illustrazione. Sono schermate piene di testo, e la
+                  compressione aggressiva si vede per prima sulle lettere. */}
               <Image
                 key={current.src}
                 src={current.src}
                 alt={current.alt}
-                width={1920}
-                height={1200}
-                sizes="90vw"
+                width={2560}
+                height={1400}
+                quality={95}
+                sizes="95vw"
                 className="h-auto max-h-full w-auto rounded-card object-contain"
               />
             </div>
