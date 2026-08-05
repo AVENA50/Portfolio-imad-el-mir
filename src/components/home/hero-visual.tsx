@@ -1,16 +1,11 @@
-import { Code2 } from "lucide-react";
-import { FaJava } from "react-icons/fa";
-import { SiNextdotjs, SiPython, SiReact, SiTypescript } from "react-icons/si";
-import type { ComponentType, CSSProperties } from "react";
-
 import { EarthGlobe } from "@/components/home/earth-globe";
+import { TechIcon } from "@/components/shared/tech-icon";
+import { getTech, type TechSlug } from "@/config/tech-stack";
 import { cn } from "@/lib/cn";
+import type { CSSProperties } from "react";
 
 interface OrbitTech {
-  label: string;
-  Glyph: ComponentType<{ className?: string }>;
-  /** Colore del marchio, usato per il glow della tile. */
-  color: string;
+  slug: TechSlug;
   /** Posizione sull'anello, in gradi. 0 = ore 12. */
   angle: number;
 }
@@ -18,20 +13,19 @@ interface OrbitTech {
 /**
  * Tecnologie in orbita.
  *
- * Elenco locale al componente: in M4-T2 nasce `config/tech-stack.ts`, il
- * registro unico con slug, gruppo e colore, e questo array verra sostituito
- * da una selezione fatta su quello.
+ * Solo slug: nome e colore arrivano da config/tech-stack.ts. Cambiare il
+ * colore di React significa toccare il registro, non questo file.
  */
 const INNER_ORBIT: readonly OrbitTech[] = [
-  { label: "React", Glyph: SiReact, color: "#61DAFB", angle: 20 },
-  { label: "Python", Glyph: SiPython, color: "#3776AB", angle: 155 },
-  { label: "Java", Glyph: FaJava, color: "#EA2D2E", angle: 265 },
+  { slug: "react", angle: 20 },
+  { slug: "python", angle: 155 },
+  { slug: "java", angle: 265 },
 ];
 
 const OUTER_ORBIT: readonly OrbitTech[] = [
-  { label: "TypeScript", Glyph: SiTypescript, color: "#3178C6", angle: 95 },
-  { label: "Next.js", Glyph: SiNextdotjs, color: "#FFFFFF", angle: 205 },
-  { label: "Codice", Glyph: Code2, color: "#A78BFA", angle: 330 },
+  { slug: "typescript", angle: 95 },
+  { slug: "nextjs", angle: 205 },
+  { slug: "postgres", angle: 330 },
 ];
 
 interface OrbitProps {
@@ -48,7 +42,7 @@ interface OrbitProps {
  * Quattro livelli di annidamento, tutti necessari:
  *   ring      ruota          -> muove le tile lungo il cerchio
  *   slot      rotate statico -> distribuisce le tile sull'anello
- *   anchor    translate      -> le spinge sul raggio
+ *   anchor    top/left       -> le spinge sul raggio
  *   counter   ruota al contrario + rotate statico -> le tiene dritte
  *
  * Senza gli ultimi due i loghi girerebbero su se stessi e a meta giro
@@ -63,43 +57,48 @@ function Orbit({ items, radius, duration, reverse = false }: OrbitProps) {
       )}
       style={{ "--orbit-duration": duration } as CSSProperties}
     >
-      {items.map((tech) => (
-        <div
-          key={tech.label}
-          className="absolute inset-0"
-          style={{ transform: `rotate(${tech.angle}deg)` }}
-        >
-          {/* La posizione sull'anello va espressa con top/left, non con
-              translate: una percentuale di translate si riferisce alla tile
-              stessa, non al contenitore, e il raggio verrebbe sbagliato. */}
+      {items.map((item) => {
+        const tech = getTech(item.slug);
+
+        return (
           <div
-            className="absolute"
-            style={{
-              top: `${50 - radius}%`,
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
+            key={item.slug}
+            className="absolute inset-0"
+            style={{ transform: `rotate(${item.angle}deg)` }}
           >
+            {/* La posizione sull'anello va espressa con top/left, non con
+                translate: una percentuale di translate si riferisce alla tile
+                stessa, non al contenitore, e il raggio verrebbe sbagliato. */}
             <div
-              className={cn(reverse ? "orbit-ring" : "orbit-ring-reverse")}
-              style={{ "--orbit-duration": duration } as CSSProperties}
+              className="absolute"
+              style={{
+                top: `${50 - radius}%`,
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
             >
-              <div style={{ transform: `rotate(${-tech.angle}deg)` }}>
-                <span
-                  title={tech.label}
-                  className="glass flex size-[4.5rem] items-center justify-center rounded-panel lg:size-24"
-                  style={{ boxShadow: `0 0 32px -12px ${tech.color}` }}
-                >
-                  {/* Il colore e quello del marchio, non del tema */}
-                  <span style={{ color: tech.color }}>
-                    <tech.Glyph className="size-9 lg:size-12" />
+              <div
+                className={cn(reverse ? "orbit-ring" : "orbit-ring-reverse")}
+                style={{ "--orbit-duration": duration } as CSSProperties}
+              >
+                <div style={{ transform: `rotate(${-item.angle}deg)` }}>
+                  <span
+                    title={tech.name}
+                    className="glass flex size-[4.5rem] items-center justify-center rounded-panel lg:size-24"
+                    style={{ boxShadow: `0 0 32px -12px ${tech.color}` }}
+                  >
+                    <TechIcon
+                      slug={item.slug}
+                      brandColor
+                      className="size-9 lg:size-12"
+                    />
                   </span>
-                </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -107,9 +106,9 @@ function Orbit({ items, radius, duration, reverse = false }: OrbitProps) {
 /**
  * Visual dell'hero: pianeta e tecnologie in orbita.
  *
- * Tutto in CSS, nessun JavaScript e nessuna immagine: il pianeta e fatto di
- * gradienti sovrapposti, quindi pesa zero, resta nitido a ogni risoluzione
- * e si adatta ai token del tema.
+ * Il pianeta e fatto di gradienti sovrapposti — pesa zero, resta nitido a
+ * ogni risoluzione e segue i token del tema. I continenti arrivano da
+ * EarthGlobe, che disegna dati geografici reali su canvas.
  */
 export function HeroVisual({ className }: { className?: string }) {
   return (
