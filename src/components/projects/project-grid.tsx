@@ -14,9 +14,21 @@ interface ProjectGridProps {
   columns?: 2 | 3;
 }
 
+/**
+ * Le colonne per larghezza di schermo.
+ *
+ * La terza colonna entra a `lg` (1024px) e non a `xl`: aspettare i 1280px
+ * significa che su un portatile da tredici pollici — cioe la macchina su
+ * cui questo sito verra aperto piu spesso — la griglia resta a due, e la
+ * pagina sembra piu vuota di quanto sia.
+ *
+ * Sotto i 640px resta una colonna sola: due card affiancate su un telefono
+ * sarebbero larghe centosessanta pixel, e la copertina diventerebbe una
+ * miniatura illeggibile.
+ */
 const COLUMNS = {
   2: "sm:grid-cols-2",
-  3: "sm:grid-cols-2 xl:grid-cols-3",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
 } as const;
 
 /**
@@ -43,7 +55,9 @@ export function ProjectGrid({
   }
 
   return (
-    <Stagger step={70} className={cn("grid gap-8", COLUMNS[columns])}>
+    // A tre colonne lo spazio orizzontale e meno, quindi il divario parte
+    // piu stretto e si allarga solo quando la larghezza lo permette.
+    <Stagger step={70} className={cn("grid gap-6 xl:gap-8", COLUMNS[columns])}>
       {projects.map((project, index) => (
         <ProjectCard
           key={project.slug}

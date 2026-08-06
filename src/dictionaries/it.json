@@ -39,7 +39,7 @@
     "completed": "Completato",
     "in-progress": "In corso",
     "planned": "Pianificato",
-    "available": "Disponibile per opportunita"
+    "available": "Disponibile per opportunità"
   },
   "hero": {
     "badge": "Disponibile per opportunità",
@@ -327,6 +327,54 @@
         "title": "Formazione annuale in nutrizione",
         "description": "Percorso annuale in alimentazione, metabolismo e nutrizione applicata, con particolare attenzione alla performance sportiva."
       }
+    }
+  },
+  "contact": {
+    "eyebrow": "Collaborazioni e opportunità",
+    "title": "Contatti",
+    "description": "Sono disponibile per un tirocinio o una prima esperienza professionale nell'ambito della Business Intelligence e del data engineering. Per proposte di collaborazione, colloqui o richieste di informazioni è possibile utilizzare il modulo oppure scrivere direttamente all'indirizzo indicato.",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Nome e cognome",
+      "email": "Email",
+      "emailPlaceholder": "Indirizzo per la risposta",
+      "subject": "Oggetto",
+      "subjectPlaceholder": "Oggetto del messaggio",
+      "message": "Messaggio",
+      "messagePlaceholder": "Contenuto del messaggio",
+      "messageHint": "Minimo {n} caratteri",
+      "submit": "Invia messaggio",
+      "sending": "Invio in corso…",
+      "required": "I campi contrassegnati con * sono obbligatori"
+    },
+    "errors": {
+      "nameTooShort": "Il nome deve contenere almeno due caratteri",
+      "nameTooLong": "Il nome supera la lunghezza massima consentita",
+      "emailRequired": "L'indirizzo email è necessario per poter rispondere",
+      "emailInvalid": "L'indirizzo email non risulta valido",
+      "emailTooLong": "L'indirizzo email supera la lunghezza massima consentita",
+      "subjectTooShort": "L'oggetto deve contenere almeno tre caratteri",
+      "subjectTooLong": "L'oggetto supera la lunghezza massima consentita",
+      "messageTooShort": "Il messaggio è troppo breve per essere valutato correttamente",
+      "messageTooLong": "Il messaggio supera la lunghezza massima consentita",
+      "rateLimited": "Sono stati inviati troppi messaggi in un breve intervallo di tempo. Si prega di riprovare fra qualche minuto.",
+      "serverError": "Si è verificato un errore durante l'invio. È possibile riprovare oppure scrivere direttamente all'indirizzo email indicato.",
+      "network": "Non è stato possibile raggiungere il server. Verificare la connessione e riprovare."
+    },
+    "success": {
+      "title": "Messaggio inviato",
+      "body": "Il messaggio è stato ricevuto correttamente. Risponderò entro un giorno lavorativo.",
+      "again": "Invia un altro messaggio"
+    },
+    "info": {
+      "title": "Contatto diretto",
+      "description": "Per allegare documenti o per un contatto immediato è possibile scrivere al seguente indirizzo.",
+      "emailLabel": "Email",
+      "locationLabel": "Sede",
+      "responseLabel": "Tempi di risposta",
+      "responseValue": "Entro un giorno lavorativo",
+      "availabilityLabel": "Disponibilità",
+      "socialLabel": "Profili professionali"
     }
   },
   "notFound": {
