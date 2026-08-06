@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 
 import { Starfield } from "@/components/effects/starfield";
+import { JsonLd } from "@/components/shared";
 import { fontVariables } from "@/app/fonts";
 import { LOCALES, LOCALE_META, isLocale, type Locale } from "@/config/i18n";
 import { SITE } from "@/config/site";
 import { getDictionary } from "@/lib/dictionary";
+import { personJsonLd, webSiteJsonLd } from "@/lib/json-ld";
 import "@/styles/globals.css";
 
 /**
@@ -94,6 +96,14 @@ export default async function LocaleLayout({
   return (
     <html lang={LOCALE_META[locale].htmlLang} className={fontVariables}>
       <body className="bg-bg text-ink antialiased">
+        {/* Dati strutturati (M10-T4). Stanno nel layout e non nelle pagine
+            perche descrivono il sito e il suo autore, non un contenuto
+            specifico: ripeterli pagina per pagina significherebbe otto
+            copie della stessa dichiarazione. I progetti aggiungono il
+            proprio `CreativeWork` nella loro pagina, e schema.org li
+            collega tramite `@id`. */}
+        <JsonLd data={[personJsonLd(locale), webSiteJsonLd(locale)]} />
+
         {/* Sfondo stellato, fisso dietro a tutto. z-index negativo: sta sopra
             il colore del body ma sotto qualsiasi contenuto. */}
         <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden>

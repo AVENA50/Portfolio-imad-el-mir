@@ -5,10 +5,11 @@ import { Stagger } from "@/components/effects";
 import { Section, SectionHeading } from "@/components/shared";
 import { Icon } from "@/components/shared/icon";
 import { SkillGroupCard } from "@/components/skills/skill-group-card";
-import { LOCALES, LOCALE_META, isLocale } from "@/config/i18n";
+import { isLocale } from "@/config/i18n";
 import { LANGUAGES } from "@/data/about";
 import { SKILL_GROUPS } from "@/data/skills";
 import { getDictionary } from "@/lib/dictionary";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 
 interface SkillsPageProps {
   params: Promise<{ locale: string }>;
@@ -18,21 +19,16 @@ export async function generateMetadata({
   params,
 }: SkillsPageProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const dictionary = await getDictionary(locale);
-  const path = `/${locale}/skills`;
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/skills",
     title: dictionary.skills.title,
     description: dictionary.skills.description,
-    alternates: {
-      canonical: path,
-      languages: Object.fromEntries(
-        LOCALES.map((code) => [LOCALE_META[code].htmlLang, `/${code}/skills`]),
-      ),
-    },
-  };
+  });
 }
 
 /**

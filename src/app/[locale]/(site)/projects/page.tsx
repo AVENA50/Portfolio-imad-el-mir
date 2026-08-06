@@ -7,6 +7,7 @@ import { Section, SectionHeading } from "@/components/shared";
 import { isLocale } from "@/config/i18n";
 import { getAllProjects } from "@/lib/content/projects";
 import { getDictionary } from "@/lib/dictionary";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 import type { ProjectSummary } from "@/types";
 
 interface ProjectsPageProps {
@@ -17,14 +18,16 @@ export async function generateMetadata({
   params,
 }: ProjectsPageProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const dictionary = await getDictionary(locale);
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/projects",
     title: dictionary.projects.title,
     description: dictionary.projects.description,
-  };
+  });
 }
 
 /**

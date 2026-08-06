@@ -12,8 +12,8 @@ import {
   ProjectToc,
   ProjectVideo,
 } from "@/components/projects";
-import { Section, SectionHeading } from "@/components/shared";
-import { LOCALES, LOCALE_META, isLocale, type Locale } from "@/config/i18n";
+import { JsonLd, Section, SectionHeading } from "@/components/shared";
+import { isLocale, type Locale } from "@/config/i18n";
 import { extractHeadings } from "@/lib/content/headings";
 import { renderMdx } from "@/lib/content/mdx";
 import {
@@ -22,6 +22,8 @@ import {
   getProjectBySlug,
 } from "@/lib/content/projects";
 import { getDictionary } from "@/lib/dictionary";
+import { breadcrumbJsonLd, projectJsonLd } from "@/lib/json-ld";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 
 interface CaseStudyPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -55,35 +57,25 @@ export async function generateMetadata({
   params,
 }: CaseStudyPageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const project = getProjectBySlug(slug, locale);
-  if (!project) return {};
+  if (!project) return EMPTY_METADATA;
 
-  const description = project.description ?? project.tagline;
-  const path = `/${locale}/projects/${slug}`;
-
-  return {
+  return buildPageMetadata({
+    locale,
+    path: `/projects/${slug}`,
     title: project.title,
-    description,
-    alternates: {
-      canonical: path,
-      languages: Object.fromEntries(
-        LOCALES.map((code) => [
-          LOCALE_META[code].htmlLang,
-          `/${code}/projects/${slug}`,
-        ]),
-      ),
-    },
-    openGraph: {
-      type: "article",
-      title: project.title,
-      description,
-      url: path,
-      locale: LOCALE_META[locale].ogLocale,
-      images: [{ url: project.cover.src, alt: project.cover.alt }],
-    },
-  };
+    description: project.description ?? project.tagline,
+    // Nessun `image`: se `generateMetadata` ne dichiara una, sovrascrive il
+    // file `opengraph-image.tsx` accanto a questo. E lo screenshot ridotto a
+    // miniatura non si legge, mentre l'immagine generata mostra il nome del
+    // progetto — che e l'informazione che serve a decidere se aprire il link.
+    type: "article",
+    // La data di inizio e l'unica certa: quella di fine manca sui progetti
+    // ancora in corso, e un `publishedTime` inventato e peggio di assente.
+    publishedTime: `${project.startDate}-01`,
+  });
 }
 
 /**
@@ -116,6 +108,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   return (
     <article>
+      {/* Il progetto come opera, piu il percorso che porta fin qui. La
+          briciola e cio che fa apparire "Progetti › Arcadium" sotto il
+          titolo nei risultati di Google, al posto dell'URL nudo. */}
+      <JsonLd
+        data={[
+          projectJsonLd(project, locale),
+          breadcrumbJsonLd(locale, [
+            { name: dictionary.nav.home, path: "/" },
+            { name: dictionary.nav.projects, path: "/projects" },
+            { name: project.title, path: `/projects/${slug}` },
+          ]),
+        ]}
+      />
+
       <ProjectHero project={project} locale={locale} dictionary={dictionary} />
 
       {/* Panoramica: il corpo MDX con l'indice a lato.

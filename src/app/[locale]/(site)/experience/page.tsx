@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { ExperienceTabs } from "@/components/timeline/experience-tabs";
 import type { TimelineEntry } from "@/components/timeline/timeline";
 import { Section, SectionHeading } from "@/components/shared";
-import { LOCALES, LOCALE_META, isLocale } from "@/config/i18n";
+import { isLocale } from "@/config/i18n";
 import { CERTIFICATES, EDUCATION, EXPERIENCE } from "@/data/about";
 import { getDictionary, type Dictionary } from "@/lib/dictionary";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 
 interface ExperiencePageProps {
   params: Promise<{ locale: string }>;
@@ -16,23 +17,16 @@ export async function generateMetadata({
   params,
 }: ExperiencePageProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const dictionary = await getDictionary(locale);
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/experience",
     title: dictionary.experience.title,
     description: dictionary.experience.description,
-    alternates: {
-      canonical: `/${locale}/experience`,
-      languages: Object.fromEntries(
-        LOCALES.map((code) => [
-          LOCALE_META[code].htmlLang,
-          `/${code}/experience`,
-        ]),
-      ),
-    },
-  };
+  });
 }
 
 /**

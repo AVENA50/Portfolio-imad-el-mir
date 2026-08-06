@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 
 import { ContactForm, ContactInfo } from "@/components/contact";
 import { Section, SectionHeading } from "@/components/shared";
-import { LOCALES, LOCALE_META, isLocale } from "@/config/i18n";
+import { isLocale } from "@/config/i18n";
 import { getDictionary } from "@/lib/dictionary";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -14,20 +15,16 @@ export async function generateMetadata({
   params,
 }: ContactPageProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const dictionary = await getDictionary(locale);
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/contact",
     title: dictionary.contact.title,
     description: dictionary.contact.description,
-    alternates: {
-      canonical: `/${locale}/contact`,
-      languages: Object.fromEntries(
-        LOCALES.map((code) => [LOCALE_META[code].htmlLang, `/${code}/contact`]),
-      ),
-    },
-  };
+  });
 }
 
 /**

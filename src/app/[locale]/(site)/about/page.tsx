@@ -10,10 +10,11 @@ import {
 } from "@/components/about";
 import { Section, SectionHeading } from "@/components/shared";
 import { Button } from "@/components/ui";
-import { LOCALES, LOCALE_META, isLocale } from "@/config/i18n";
+import { isLocale } from "@/config/i18n";
 import { localePath } from "@/config/navigation";
 import { getAllProjects } from "@/lib/content/projects";
 import { getDictionary } from "@/lib/dictionary";
+import { EMPTY_METADATA, buildPageMetadata } from "@/lib/metadata";
 import { primaryLanguage } from "@/lib/stats";
 
 interface AboutPageProps {
@@ -24,20 +25,16 @@ export async function generateMetadata({
   params,
 }: AboutPageProps): Promise<Metadata> {
   const { locale } = await params;
-  if (!isLocale(locale)) return {};
+  if (!isLocale(locale)) return EMPTY_METADATA;
 
   const dictionary = await getDictionary(locale);
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/about",
     title: dictionary.nav.about,
     description: dictionary.about.leadOne,
-    alternates: {
-      canonical: `/${locale}/about`,
-      languages: Object.fromEntries(
-        LOCALES.map((code) => [LOCALE_META[code].htmlLang, `/${code}/about`]),
-      ),
-    },
-  };
+  });
 }
 
 /**
