@@ -44,7 +44,16 @@
 
   --color-ink: #f8fafc; /* titoli e testo primario */
   --color-ink-muted: #94a3b8; /* paragrafi, descrizioni */
-  --color-ink-subtle: #64748b; /* label, date, meta */
+  /* label, date, meta.
+     Era #64748b (slate-500) e non passava il contrasto minimo: 4.25 sul
+     fondo pagina, 3.43 sui badge, 3.45 sul vetro, contro i 4.5 che le WCAG
+     chiedono al testo sotto i 24px. Ed e proprio il colore delle etichette
+     da 12-14px, cioe l'unica misura su cui e usato.
+     #7a8aa1 e il valore piu scuro che passa su tutti i fondi del sito —
+     4.64 nel caso peggiore — restando distinguibile da --color-ink-muted,
+     che sopra di lui sta a 7.89. Salire ancora avrebbe schiacciato i due
+     livelli l'uno sull'altro e tolto la gerarchia. */
+  --color-ink-subtle: #7a8aa1;
   --color-ink-inverse: #05060d; /* testo su fondo chiaro */
 
   /* ------------------------------------------------------------ brand ----- */
