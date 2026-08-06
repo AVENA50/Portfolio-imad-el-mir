@@ -11,11 +11,13 @@ Su [vercel.com](https://vercel.com), **Add New → Project**, e importa
 `Portfolio-imad-el-mir` da GitHub.
 
 Vercel riconosce Next.js da solo: non toccare comando di build, cartella di
-output e directory di installazione. C'è però una casella da cambiare.
+output e directory di installazione.
 
-**Root Directory** va impostata su `portfolio`, non sulla radice del
-repository. Il codice sta in quella sottocartella, e senza questa
-impostazione la build non trova nemmeno il `package.json`.
+**Root Directory** resta `./`. Sul computer il percorso è
+`Portfolio Imad El mir\portfolio\`, ma il repository git parte proprio da
+lì: `package.json`, `next.config.ts` e `src` stanno alla radice, non in una
+sottocartella. Nel selettore di Vercel si riconosce dalla **Ⓝ** di Next.js
+accanto alla riga `(root)` — è quella l'indicazione che conta.
 
 ---
 
@@ -134,6 +136,29 @@ git commit -m "..."
 git push -u origin feat/qualcosa
 ```
 
-Vercel crea un'anteprima per quel branch, con un suo indirizzo. La guardi,
-e se va bene unisci in `main`. Quando la produzione esisterà, unire `main`
-in `release` pubblicherà le modifiche.
+Vercel crea un'anteprima per quel branch, con un suo indirizzo, e la
+commenta nella pull request. La guardi, e se va bene unisci in `main`: il
+sito online si aggiorna da solo in un paio di minuti.
+
+Non c'è niente da fermare, cancellare o rilanciare a mano. L'unico caso in
+cui si torna qui è per cambiare una variabile d'ambiente: quelle vengono
+lette al momento della build, quindi dopo averle modificate serve un
+**Deployments → ⋯ → Redeploy**.
+
+Se un deploy fallisce, il sito online resta quello di prima. Vercel
+sostituisce la versione pubblica solo quando la build è andata a buon fine.
+
+---
+
+## Il piano gratuito non può generare una bolletta
+
+Il piano Hobby non ha addebiti a consumo: senza un metodo di pagamento
+registrato non esiste il meccanismo per superare la soglia pagando. Al
+raggiungimento dei limiti mensili — 100 GB di traffico, un milione di
+richieste, 100 minuti di build — il progetto viene **sospeso** fino al
+ciclo successivo. È l'opposto del modello AWS, dove il conto cresce e basta.
+
+Per dare un ordine di grandezza: 100 GB corrispondono a decine di migliaia
+di visite. Un portfolio personale ne fa qualche centinaio al mese.
+
+L'unico modo per iniziare a pagare è scegliere di passare al piano Pro.

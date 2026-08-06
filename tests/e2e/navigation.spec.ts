@@ -159,6 +159,48 @@ test.describe("SEO", () => {
   });
 });
 
+test.describe("header", () => {
+  /**
+   * Il test che serve davvero e questo: `sticky` si rompe in silenzio.
+   *
+   * Basta che un giorno un antenato dell'header prenda un `overflow-hidden`
+   * o un `transform` — due cose che si aggiungono per sistemare tutt'altro —
+   * e l'header ricomincia a scorrere via senza che nulla segnali l'errore.
+   * Qui si misura la posizione reale sullo schermo dopo aver scorso.
+   */
+  test("resta agganciato in cima dopo aver scorso", async ({ page }) => {
+    await page.goto("/it/projects");
+
+    // `instant`: la pagina ha `scroll-behavior: smooth`, e senza questo si
+    // misurerebbe mentre l'animazione e ancora in corso.
+    await page.evaluate(() =>
+      window.scrollTo({ top: 1200, behavior: "instant" }),
+    );
+
+    // Prima si verifica che la pagina si sia mossa: se fosse troppo corta
+    // per scorrere, l'asserzione dopo passerebbe senza provare niente.
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(400);
+
+    const riquadro = await page.locator("header").boundingBox();
+    // Coordinate relative alla finestra: un header agganciato sta a zero.
+    expect(riquadro?.y ?? -1).toBeLessThanOrEqual(1);
+  });
+
+  test("il fondale compare solo dopo aver scorso", async ({ page }) => {
+    await page.goto("/it/projects");
+
+    const fondale = page.locator("header [data-scrolled]");
+    // In cima l'header e trasparente: e una scelta, non una dimenticanza.
+    await expect(fondale).toHaveAttribute("data-scrolled", "false");
+
+    await page.evaluate(() =>
+      window.scrollTo({ top: 1200, behavior: "instant" }),
+    );
+
+    await expect(fondale).toHaveAttribute("data-scrolled", "true");
+  });
+});
+
 test.describe("tastiera", () => {
   test("il primo Tab porta al link di salto", async ({ page }) => {
     await page.goto("/it");

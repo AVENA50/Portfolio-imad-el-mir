@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { HeaderBackdrop } from "@/components/layout/header-backdrop";
 import { NavDesktop } from "@/components/layout/nav-desktop";
 import { NavMobile } from "@/components/layout/nav-mobile";
 import { LocaleSwitcher } from "@/components/shared/locale-switcher";
@@ -22,15 +23,25 @@ interface HeaderProps {
  * due blocchi laterali: cosi resta al centro anche se il nome e le azioni
  * hanno larghezze diverse — e le hanno, perche cambiano con la lingua.
  *
- * Server component: gli unici pezzi interattivi sono il nav e lo switcher.
- * Il drawer mobile arriva in M3-T4.
+ * Resta agganciato in cima su qualunque schermo. Perche funzioni, nessun
+ * antenato deve avere `overflow` diverso da `visible` ne una proprieta che
+ * crei un contenitore — `transform`, `filter`, `backdrop-filter`: e la
+ * ragione per cui l'header e figlio diretto del `body` e per cui il vetro
+ * sta in `HeaderBackdrop` invece che qui sopra.
+ *
+ * Lo sfondo non c'e a pagina ferma — il nome galleggia sul cielo stellato —
+ * e compare scorrendo, quando serve a tenere leggibile il menu sopra il
+ * contenuto. Se ne occupa `HeaderBackdrop`, l'unico pezzo che deve girare
+ * nel browser: tutto il resto e reso sul server.
  */
 export function Header({ locale, dictionary }: HeaderProps) {
   return (
-    // Nessuno sfondo: l'header e fuso col body e lascia passare le stelle.
-    // A dare corpo ai controlli ci pensano il vetro dello switcher, del
-    // bottone CV e la pill scorrevole del menu.
     <header className="sticky top-0 z-50">
+      {/* Primo nel DOM e senza z-index: resta sotto al contenuto della
+          barra per semplice ordine di disegno, senza aprire una gara di
+          livelli con il drawer mobile che vive qui dentro. */}
+      <HeaderBackdrop />
+
       <div className="relative mx-auto flex h-20 max-w-[110rem] items-center justify-between gap-6 px-6 lg:px-10">
         <Link
           href={localePath(locale, "/")}
