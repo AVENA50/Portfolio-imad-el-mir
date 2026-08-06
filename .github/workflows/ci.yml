@@ -16,6 +16,12 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Permette di lanciare la verifica a mano, dal terminale con
+  # `gh workflow run CI --ref main` o dal pulsante "Run workflow" su GitHub.
+  # Serve a rilanciare un controllo fallito per una causa esterna — una
+  # macchina lenta, un pacchetto npm momentaneamente irraggiungibile —
+  # senza dover inventare un commit finto solo per far ripartire la CI.
+  workflow_dispatch:
 
 # Un push nuovo sullo stesso branch annulla la verifica precedente: quella
 # vecchia riguarda codice che non esiste piu.
