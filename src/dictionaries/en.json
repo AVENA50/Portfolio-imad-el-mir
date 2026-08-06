@@ -329,6 +329,54 @@
       }
     }
   },
+  "contact": {
+    "eyebrow": "Collaboration and opportunities",
+    "title": "Contact",
+    "description": "I am available for an internship or a first professional role in business intelligence and data engineering. For collaboration proposals, interviews or general enquiries, please use the form below or write directly to the address provided.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Full name",
+      "email": "Email",
+      "emailPlaceholder": "Address for the reply",
+      "subject": "Subject",
+      "subjectPlaceholder": "Subject of the message",
+      "message": "Message",
+      "messagePlaceholder": "Content of the message",
+      "messageHint": "Minimum {n} characters",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "required": "Fields marked with * are required"
+    },
+    "errors": {
+      "nameTooShort": "The name must contain at least two characters",
+      "nameTooLong": "The name exceeds the maximum permitted length",
+      "emailRequired": "An email address is required in order to reply",
+      "emailInvalid": "The email address does not appear to be valid",
+      "emailTooLong": "The email address exceeds the maximum permitted length",
+      "subjectTooShort": "The subject must contain at least three characters",
+      "subjectTooLong": "The subject exceeds the maximum permitted length",
+      "messageTooShort": "The message is too brief to be properly considered",
+      "messageTooLong": "The message exceeds the maximum permitted length",
+      "rateLimited": "Too many messages have been sent in a short period. Please try again in a few minutes.",
+      "serverError": "An error occurred while sending. Please try again, or write directly to the email address provided.",
+      "network": "The server could not be reached. Please check your connection and try again."
+    },
+    "success": {
+      "title": "Message sent",
+      "body": "The message has been received. I will reply within one working day.",
+      "again": "Send another message"
+    },
+    "info": {
+      "title": "Direct contact",
+      "description": "To attach documents or to get in touch immediately, please write to the address below.",
+      "emailLabel": "Email",
+      "locationLabel": "Based in",
+      "responseLabel": "Response time",
+      "responseValue": "Within one working day",
+      "availabilityLabel": "Availability",
+      "socialLabel": "Professional profiles"
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "This page went off the board",
