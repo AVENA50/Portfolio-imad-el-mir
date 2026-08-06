@@ -8,6 +8,7 @@
 
 export { EmptyState } from "./empty-state";
 export { Icon } from "./icon";
+export { JsonLd } from "./json-ld";
 export { LocaleSwitcher } from "./locale-switcher";
 export { Section, sectionVariants, type SectionProps } from "./section";
 export { SectionHeading } from "./section-heading";
