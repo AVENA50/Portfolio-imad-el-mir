@@ -175,6 +175,71 @@
     "languagesDescription": "Levels according to the Common European Framework of Reference.",
     "nativeLevel": "Native"
   },
+  "experience": {
+    "eyebrow": "Where I come from",
+    "title": "Path",
+    "description": "Education, work and certifications. Not all of it is computing, and the part that isn't still taught me something I use every day.",
+    "tabsLabel": "Path sections",
+    "tabEducation": "Education",
+    "tabWork": "Experience",
+    "tabCertificates": "Certifications",
+    "education": {
+      "its": {
+        "title": "Business Intelligence Software Developer",
+        "description": "An EQF level 5 ITS programme focused on data analysis and software development. It's the course I'm attending now, and where the projects in this portfolio come from.",
+        "details": [
+          "Business intelligence and data analysis",
+          "SQL and NoSQL databases",
+          "Python, Java, JavaScript, Node.js",
+          "Web development and REST APIs",
+          "Linux and networking",
+          "Cloud, containers and machine learning"
+        ]
+      },
+      "physics": {
+        "title": "University studies in Physics",
+        "description": "Studies in general physics, mathematics and scientific method, close to completion: two exams left before graduating. This is where my way of approaching a problem comes from — isolate the variables, measure, verify before concluding.",
+        "details": [
+          "Classical and modern physics",
+          "Calculus and differential equations",
+          "Analysis of experimental data",
+          "Scientific method"
+        ]
+      },
+      "highschool": {
+        "title": "Scientific high school diploma",
+        "description": "Scientific lyceum, with foundations in mathematics, physics and science.",
+        "details": []
+      }
+    },
+    "work": {
+      "contentCreator": {
+        "title": "Content creator and digital media designer",
+        "description": "Running social accounts with a community of more than 350,000 followers: producing and editing video content, editorial planning, reading metrics and building organic growth. I learned to read an audience's numbers and decide from them — which is exactly what I ask of a business intelligence dashboard.",
+        "details": [
+          "350,000+ followers",
+          "Video editing and post-production",
+          "Performance analysis",
+          "Editorial planning"
+        ]
+      },
+      "personalTrainer": {
+        "title": "Personal trainer",
+        "description": "Almost five years guiding people toward measurable goals, adjusting programmes when the data didn't agree. This is the job that taught me consistency, and how to explain technical things to people outside the field.",
+        "details": [
+          "Training programme design",
+          "Progress tracking",
+          "Client communication"
+        ]
+      }
+    },
+    "certificates": {
+      "nutrition": {
+        "title": "Annual training in nutrition",
+        "description": "A year-long programme in nutrition, metabolism and applied dietetics, with a focus on athletic performance."
+      }
+    }
+  },
   "notFound": {
     "code": "404",
     "title": "This page went off the board",
