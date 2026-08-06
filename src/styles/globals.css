@@ -352,6 +352,330 @@
     transform: scale(1.02);
   }
 
+  /* ------------------------------------------------ basamento luminoso ---
+     Il podio sotto la cornice del ritratto (components/about/
+     portrait-frame.tsx).
+
+     MISURE PRESE SUL MOCKUP (immagine 1536x1024, campionata pixel per
+     pixel). Tutte le proporzioni qui sotto vengono da li, non a occhio.
+
+       cornice esagonale        x 891 -> 1370      largh. 479 px
+       livello 1, bordo dietro  y 767              = bordo basso cornice
+       livello 1, bordo davanti y 822
+       livello 1, larghezza     x 890 -> 1280      390 px  = 81% cornice
+       livello 1, altezza ellisse                   55 px  -> 390/55 = 7.1:1
+       livello 1, parete                            11 px  = 2.8% larghezza
+       livello 2, bordo davanti y 835
+       livello 2, larghezza                        450 px  = 94% cornice
+       pavimento                y 846 in giu
+
+     COLORI CAMPIONATI, colonna centrale x=1085
+       superficie dietro   y 775  rgb(14  4  65)
+       superficie meta     y 805  rgb(29  7 114)
+       superficie davanti  y 819  rgb(98 17 241)
+       BORDO               y 822  rgb(243 209 255)   <- il punto piu chiaro
+       parete alta         y 823  rgb(78 17 212)
+       parete bassa        y 832  rgb(28 10  98)
+       bordo livello 2     y 835  rgb(73 30 159)
+       pavimento           y 840  rgb(11  6  42)     ~ come lo sfondo
+
+     TRE COSE CHE IL CAMPIONAMENTO HA SMENTITO
+     1. Non c'e quasi bagliore sul pavimento. Sotto il podio si legge
+        rgb(11 6 42) contro uno sfondo di rgb(6 5 28): quasi niente. La
+        luce resta sul podio, non lo circonda.
+     2. La superficie non e scura al centro e chiara sul bordo in modo
+        uniforme: e scura per tutta la meta posteriore e si accende solo
+        nell'ultimo quarto, contro il bordo anteriore. E il riflesso del
+        bordo sulla superficie lucida, non un'illuminazione radiale.
+     3. Il bordo posteriore e praticamente invisibile — rgb(16 5 77),
+        cioe piu scuro della superficie stessa. La luce e tutta davanti.
+
+     COME E COSTRUITO
+     Due cilindri sovrapposti, ognuno fatto di due pezzi: una parete
+     rettangolare con il bordo inferiore arrotondato a mezza ellisse, e
+     un'ellisse piena appoggiata sopra che ne copre il bordo superiore
+     piatto. E la costruzione classica del cilindro in CSS, e a differenza
+     di un cerchio con un'ombra ha uno spessore vero.
+
+     Il bordo acceso non e un `box-shadow`: e un `conic-gradient` ritagliato
+     sulla cornice del box. Un'ombra e uguale tutt'intorno, e il mockup ha
+     l'arco anteriore bianco e quello posteriore spento. */
+
+  .podium {
+    position: absolute;
+    /* Il bordo posteriore del livello 1 cade esattamente sul bordo basso
+       della cornice, come nel mockup: `top: 100%` fa proprio questo. */
+    top: 100%;
+    inset-inline: 0;
+    /* 479 x 90 e il rettangolo che nel mockup contiene tutto il podio,
+       pavimento compreso. Con `aspect-ratio` le proporzioni reggono a
+       qualsiasi larghezza della cornice. */
+    aspect-ratio: 479 / 90;
+    pointer-events: none;
+
+    /* Il bordo acceso. 0deg punta in basso (`from 180deg`), cioe verso
+       l'arco anteriore. Sull'ellisse schiacciata del mockup l'arco davanti
+       occupa circa 160 gradi: entro i primi 70 la luce e piena, poi cade.
+
+       I colori sono i token del sito — violet-300 e violet-500 — non un
+       viola inventato. Il punto piu chiaro resta acceso, ma si spegne
+       prima: e la sola parte del podio che deve competere col resto della
+       pagina, tutto il resto va tenuto sotto. */
+    --pdm-rim: conic-gradient(
+      from 180deg at 50% 50%,
+      rgb(233 226 255 / 1) 0deg,
+      rgb(196 181 253 / 0.92) 30deg,
+      rgb(139 92 246 / 0.7) 56deg,
+      rgb(109 40 217 / 0.38) 78deg,
+      rgb(76 29 149 / 0.14) 100deg,
+      rgb(46 16 101 / 0.04) 134deg,
+      rgb(30 12 70 / 0.02) 180deg,
+      rgb(46 16 101 / 0.04) 226deg,
+      rgb(76 29 149 / 0.14) 260deg,
+      rgb(109 40 217 / 0.38) 282deg,
+      rgb(139 92 246 / 0.7) 304deg,
+      rgb(196 181 253 / 0.92) 330deg,
+      rgb(233 226 255 / 1) 360deg
+    );
+  }
+
+  /* Ogni pezzo del podio e centrato orizzontalmente. */
+  .podium-part {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+  }
+
+  /* --- PARETI ---------------------------------------------------------
+     Un rettangolo con i soli angoli inferiori arrotondati a mezza ellisse.
+     Il bordo superiore resta dritto, ma non si vede: ci si appoggia sopra
+     l'ellisse piena, che e opaca.
+
+     Due gradienti sovrapposti su ogni parete, e il secondo e quello che fa
+     davvero la differenza:
+
+       verticale    la luce del bordo scende lungo la parete e si spegne
+       orizzontale  la parete si scurisce verso i due lati
+
+     Il secondo e la **curvatura del cilindro**. Una parete con la sola
+     sfumatura verticale e un nastro piatto avvolto attorno a un'ellisse: si
+     vede subito, perche i fianchi — che nella realta sono quasi di taglio —
+     resterebbero luminosi quanto il centro. Scurirli e cio che trasforma il
+     nastro in un solido. */
+
+  .podium-wall-1 {
+    /* 390/479 della cornice. Alta 38.5/90 del podio: gli 11 di parete piu
+       i 27.5 di semiasse dell'ellisse che la sovrasta. */
+    width: 81.4%;
+    top: 30.6%;
+    height: 42.8%;
+    border-radius: 0 0 50% 50% / 0 0 71.4% 71.4%;
+    background:
+      linear-gradient(
+        to right,
+        rgb(2 3 8 / 0.82) 0%,
+        rgb(2 3 8 / 0.34) 12%,
+        rgb(2 3 8 / 0) 32%,
+        rgb(2 3 8 / 0) 68%,
+        rgb(2 3 8 / 0.34) 88%,
+        rgb(2 3 8 / 0.82) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(124 58 237) 0%,
+        rgb(76 29 149) 16%,
+        rgb(40 18 92) 42%,
+        rgb(22 12 52) 72%,
+        rgb(11 9 26) 100%
+      );
+  }
+
+  .podium-wall-2 {
+    width: 94%;
+    top: 40%;
+    height: 47.5%;
+    border-radius: 0 0 50% 50% / 0 0 74.3% 74.3%;
+    background:
+      linear-gradient(
+        to right,
+        rgb(2 3 8 / 0.8) 0%,
+        rgb(2 3 8 / 0.3) 14%,
+        rgb(2 3 8 / 0) 34%,
+        rgb(2 3 8 / 0) 66%,
+        rgb(2 3 8 / 0.3) 86%,
+        rgb(2 3 8 / 0.8) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(58 28 122) 0%,
+        rgb(30 16 68) 26%,
+        rgb(16 10 38) 58%,
+        rgb(8 6 20) 100%
+      );
+  }
+
+  /* Occlusione: la riga scura dove il livello superiore appoggia su quello
+     inferiore. In un render 3D la luce non arriva mai in fondo a un angolo
+     rientrante, e quel filo di buio e cio che fa capire che i due pezzi si
+     toccano invece di essere disegnati uno sopra l'altro. */
+  .podium-wall-1::after {
+    content: "";
+    position: absolute;
+    inset-inline: 2%;
+    bottom: -6%;
+    height: 26%;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgb(0 0 0 / 0.75) 0%,
+      rgb(0 0 0 / 0.4) 55%,
+      rgb(0 0 0 / 0) 85%
+    );
+    filter: blur(3px);
+  }
+
+  /* --- PIANI ----------------------------------------------------------
+     L'ellisse piena appoggiata su ogni parete.
+
+     Quattro strati sovrapposti invece di un solo gradiente, e la ragione e
+     un difetto preciso: un `radial-gradient` con il centro sul bordo
+     anteriore crea un punto caldo, una macchia luminosa a forma di ventaglio
+     che punta verso il centro del disco. Su una superficie lucida quel punto
+     non esiste — la luce del bordo si riflette come una **fascia** parallela
+     al bordo, non come un raggio. Quindi:
+
+       1  ombra sul bordo posteriore   il lato lontano e in ombra
+       2  fascia riflessa davanti      lineare, nessun punto caldo
+       3  alone lungo il perimetro     debolissimo, segue l'ellisse
+       4  corpo                        il fondo della pagina, non un viola
+
+     Lo strato 4 e la chiave del "piu scuro": il corpo del disco e
+     praticamente `--color-bg`. Tutto il colore che si vede e luce riflessa
+     sopra quel nero, non una superficie viola illuminata. */
+
+  .podium-top-2 {
+    width: 94%;
+    top: 4.7%;
+    height: 70.6%;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background:
+      linear-gradient(
+          to top,
+          rgb(76 29 149 / 0.4) 0%,
+          rgb(46 16 101 / 0.14) 24%,
+          rgb(30 12 70 / 0) 48%
+        )
+        padding-box,
+      linear-gradient(to bottom, rgb(9 10 22) 0%, rgb(6 7 16) 100%) padding-box,
+      var(--pdm-rim) border-box;
+    opacity: 0.55;
+  }
+
+  .podium-top-1 {
+    width: 81.4%;
+    top: 0;
+    height: 61.1%;
+    border: 1.5px solid transparent;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+          ellipse 90% 70% at 50% 0%,
+          rgb(0 0 0 / 0.55) 0%,
+          rgb(0 0 0 / 0.22) 46%,
+          rgb(0 0 0 / 0) 78%
+        )
+        padding-box,
+      linear-gradient(
+          to top,
+          rgb(167 139 250 / 0.42) 0%,
+          rgb(124 58 237 / 0.34) 9%,
+          rgb(91 33 182 / 0.18) 22%,
+          rgb(60 22 128 / 0.06) 40%,
+          rgb(46 16 101 / 0) 62%
+        )
+        padding-box,
+      radial-gradient(
+          ellipse at 50% 50%,
+          rgb(46 16 101 / 0) 46%,
+          rgb(76 29 149 / 0.16) 82%,
+          rgb(109 40 217 / 0.26) 100%
+        )
+        padding-box,
+      linear-gradient(to bottom, rgb(12 13 28) 0%, rgb(8 9 20) 100%) padding-box,
+      var(--pdm-rim) border-box;
+  }
+
+  /* I solchi concentrici sulla superficie: nel mockup se ne contano due,
+     appena percettibili. Un solo radial-gradient con due coppie di stop
+     ravvicinati li disegna entrambi, e seguono l'ellisse da soli.
+
+     La maschera verticale li fa comparire solo nella meta anteriore: un
+     solco e visibile perche riflette la luce, e dietro la luce non arriva.
+     Un anello completo si legge come un cerchio disegnato sopra il disco. */
+  .podium-top-1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      transparent 50%,
+      rgb(167 139 250 / 0.07) 53%,
+      transparent 56%,
+      transparent 74%,
+      rgb(196 181 253 / 0.09) 77%,
+      transparent 80%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent 30%, #000 78%);
+    mask-image: linear-gradient(to bottom, transparent 30%, #000 78%);
+  }
+
+  /* Il bagliore del bordo: una copia del conic sfocata, in `screen`. La luce
+     si somma a cio che ha sotto invece di coprirlo, ed e la differenza fra
+     un alone e una luce. Sta fuori dal box perche il bagliore deborda. */
+  .podium-top-1::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    padding: 2.5px;
+    background-image: var(--pdm-rim);
+    filter: blur(2.5px);
+    mix-blend-mode: screen;
+    opacity: 0.7;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  /* --- PAVIMENTO ------------------------------------------------------
+     Volutamente debolissimo. Campionando il mockup sotto il podio si legge
+     rgb(11 6 42) contro uno sfondo di rgb(6 5 28): quasi niente. Un alone
+     largo e vistoso e la cosa che piu allontana dall'originale.
+
+     Non e centrato sul podio ma spostato **in avanti**: la luce esce dal
+     bordo anteriore, quindi cade davanti al podio e non tutt'intorno. */
+
+  .podium-floor {
+    width: 96%;
+    top: 68%;
+    height: 44%;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at 50% 30%,
+      rgb(109 40 217 / 0.22) 0%,
+      rgb(76 29 149 / 0.09) 46%,
+      rgb(46 16 101 / 0) 76%
+    );
+    filter: blur(18px);
+  }
+
   /* --------------------------------------------------------- fallback ----
      Browser senza backdrop-filter: si passa a una superficie opaca, cosi
      il testo resta leggibile invece di galleggiare su niente. */

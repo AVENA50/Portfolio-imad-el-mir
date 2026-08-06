@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { LOCALES, LOCALE_META, type Locale } from "@/config/i18n";
 import { localeFromPathname, stripLocale } from "@/config/navigation";
@@ -21,28 +21,34 @@ interface LocaleSwitcherProps {
  * Selettore di lingua.
  *
  * Cambia solo il primo segmento del path, quindi resti sulla stessa pagina:
- * /it/projects/arcadium diventa /en/projects/arcadium. Salva la scelta in un
- * cookie, cosi il middleware la rispetta alle visite successive.
+ * /it/projects/arcadium diventa /en/projects/arcadium.
+ *
+ * **Sono link, non bottoni**, e la differenza si sente. Next precarica i
+ * link appena entrano nella viewport: quando clicchi, la pagina nell'altra
+ * lingua e gia scaricata e il passaggio e istantaneo. Con un bottone e
+ * `router.push` il download comincia al click, e si aspetta.
+ *
+ * In piu un link e la cosa giusta anche a prescindere dalla velocita: si
+ * apre in una nuova scheda col tasto centrale, si copia col tasto destro, e
+ * `hreflang` dice ai motori di ricerca che quella e la stessa pagina in
+ * un'altra lingua.
+ *
+ * Il cookie viene scritto nel click **senza bloccare la navigazione**: non
+ * c'e preventDefault, il link fa il suo lavoro subito dopo. Serve solo
+ * perche la prossima volta che arrivi su un indirizzo senza prefisso il
+ * middleware sappia dove mandarti.
  */
 export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
 
   const current = localeFromPathname(pathname);
+  const rest = stripLocale(pathname);
+
   const { containerRef, activeRef, indicator, indicatorStyle, moveTo, settle } =
-    useSlidingIndicator<HTMLDivElement, HTMLButtonElement>(current);
+    useSlidingIndicator<HTMLDivElement, HTMLAnchorElement>(current);
 
-  function switchTo(locale: Locale) {
-    if (locale === current) return;
-
+  function remember(locale: Locale) {
     document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=31536000;samesite=lax`;
-
-    const rest = stripLocale(pathname);
-    startTransition(() => {
-      router.push(rest === "/" ? `/${locale}` : `/${locale}${rest}`);
-      router.refresh();
-    });
   }
 
   return (
@@ -51,11 +57,7 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
       role="group"
       aria-label={label}
       onMouseLeave={settle}
-      className={cn(
-        "relative inline-flex items-center gap-1 p-1",
-        isPending && "opacity-60",
-        className,
-      )}
+      className={cn("relative inline-flex items-center gap-1 p-1", className)}
     >
       <span
         aria-hidden
@@ -69,19 +71,22 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
 
       {LOCALES.map((locale) => {
         const isActive = locale === current;
+        const href = rest === "/" ? `/${locale}` : `/${locale}${rest}`;
 
         return (
-          <button
+          <Link
             key={locale}
             ref={isActive ? activeRef : undefined}
-            type="button"
+            href={href}
+            hrefLang={LOCALE_META[locale].htmlLang}
             lang={locale}
-            onClick={() => switchTo(locale)}
+            // La pagina corrente non si precarica: e gia qui.
+            prefetch={isActive ? false : undefined}
+            onClick={() => remember(locale)}
             onMouseEnter={(event) => moveTo(event.currentTarget)}
             onFocus={(event) => moveTo(event.currentTarget)}
             onBlur={settle}
             aria-current={isActive ? "true" : undefined}
-            disabled={isPending}
             className={cn(
               "relative z-10 rounded-pill px-5 py-2.5 text-base font-bold transition-colors",
               isActive ? "text-ink" : "text-ink/60 hover:text-ink",
@@ -89,7 +94,7 @@ export function LocaleSwitcher({ label, className }: LocaleSwitcherProps) {
           >
             <span className="sr-only">{LOCALE_META[locale].label}</span>
             <span aria-hidden>{LOCALE_META[locale].shortLabel}</span>
-          </button>
+          </Link>
         );
       })}
     </div>
