@@ -1,8 +1,10 @@
 import { Code2, Database } from "lucide-react";
 import { FaJava } from "react-icons/fa";
 import {
+  SiCss,
   SiDocker,
   SiFastapi,
+  SiHtml5,
   SiGit,
   SiGithub,
   SiJavascript,
@@ -49,6 +51,8 @@ const GLYPHS: Record<TechSlug, GlyphComponent> = {
   python: SiPython,
   java: FaJava,
 
+  html: SiHtml5,
+  css: SiCss,
   react: SiReact,
   nextjs: SiNextdotjs,
   tailwind: SiTailwindcss,

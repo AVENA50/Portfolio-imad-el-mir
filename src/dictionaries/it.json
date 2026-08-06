@@ -156,6 +156,25 @@
       "devops": "DevOps e strumenti"
     }
   },
+  "skills": {
+    "eyebrow": "Cosa so fare",
+    "title": "Competenze",
+    "description": "Niente percentuali: le competenze qui sotto sono divise fra quelle che ho già usato in un progetto e quelle che sto imparando adesso. Le prime portano al progetto che le dimostra.",
+    "legendProven": "Usata in un progetto",
+    "legendLearning": "In apprendimento",
+    "learning": "Sto imparando",
+    "groups": {
+      "languages": "Linguaggi",
+      "frontend": "Frontend",
+      "backend": "Backend e API",
+      "data": "Dati e analisi",
+      "devops": "DevOps e strumenti"
+    },
+    "languagesEyebrow": "Lingue",
+    "languagesTitle": "Lingue parlate",
+    "languagesDescription": "Livelli secondo il Quadro comune europeo di riferimento.",
+    "nativeLevel": "Madrelingua"
+  },
   "notFound": {
     "code": "404",
     "title": "Questa pagina è uscita dalla mappa",

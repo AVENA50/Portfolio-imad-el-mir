@@ -45,6 +45,15 @@ export interface SectionProps
   asChild?: boolean;
   /** Toglie il contenitore centrato, per sezioni a tutta larghezza. */
   bleed?: boolean;
+  /**
+   * Larghezza del contenuto.
+   *
+   * `wide` e per le pagine fatte di griglie — competenze, timeline — che
+   * su un monitor largo sembrerebbero una colonna stretta in mezzo al
+   * vuoto. Non va usata dove c'e prosa: una riga di testo larga 1600px si
+   * legge male, perche l'occhio perde il capo riga.
+   */
+  width?: "default" | "wide";
 }
 
 export function Section({
@@ -53,6 +62,7 @@ export function Section({
   spacing,
   asChild = false,
   bleed = false,
+  width = "default",
   children,
   ...props
 }: SectionProps) {
@@ -63,7 +73,13 @@ export function Section({
       className={cn(sectionVariants({ tone, spacing }), className)}
       {...props}
     >
-      {bleed ? children : <div className="container-site">{children}</div>}
+      {bleed ? (
+        children
+      ) : (
+        <div className={width === "wide" ? "container-wide" : "container-site"}>
+          {children}
+        </div>
+      )}
     </Component>
   );
 }

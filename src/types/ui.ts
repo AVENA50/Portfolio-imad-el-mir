@@ -8,8 +8,18 @@ import type { ICON_NAMES } from "@/config/icons";
  * in produzione.
  */
 
-/** Accenti di colore. Uno per categoria di progetto, piu il verde di stato. */
-export type Accent = "violet" | "blue" | "indigo" | "cyan" | "green";
+/**
+ * Accenti di colore.
+ *
+ * I primi cinque formano una scala fredda continua — violetto, indaco,
+ * blu, ciano, teal — e sono quelli decorativi: categorie di progetto,
+ * gruppi di competenze.
+ *
+ * Il verde sta a parte ed e un colore di **stato**: "disponibile per
+ * opportunita". Usarlo anche come accento decorativo gli toglierebbe il
+ * significato, ed e la ragione per cui il gruppo DevOps e passato al teal.
+ */
+export type Accent = "violet" | "blue" | "indigo" | "cyan" | "teal" | "green";
 
 /** Varianti del componente Button (M2-T1). */
 export type ButtonVariant = "primary" | "secondary" | "ghost";

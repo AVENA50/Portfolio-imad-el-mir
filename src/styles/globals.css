@@ -129,8 +129,19 @@
     padding-inline: 1.25rem;
   }
 
+  /* Variante larga: stessi margini laterali, solo piu spazio al centro.
+     Serve alle pagine fatte di griglie, non a quelle fatte di testo — una
+     riga di prosa larga 1600px e illeggibile. */
+  .container-wide {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
   @media (min-width: 768px) {
-    .container-site {
+    .container-site,
+    .container-wide {
       padding-inline: 2rem;
     }
   }

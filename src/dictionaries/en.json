@@ -156,6 +156,25 @@
       "devops": "DevOps and tooling"
     }
   },
+  "skills": {
+    "eyebrow": "What I can do",
+    "title": "Skills",
+    "description": "No percentages: the skills below are split between the ones I've already used in a project and the ones I'm learning right now. The first kind links to the project that proves it.",
+    "legendProven": "Used in a project",
+    "legendLearning": "Currently learning",
+    "learning": "Learning",
+    "groups": {
+      "languages": "Languages",
+      "frontend": "Frontend",
+      "backend": "Backend and APIs",
+      "data": "Data and analysis",
+      "devops": "DevOps and tooling"
+    },
+    "languagesEyebrow": "Languages",
+    "languagesTitle": "Spoken languages",
+    "languagesDescription": "Levels according to the Common European Framework of Reference.",
+    "nativeLevel": "Native"
+  },
   "notFound": {
     "code": "404",
     "title": "This page went off the board",

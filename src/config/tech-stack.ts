@@ -23,6 +23,8 @@ export const TECH_SLUGS = [
   "python",
   "java",
   // Frontend
+  "html",
+  "css",
   "react",
   "nextjs",
   "tailwind",
@@ -84,6 +86,8 @@ export const TECH_STACK: Record<TechSlug, Tech> = {
   },
   java: { slug: "java", name: "Java", group: "language", color: "#EA2D2E" },
 
+  html: { slug: "html", name: "HTML", group: "frontend", color: "#E34F26" },
+  css: { slug: "css", name: "CSS", group: "frontend", color: "#1572B6" },
   react: { slug: "react", name: "React", group: "frontend", color: "#61DAFB" },
   nextjs: {
     slug: "nextjs",

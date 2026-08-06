@@ -25,6 +25,7 @@ const badgeVariants = cva(
         blue: "border-blue-500/30 bg-blue-500/12 text-blue-300",
         indigo: "border-indigo-500/30 bg-indigo-500/12 text-indigo-300",
         cyan: "border-cyan-400/30 bg-cyan-400/12 text-cyan-300",
+        teal: "border-teal-400/30 bg-teal-400/12 text-teal-300",
         green: "border-emerald-500/30 bg-emerald-500/12 text-emerald-300",
         /** Neutro: tag tecnologia, date, meta. */
         neutral: "border-border bg-surface-strong text-ink-muted",
