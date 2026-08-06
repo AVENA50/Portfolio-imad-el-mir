@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { CONTACT_LIMITS } from "@/lib/contact/limits";
+
 /**
  * Schema del messaggio di contatto (M9-T8).
  *
@@ -18,16 +20,16 @@ import { z } from "zod";
  * le lingue restano due.
  */
 
-/** Limiti dei campi. In un posto solo: li usano schema, form e test. */
-export const CONTACT_LIMITS = {
-  nameMin: 2,
-  nameMax: 80,
-  emailMax: 254,
-  subjectMin: 3,
-  subjectMax: 120,
-  messageMin: 20,
-  messageMax: 2000,
-} as const;
+/**
+ * I limiti vivono in `limits.ts`, che non dipende da zod.
+ *
+ * Ri-esportati qui perche chi valida li vuole insieme allo schema, e
+ * perche il server e i test li hanno sempre presi da questo file. Chi
+ * invece deve solo leggere i numeri — il form, per gli attributi
+ * `maxLength` — importa direttamente `limits.ts` e non si porta dietro
+ * zod nel browser.
+ */
+export { CONTACT_LIMITS };
 
 /**
  * Email valida senza inventarsi un'espressione regolare.

@@ -4,16 +4,51 @@ import { useRef, useState, type FormEvent } from "react";
 
 import { Icon } from "@/components/shared/icon";
 import { Button, Field, Input, Textarea } from "@/components/ui";
+import { CONTACT_LIMITS } from "@/lib/contact/limits";
 import type { Dictionary } from "@/lib/dictionary";
-import {
-  CONTACT_LIMITS,
-  collectErrors,
-  contactSchema,
-  type ContactErrors,
-} from "@/lib/contact/schema";
+// `import type` sparisce alla compilazione: i tipi non finiscono nel bundle,
+// quindi importarli da un file che dipende da zod non costa niente.
+import type { ContactErrors } from "@/lib/contact/schema";
 
 interface ContactFormProps {
   dictionary: Dictionary;
+}
+
+/**
+ * Lo schema, caricato solo quando serve (M10-T7).
+ *
+ * **Il problema.** zod pesa circa 45 kB non compressi. Importandolo in
+ * cima a questo file finiva nel bundle iniziale della pagina Contatti, che
+ * infatti misurava 227 kB di First Load JS contro i 158-191 di tutte le
+ * altre. Cioe la pagina piu pesante del sito era quella dove un
+ * selezionatore decide di scriverti.
+ *
+ * **La soluzione, e perche non peggiora l'esperienza.** La validazione qui
+ * scatta al primo invio, mai mentre si scrive: fino a quel momento zod non
+ * serve a niente. Caricarlo dinamicamente lo sposta in un file separato,
+ * che il browser scarica solo se qualcuno usa davvero il form.
+ *
+ * **E perche non si nota nemmeno il ritardo.** Il caricamento parte al
+ * primo tocco su un campo, non al click su "Invia": mentre la persona
+ * scrive il nome, i quaranta kilobyte sono gia arrivati.
+ *
+ * La cache e fuori dal componente perche deve sopravvivere ai render.
+ */
+let validator: Awaited<ReturnType<typeof importValidator>> | null = null;
+
+/**
+ * L'import sta in una funzione sua perche il tipo del modulo si ricava dal
+ * suo valore di ritorno: la regola `consistent-type-imports` vieta di
+ * scrivere `typeof import(...)` in una annotazione, e questa e la forma
+ * equivalente che il linter accetta.
+ */
+function importValidator() {
+  return import("@/lib/contact/schema");
+}
+
+async function loadValidator() {
+  validator ??= await importValidator();
+  return validator;
 }
 
 type Status = "idle" | "sending" | "sent";
@@ -53,10 +88,15 @@ export function ContactForm({ dictionary }: ContactFormProps) {
     const next = { ...values, [field]: value };
     setValues(next);
 
-    if (!submitted.current) return;
+    // Prima del primo invio non si segnala nulla, e prima di allora lo
+    // schema puo non essere ancora arrivato: in entrambi i casi non c'e
+    // niente da rivalidare.
+    if (!submitted.current || !validator) return;
 
-    const parsed = contactSchema.safeParse(next);
-    setErrors(parsed.success ? {} : collectErrors(parsed.error.issues));
+    const parsed = validator.contactSchema.safeParse(next);
+    setErrors(
+      parsed.success ? {} : validator.collectErrors(parsed.error.issues),
+    );
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -65,6 +105,7 @@ export function ContactForm({ dictionary }: ContactFormProps) {
     submitted.current = true;
     setFormError(null);
 
+    const { contactSchema, collectErrors } = await loadValidator();
     const parsed = contactSchema.safeParse(values);
 
     if (!parsed.success) {
@@ -148,6 +189,11 @@ export function ContactForm({ dictionary }: ContactFormProps) {
     <form
       onSubmit={handleSubmit}
       noValidate
+      // Il primo tocco su un campo fa partire il download dello schema, che
+      // arriva mentre la persona scrive. `void` perche non c'e niente da
+      // aspettare: se non fosse pronto al momento dell'invio, `handleSubmit`
+      // lo attende comunque.
+      onFocus={() => void loadValidator()}
       className="glass flex flex-col gap-6 rounded-panel p-7 md:p-8"
     >
       {/* `noValidate` disattiva i messaggi del browser: sono in inglese a
