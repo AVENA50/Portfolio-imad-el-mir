@@ -68,14 +68,17 @@ export function ProjectFiltersBar({
           onMouseEnter={(event) => moveTo(event.currentTarget)}
           aria-pressed={isActive}
           className={cn(
-            "relative z-10 inline-flex items-center gap-2 rounded-pill px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+            "relative z-10 inline-flex items-center gap-2.5 rounded-pill px-5 py-2.5 text-base font-medium whitespace-nowrap transition-colors",
             isActive ? "text-ink" : "text-ink-muted hover:text-ink",
           )}
         >
           {label}
+          {/* Il conteggio resta piu piccolo dell'etichetta anche dopo
+              l'ingrandimento: e un dato di servizio, e se avesse lo stesso
+              peso del nome della categoria competerebbe con esso. */}
           <span
             className={cn(
-              "text-xs tabular-nums",
+              "text-sm tabular-nums",
               isActive ? "text-violet-300" : "text-ink-subtle",
             )}
           >
@@ -92,14 +95,17 @@ export function ProjectFiltersBar({
       <ul
         ref={containerRef}
         onMouseLeave={settle}
-        className="glass relative flex flex-wrap items-center gap-1 rounded-pill p-1"
+        className="glass relative flex flex-wrap items-center gap-1.5 rounded-pill p-1.5"
       >
+        {/* `inset-y-1.5` segue il padding del contenitore: se i due valori
+            divergono la pillola scorrevole resta disallineata rispetto al
+            bottone che sta evidenziando. */}
         <span
           aria-hidden
           style={indicatorStyle}
           className={cn(
             INDICATOR_CLASSES,
-            "inset-y-1",
+            "inset-y-1.5",
             indicator.visible ? "opacity-100" : "opacity-0",
           )}
         />
@@ -113,14 +119,14 @@ export function ProjectFiltersBar({
 
       <div className="flex items-center gap-3">
         {isFiltered && (
-          <Button variant="ghost" iconLeft="close" size="sm" onClick={onReset}>
+          <Button variant="ghost" iconLeft="close" onClick={onReset}>
             {dictionary.projects.resetFilters}
           </Button>
         )}
 
         {/* ------------------------------------------------ ordinamento -- */}
-        <label className="glass inline-flex items-center gap-2 rounded-pill px-4 py-2">
-          <span className="text-xs whitespace-nowrap text-ink-subtle">
+        <label className="glass inline-flex items-center gap-2.5 rounded-pill px-5 py-2.5">
+          <span className="text-sm whitespace-nowrap text-ink-subtle">
             {dictionary.projects.sortLabel}
           </span>
 
@@ -129,7 +135,7 @@ export function ProjectFiltersBar({
             onChange={(event) =>
               onChange({ sort: event.target.value as ProjectSort })
             }
-            className="cursor-pointer bg-transparent text-sm font-medium text-ink outline-none"
+            className="cursor-pointer bg-transparent text-base font-medium text-ink outline-none"
           >
             {SORT_OPTIONS.map((option) => (
               // La voce del menu si disegna sul fondo di sistema, non sul
@@ -147,7 +153,7 @@ export function ProjectFiltersBar({
         </label>
 
         {/* ------------------------------------------------------ vista -- */}
-        <div className="glass hidden items-center gap-1 rounded-pill p-1 sm:inline-flex">
+        <div className="glass hidden items-center gap-1.5 rounded-pill p-1.5 sm:inline-flex">
           {(["grid", "list"] as const).map((view) => {
             const isActive = filters.view === view;
 
@@ -159,13 +165,13 @@ export function ProjectFiltersBar({
                 aria-pressed={isActive}
                 title={dictionary.projects.view[view]}
                 className={cn(
-                  "inline-flex size-9 items-center justify-center rounded-pill transition-colors",
+                  "inline-flex size-11 items-center justify-center rounded-pill transition-colors",
                   isActive
                     ? "glass-strong text-ink"
                     : "text-ink-subtle hover:text-ink",
                 )}
               >
-                <Icon name={view} className="size-4" />
+                <Icon name={view} className="size-5" />
                 <span className="sr-only">
                   {dictionary.projects.view[view]}
                 </span>

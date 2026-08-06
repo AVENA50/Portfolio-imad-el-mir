@@ -82,6 +82,10 @@ export function ProjectsBrowser({
             projects={visible}
             locale={locale}
             dictionary={dictionary}
+            // Tre colonne: con otto progetti, due per riga significa quattro
+            // righe e nessuna visione d'insieme. La home usa ancora due,
+            // dove le card sono poche e devono essere grandi.
+            columns={3}
           />
         )}
       </div>

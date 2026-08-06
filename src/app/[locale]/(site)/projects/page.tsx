@@ -53,7 +53,12 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   );
 
   return (
-    <Section spacing="md">
+    // Contenitore largo, come Competenze, Percorso e Contatti: sono le
+    // pagine fatte di griglie e di elenchi, dove lo spazio in piu si
+    // traduce in contenuto visibile invece che in righe di testo troppo
+    // lunghe. La prosa dell'intestazione resta comunque nella sua colonna
+    // stretta, quindi non ne risente.
+    <Section spacing="md" width="wide">
       <SectionHeading
         as="h1"
         eyebrow={dictionary.projects.eyebrow}
@@ -74,14 +79,20 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
   );
 }
 
-/** Ingombro dei filtri e di sei card, per non far saltare la pagina. */
+/**
+ * Ingombro dei filtri e di sei card, per non far saltare la pagina.
+ *
+ * Le misure devono seguire quelle vere: se lo scheletro mostra due colonne
+ * e poi ne arrivano tre, il salto che doveva evitare lo produce lui. Sei
+ * card e non quattro perche con tre colonne sei sono due righe piene.
+ */
 function ProjectsSkeleton() {
   return (
     <div aria-hidden className="animate-pulse">
-      <div className="h-12 w-full max-w-xl rounded-pill bg-surface" />
+      <div className="h-14 w-full max-w-xl rounded-pill bg-surface" />
 
-      <div className="mt-14 grid gap-8 sm:grid-cols-2">
-        {[0, 1, 2, 3].map((index) => (
+      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
+        {[0, 1, 2, 3, 4, 5].map((index) => (
           <div key={index} className="rounded-card bg-surface">
             <div className="aspect-[16/9] rounded-t-card bg-surface-hover" />
             <div className="space-y-3 p-6">
