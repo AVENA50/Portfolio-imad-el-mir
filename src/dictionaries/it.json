@@ -74,6 +74,95 @@
       }
     }
   },
+  "about": {
+    "eyebrow": "Chi sono",
+    "titleLead": "Trasformo i dati",
+    "titleAccent": "in decisioni",
+    "subtitle": "Business Intelligence Software Developer",
+    "leadOne": "Credo che il valore dei dati non stia nella quantità, ma nella capacità di trasformarli in decisioni. Per questo progetto software che unisce Business Intelligence, sviluppo Full Stack e Intelligenza Artificiale, con particolare attenzione all'architettura, alla qualità del codice e all'esperienza d'uso.",
+    "leadTwo": "Il mio percorso è iniziato con la Fisica, dove ho sviluppato un approccio analitico e rigoroso alla risoluzione dei problemi. Oggi studio Business Intelligence Software Development all'ITS ICT Piemonte, dove applico quel metodo alla progettazione di soluzioni software moderne e data-driven.",
+    "photoAlt": "Ritratto di Imad El Mir",
+    "factLocation": "Vivo e studio qui",
+    "factStudying": "Business Intelligence Software Development",
+    "factBeforeValue": "Fisica",
+    "followLabel": "Seguimi su",
+    "circle": {
+      "analyze": "Analizzo",
+      "build": "Costruisco",
+      "improve": "Miglioro"
+    },
+    "panel": {
+      "language": "Linguaggio principale",
+      "focus": "Focus attuale",
+      "focusValue": "Business Intelligence",
+      "learning": "In apprendimento",
+      "learningValue": "Machine Learning"
+    },
+    "passionsLabel": "Le mie passioni",
+    "passions": {
+      "bi": {
+        "title": "Business Intelligence",
+        "subtitle": "Dati che decidono"
+      },
+      "ai": {
+        "title": "Intelligenza artificiale",
+        "subtitle": "Modelli che imparano"
+      },
+      "software": {
+        "title": "Software engineering",
+        "subtitle": "Architettura e qualità"
+      },
+      "data": {
+        "title": "Data engineering",
+        "subtitle": "Pipeline e modelli"
+      },
+      "learning": {
+        "title": "Apprendimento continuo",
+        "subtitle": "Sempre in corso"
+      }
+    },
+    "badgeHint": "Trascina la card",
+    "badgeFooter": "ITS ICT PIEMONTE",
+    "badgePhotoAlt": "Ritratto di Imad El Mir",
+    "sceneAlt": "Un badge con il nome di Imad El Mir appeso a un cordino: si può trascinare con il mouse e oscilla.",
+    "storyEyebrow": "Come ci sono arrivato",
+    "storyTitle": "Tre passaggi, nessuna scorciatoia",
+    "story": {
+      "physics": {
+        "title": "La fisica",
+        "body": "Università Sidi Mohammed Ben Abdellah, Fès: fisica classica e moderna, analisi matematica, laboratorio. Mancano due esami alla laurea e li darò. Quello che mi porto dietro non è il titolo: è l'abitudine a non fidarmi della prima spiegazione che sembra funzionare. Cambiare una variabile alla volta, misurare, e accettare che il numero contraddica l'ipotesi — davanti a un bug faccio esattamente questo."
+      },
+      "data": {
+        "title": "Il passaggio al software",
+        "body": "Il salto è stato meno lungo di quanto sembri. Un dato sperimentale sporco e una tabella sporca hanno lo stesso problema: prima di calcolare qualsiasi cosa devi sapere da dove vengono i valori e di quali ti puoi fidare. Da lì sono arrivato a Python, Java e SQL, poi ai container e alle pipeline, e infine alle interfacce — perché un'analisi che nessuno riesce a leggere non ha ancora finito il suo lavoro."
+      },
+      "next": {
+        "title": "Dove voglio arrivare",
+        "body": "Cerco un tirocinio o una prima esperienza nella Business Intelligence e nel data engineering. Non ho ancora lavorato in un team di sviluppo, e la cosa che mi interessa di più è proprio quella: dati veri, vincoli veri, code review di qualcuno più bravo di me. Nel frattempo continuo a costruire, perché è l'unico modo che conosco per scoprire cosa non ho ancora capito."
+      }
+    },
+    "bringEyebrow": "Quello che non è informatica",
+    "bringTitle": "Cosa mi porto dietro",
+    "bringDescription": "Prima del codice ho fatto altri due mestieri. Non li nascondo in fondo al CV: mi hanno insegnato tre cose che nel lavoro tecnico servono più di quanto si ammetta.",
+    "bring": {
+      "audience": {
+        "title": "Leggere i numeri di un pubblico",
+        "body": "Gestisco profili social con oltre 350.000 follower. Ogni pubblicazione produce metriche, e la differenza fra crescere e fermarsi sta nel decidere in base a quelle invece che a quello che ti piace. È la stessa domanda che si fa a un cruscotto di Business Intelligence: cosa mi sta dicendo questo numero, e cosa ci faccio domani."
+      },
+      "clients": {
+        "title": "Spiegare cose tecniche a chi non è del mestiere",
+        "body": "Quasi cinque anni da personal trainer. Un programma di allenamento funziona solo se la persona capisce perché lo sta facendo, altrimenti lo abbandona in due settimane. Tradurre qualcosa di tecnico in qualcosa di comprensibile senza banalizzarlo è un'abilità, e si allena."
+      },
+      "discipline": {
+        "title": "Finire quello che comincio",
+        "body": "Sei anni di MMA e due vittorie regionali, cinque anni nella stessa palestra, un pubblico costruito da zero. Rispondono tutti alla domanda che conta davvero su un primo portfolio: questa persona porta a termine le cose? I progetti qui dentro sono la stessa risposta, in un'altra forma."
+      }
+    },
+    "ctaTitle": "Il resto è scritto",
+    "ctaDescription": "Formazione, esperienze e certificazioni in ordine cronologico, oppure i progetti con il codice e le scelte tecniche dietro.",
+    "ctaTimeline": "Vedi il percorso",
+    "ctaProjects": "Vedi i progetti"
+  },
   "featured": {
     "eyebrow": "In evidenza",
     "title": "Progetti selezionati",

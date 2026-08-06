@@ -74,6 +74,95 @@
       }
     }
   },
+  "about": {
+    "eyebrow": "About me",
+    "titleLead": "I turn data",
+    "titleAccent": "into decisions",
+    "subtitle": "Business Intelligence Software Developer",
+    "leadOne": "I believe the value of data isn't in how much of it you have, but in whether you can turn it into a decision. That's why I build software that brings together business intelligence, full stack development and artificial intelligence — with real attention to architecture, code quality and the experience of using it.",
+    "leadTwo": "My path started with physics, where I built an analytical and rigorous approach to solving problems. Today I study Business Intelligence Software Development at ITS ICT Piemonte, applying that same method to designing modern, data-driven software.",
+    "photoAlt": "Portrait of Imad El Mir",
+    "factLocation": "Living and studying here",
+    "factStudying": "Business Intelligence Software Development",
+    "factBeforeValue": "Physics",
+    "followLabel": "Find me on",
+    "circle": {
+      "analyze": "Analyze",
+      "build": "Build",
+      "improve": "Improve"
+    },
+    "panel": {
+      "language": "Main language",
+      "focus": "Current focus",
+      "focusValue": "Business Intelligence",
+      "learning": "Always learning",
+      "learningValue": "Machine Learning"
+    },
+    "passionsLabel": "What I work on",
+    "passions": {
+      "bi": {
+        "title": "Business intelligence",
+        "subtitle": "Data that decides"
+      },
+      "ai": {
+        "title": "Artificial intelligence",
+        "subtitle": "Models that learn"
+      },
+      "software": {
+        "title": "Software engineering",
+        "subtitle": "Architecture and quality"
+      },
+      "data": {
+        "title": "Data engineering",
+        "subtitle": "Pipelines and models"
+      },
+      "learning": {
+        "title": "Continuous learning",
+        "subtitle": "Always in progress"
+      }
+    },
+    "badgeHint": "Drag the card",
+    "badgeFooter": "ITS ICT PIEMONTE",
+    "badgePhotoAlt": "Portrait of Imad El Mir",
+    "sceneAlt": "A badge with Imad El Mir's name hanging from a lanyard: you can drag it with the mouse and it swings.",
+    "storyEyebrow": "How I got here",
+    "storyTitle": "Three steps, no shortcuts",
+    "story": {
+      "physics": {
+        "title": "Physics",
+        "body": "Université Sidi Mohammed Ben Abdellah, Fès: classical and modern physics, calculus, lab work. Two exams short of the degree, and I intend to sit them. What I carry isn't the title — it's the habit of distrusting the first explanation that seems to work. Change one variable at a time, measure, and accept it when the number contradicts the hypothesis. Facing a bug, I do exactly that."
+      },
+      "data": {
+        "title": "Moving into software",
+        "body": "The jump was shorter than it looks. Dirty experimental data and a dirty table have the same problem: before you compute anything, you need to know where the values came from and which ones you can trust. From there I got to Python, Java and SQL, then to containers and pipelines, and finally to interfaces — because an analysis nobody can read hasn't finished its job yet."
+      },
+      "next": {
+        "title": "Where I want to go",
+        "body": "I'm looking for an internship or a first role in business intelligence and data engineering. I haven't worked in a development team yet, and that's precisely the part I want: real data, real constraints, code review from someone better than me. In the meantime I keep building, because it's the only way I know to find out what I haven't understood yet."
+      }
+    },
+    "bringEyebrow": "The non-technical part",
+    "bringTitle": "What I bring with me",
+    "bringDescription": "Before code I did two other jobs. They're not buried at the bottom of my CV: they taught me three things that matter in technical work more than people admit.",
+    "bring": {
+      "audience": {
+        "title": "Reading an audience's numbers",
+        "body": "I run social accounts with over 350,000 followers. Every post produces metrics, and the difference between growing and stalling is deciding from those instead of from what you personally like. It's the same question you ask a BI dashboard: what is this number telling me, and what do I do about it tomorrow."
+      },
+      "clients": {
+        "title": "Explaining technical things to non-specialists",
+        "body": "Almost five years as a personal trainer. A training programme only works if the person understands why they're doing it — otherwise they drop it in a fortnight. Turning something technical into something understandable without dumbing it down is a skill, and it can be trained."
+      },
+      "discipline": {
+        "title": "Finishing what I start",
+        "body": "Six years of MMA and two regional wins, five years in the same gym, an audience built from zero. They all answer the question that actually matters on a first portfolio: does this person see things through? The projects here are the same answer in a different form."
+      }
+    },
+    "ctaTitle": "The rest is on record",
+    "ctaDescription": "Education, work and certificates in chronological order — or the projects, with the code and the technical decisions behind them.",
+    "ctaTimeline": "See the timeline",
+    "ctaProjects": "See the projects"
+  },
   "featured": {
     "eyebrow": "Featured",
     "title": "Selected work",

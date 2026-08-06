@@ -46,9 +46,9 @@ export const EDUCATION: readonly EducationEntry[] = [
   },
   {
     key: "physics",
-    institution: "Universite Sidi Mohammed Ben Abdellah",
+    institution: "Université Sidi Mohamed Ben Abdellah",
     startDate: "2021-09",
-    location: "Fes",
+    location: "Fès",
     url: "https://www.usmba.ac.ma/",
   },
   {
@@ -56,7 +56,7 @@ export const EDUCATION: readonly EducationEntry[] = [
     institution: "Liceo Hamilton",
     startDate: "2020-09",
     endDate: "2021-06",
-    location: "Fes",
+    location: "Fès",
   },
 ];
 
@@ -99,7 +99,7 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
     key: "contentCreator",
     organization: "Freelance",
     startDate: "2022-01",
-    location: "Fes",
+    location: "Fès",
     transferable: true,
   },
   {
@@ -107,7 +107,7 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
     organization: "AdriGym",
     startDate: "2021-04",
     endDate: "2025-12",
-    location: "Fes",
+    location: "Fès",
     transferable: true,
   },
 ];
@@ -129,6 +129,19 @@ export const LANGUAGES: readonly LanguageSkill[] = [
   { key: "french", level: "C1" },
   { key: "italian", level: "B2" },
 ];
+
+/**
+ * Foto usata sul badge, in 3D e nella versione statica.
+ *
+ * `undefined` finche non c'e il file: il badge disegna le iniziali e non
+ * si rompe. Quando la foto arriva, basta metterla in
+ * `public/images/about/` e scrivere qui il percorso — una riga sola, e
+ * cambiano entrambe le versioni insieme.
+ *
+ * Formato consigliato: ritratto quasi quadrato, lato lungo almeno 900px.
+ * Il ritaglio e centrato, quindi la faccia deve stare al centro.
+ */
+export const PROFILE_PHOTO: string | undefined = undefined;
 
 /** Dove vive e lavora, per il testo e per i dati strutturati di M10. */
 export const LOCATION: Record<Locale, string> = {
