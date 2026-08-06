@@ -1,0 +1,93 @@
+# Controlli automatici su ogni push e pull request (M10-T9).
+#
+# A cosa serve, visto che i controlli si lanciano gia in locale: a lanciarli
+# *sempre*. Un `npm run check` dimenticato prima di un push non lo nota
+# nessuno finche il sito non si rompe. Qui il verde o il rosso stanno
+# scritti accanto al commit, e una pull request rossa non si puo unire.
+#
+# Due lavori separati e non uno solo: i controlli statici durano meno di un
+# minuto, i test end-to-end richiedono di compilare il sito e avviare un
+# browser. Tenerli distinti significa sapere in trenta secondi se hai
+# rotto i tipi, senza aspettare la parte lenta.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Un push nuovo sullo stesso branch annulla la verifica precedente: quella
+# vecchia riguarda codice che non esiste piu.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Le variabili vere non servono ai controlli, ma `serverEnv()` fallisce se
+  # mancano del tutto e la build compila la rotta del form. Sono valori
+  # fittizi: nessuna email parte, perche nessun test invia davvero.
+  RESEND_API_KEY: chiave-finta-per-la-ci
+  CONTACT_EMAIL_FROM: onboarding@resend.dev
+  CONTACT_EMAIL_TO: ci@example.com
+
+jobs:
+  qualita:
+    name: Tipi, lint, formato e test unitari
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          # Mette in cache i pacchetti fra un'esecuzione e l'altra: senza,
+          # ogni verifica ripartirebbe da un `npm install` completo.
+          cache: npm
+
+      # `npm ci` e non `npm install`: installa esattamente le versioni del
+      # lockfile e fallisce se il lockfile e disallineato da package.json.
+      # E il controllo che impedisce di scoprire in produzione che qualcuno
+      # ha aggiornato una dipendenza senza committare il lockfile.
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run test
+
+  e2e:
+    name: Test end-to-end
+    runs-on: ubuntu-latest
+    # Non parte se i controlli statici falliscono: se i tipi non compilano,
+    # avviare un browser e solo tempo sprecato.
+    needs: qualita
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Solo Chromium: due browser raddoppiano il tempo per coprire
+      # differenze che su un sito statico non esistono. `--with-deps`
+      # installa anche le librerie di sistema che servono su Ubuntu.
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run build
+
+      - run: npm run test:e2e
+
+      # Il rapporto si carica **solo in caso di errore**: quando tutto passa
+      # non serve a nessuno e occuperebbe spazio a ogni esecuzione.
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: rapporto-playwright
+          path: playwright-report/
+          retention-days: 7
