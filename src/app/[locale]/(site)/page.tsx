@@ -60,16 +60,29 @@ export default async function HomePage({
               {t.hero.badge}
             </Badge>
 
-            <h1 className="mt-8 text-display">
-              {t.hero.greeting}{" "}
-              <span className="text-gradient">{t.hero.name}</span>
+            {/* Il nome non compare: sta gia nella navbar, e ripeterlo
+                userebbe la riga piu visibile del sito per un'informazione
+                che il visitatore ha davanti agli occhi. Al suo posto la
+                frase dice cosa faccio e per chi serve. */}
+            <h1 className="mt-9 text-hero">
+              {t.hero.titleLead}{" "}
+              <span className="text-gradient">{t.hero.titleAccent}</span>
             </h1>
 
-            <p className="mt-4 font-display text-h3 font-semibold text-ink-muted">
+            {/* Il ruolo scende sotto il titolo per corpo e peso: e una
+                didascalia, non una seconda voce che compete con la prima.
+                Resta su ink-muted perche e una qualifica, non un dettaglio
+                secondario, e la spaziatura delle lettere lo rende leggibile
+                anche a corpo piccolo. */}
+            <p className="mt-6 font-display text-lg font-semibold tracking-[0.01em] text-ink-muted lg:text-xl">
               {t.hero.role}
             </p>
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-subtle lg:text-xl">
+            {/* 40rem = 640px: intorno alle 75 battute per riga, la misura in
+                cui l'occhio ritrova l'inizio della riga successiva senza
+                perderla. Il testo e lungo, e senza questo limite arriverebbe
+                a coprire tutta la colonna. */}
+            <p className="mt-8 max-w-[40rem] text-base leading-relaxed text-ink-subtle lg:text-lg">
               {t.hero.intro}
             </p>
 

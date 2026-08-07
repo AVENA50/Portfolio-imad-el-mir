@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Imad El Mir - Full Stack Developer",
-    "description": "Portfolio e case study di Imad El Mir: applicazioni web full stack, sistemi intelligenti e pipeline dati."
+    "title": "Imad El Mir - Business Intelligence Software Developer",
+    "description": "Portfolio e case study di Imad El Mir, Business Intelligence Software Developer: applicazioni che trasformano dati complessi in decisioni."
   },
   "nav": {
     "home": "Home",
@@ -43,10 +43,10 @@
   },
   "hero": {
     "badge": "Disponibile per opportunità",
-    "greeting": "Ciao, sono",
-    "name": "Imad",
-    "role": "Full Stack Developer & AI Enthusiast",
-    "intro": "Costruisco applicazioni web moderne, sistemi intelligenti ed esperienze di gioco coinvolgenti.",
+    "titleLead": "Costruisco software guidato dai",
+    "titleAccent": "dati.",
+    "role": "Business Intelligence Software Developer",
+    "intro": "Progetto applicazioni che trasformano dati complessi in strumenti utili per prendere decisioni. Unisco Business Intelligence, sviluppo Full Stack e Intelligenza Artificiale con particolare attenzione ad architettura software, qualità del codice, prestazioni e user experience.",
     "primaryCta": "Vedi i miei lavori",
     "secondaryCta": "Scrivimi"
   },

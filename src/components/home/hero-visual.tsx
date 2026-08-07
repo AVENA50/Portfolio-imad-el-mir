@@ -23,7 +23,7 @@ const INNER_ORBIT: readonly OrbitTech[] = [
 ];
 
 const OUTER_ORBIT: readonly OrbitTech[] = [
-  { slug: "typescript", angle: 95 },
+  { slug: "mysql", angle: 95 },
   { slug: "nextjs", angle: 205 },
   { slug: "postgres", angle: 330 },
 ];

@@ -45,8 +45,14 @@ export default async function OpengraphImage({
   const locale = isLocale(params.locale) ? params.locale : "it";
   const dictionary = await getDictionary(locale);
 
+  // Il titolo dell'hero, non la descrizione: quella e lunga oltre duecento
+  // caratteri e a 1200x630 uscirebbe dal riquadro, perche Satori non sa
+  // rimpicciolire il testo per farlo entrare. Un'anteprima social ha lo
+  // spazio di un'insegna, non di un paragrafo.
+  const { titleLead, titleAccent, role } = dictionary.hero;
+
   return renderOgImage({
-    eyebrow: dictionary.hero.role,
-    title: dictionary.hero.intro,
+    eyebrow: role,
+    title: `${titleLead} ${titleAccent}`,
   });
 }

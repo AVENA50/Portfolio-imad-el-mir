@@ -60,11 +60,17 @@ export function isPublicSite(): boolean {
 export const SITE = {
   name: "Imad El Mir",
   shortName: "IEM",
-  role: "Full Stack Developer",
-  tagline: "Full Stack Developer & AI Enthusiast",
+  /**
+   * Il ruolo dichiarato a chi non legge la pagina: `jobTitle` nei dati
+   * strutturati e riga in fondo alle anteprime social. Deve coincidere con
+   * quello dell'hero — se Google legge una qualifica e il visitatore ne
+   * trova un'altra, la meno credibile delle due vince.
+   */
+  role: "Business Intelligence Software Developer",
+  tagline: "Business Intelligence, Full Stack e Intelligenza Artificiale",
 
   description:
-    "Portfolio e case study di Imad El Mir: applicazioni web full stack, sistemi intelligenti e pipeline dati.",
+    "Portfolio e case study di Imad El Mir, Business Intelligence Software Developer: applicazioni che trasformano dati complessi in decisioni.",
 
   /** Senza slash finale: gli URL assoluti si compongono concatenando. */
   url: siteUrl(),

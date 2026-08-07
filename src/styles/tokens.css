@@ -152,6 +152,14 @@
   --text-display--line-height: 1;
   --text-display--letter-spacing: -0.04em;
 
+  /* Titolo dell'hero. Piu contenuto di --text-display, che a 6rem e tarato
+     su due o tre parole: una frase intera, nella colonna sinistra da ~43rem,
+     a quella misura finisce su quattro righe e mangia mezzo schermo. Qui
+     sta su due righe e resta la voce piu forte della pagina. */
+  --text-hero: clamp(2.5rem, 1.5rem + 3.6vw, 4.5rem);
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.035em;
+
   --text-h1: clamp(2.25rem, 1.4rem + 3.6vw, 3.5rem);
   --text-h1--line-height: 1.08;
   --text-h1--letter-spacing: -0.03em;
